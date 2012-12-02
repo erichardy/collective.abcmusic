@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<object name="xtune" meta_type="Dexterity FTI" 
+  i18n:domain="collective.abcmusic"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+   
+ <property name="title" i18n:translate="">xtune</property>
+ <property name="description" i18n:translate="">A tune in abc format</property>
+ <property name="icon_expr">string:${portal_url}/document_icon.png</property>
+ <property name="allow_discussion">True</property>
+ <property name="global_allow">True</property>
+ <property name="filter_content_types">True</property>
+ <property name="allowed_content_types" />
+ 
+ <!-- schema interface -->
+ <property name="schema">collective.abcmusic.xtune.IXtune</property>
+
+ <property name="klass">plone.dexterity.content.Item</property>
+
+ <property name="add_permission">cmf.AddPortalContent</property>
+
+ <property name="behaviors">
+  <element value="plone.app.content.interfaces.INameFromTitle"/>
+  <!-- genere le bug ci-dessous 
+  <element value="collective.flowplayer.behaviors.IFlowplayerFile"/>
+  -->
+ </property>
+
+
+ <property name="default_view">view</property>
+ <property name="default_view_fallback">False</property>
+ <property name="view_methods">
+  <element value="view"/>
+ </property>
+ 
+ 
+
+ <alias from="(Default)" to="(dynamic view)"/>
+ <alias from="edit" to="@@edit"/>
+ <alias from="sharing" to="@@sharing"/>
+ <alias from="view" to="(selected layout)"/>
+ 
+ 
+ <action title="View" action_id="view" category="object" condition_expr=""
+   url_expr="string:${object_url}" visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="Edit" action_id="edit" category="object" condition_expr=""
+    url_expr="string:${object_url}/edit" visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+</object>
+
+<!-- BUG genere par [behaviors : value="collective.flowplayer.behaviors.IFlowplayerFile"]
+2012-12-02 21:34:57 ERROR Zope.SiteErrorLog 1354480497.40.746355606446 http://localhost:8080/Plone/++add++xtune
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 126, in publish
+  Module ZPublisher.mapply, line 77, in mapply
+  Module ZPublisher.Publish, line 46, in call_object
+  Module plone.z3cform.layout, line 70, in __call__
+  Module plone.z3cform.layout, line 54, in update
+  Module plone.dexterity.browser.add, line 112, in update
+  Module plone.z3cform.fieldsets.extensible, line 59, in update
+  Module plone.z3cform.patch, line 30, in GroupForm_update
+  Module z3c.form.group, line 138, in update
+  Module z3c.form.action, line 99, in execute
+  Module z3c.form.button, line 315, in __call__
+  Module z3c.form.button, line 170, in __call__
+  Module plone.dexterity.browser.add, line 99, in handleAdd
+  Module z3c.form.form, line 247, in createAndAdd
+  Module plone.dexterity.browser.add, line 78, in add
+  Module plone.dexterity.utils, line 152, in addContentToContainer
+  Module OFS.ObjectManager, line 358, in _setObject
+  Module zope.event, line 31, in notify
+  Module zope.component.event, line 24, in dispatch
+  Module zope.component._api, line 136, in subscribers
+  Module zope.component.registry, line 321, in subscribers
+  Module zope.interface.adapter, line 585, in subscribers
+  Module zope.component.event, line 32, in objectEventNotify
+  Module zope.component._api, line 136, in subscribers
+  Module zope.component.registry, line 321, in subscribers
+  Module zope.interface.adapter, line 585, in subscribers
+  Module collective.flowplayer.dexterity, line 32, in update_media_info
+  Module zope.component.hooks, line 104, in adapter_hook
+  Module plone.dexterity.primary, line 24, in __init__
+TypeError: ('Could not adapt', <Item at /Plone/tune>, <InterfaceClass plone.rfc822.interfaces.IPrimaryFieldInfo>)
+-->
