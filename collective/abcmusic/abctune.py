@@ -3,6 +3,7 @@ from zope import schema
 from plone.namedfile.field import NamedImage
 from plone.namedfile.field import NamedFile
 from plone.directives import form
+import subprocess as sp
 
 from collective.abcmusic import _
 
@@ -44,7 +45,9 @@ class View(grok.View):
         """
         return True if the abc if ok
         """
-        return 'retour de analizeABC'
+        p = sp.Popen(["abc2midi"], stdout=sp.PIPE, stderr=sp.PIPE)
+        output, errors = p.communicate()
+        return output
         
         
     

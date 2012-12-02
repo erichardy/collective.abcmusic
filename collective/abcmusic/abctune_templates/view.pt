@@ -20,7 +20,7 @@
     <tal:main-macro metal:define-macro="main">
 
     dans la macro MAINnn....
-    <span tal:content="view/analyzeABC">sdfsdf</span>
+    <span tal:content="structure view/analyzeABC">sdfsdf</span>
     
     </tal:main-macro>
 </metal:main>
