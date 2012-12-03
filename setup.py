@@ -30,6 +30,8 @@ setup(name='collective.abcmusic',
           'setuptools',
 	      'Plone',
 	      'plone.app.dexterity',
+          'plone.namedfile[blobs]',
+          'plone.formwidget.namedfile',
 	      'collective.autopermission',
           'collective.flowplayer',
           # -*- Extra requirements: -*-

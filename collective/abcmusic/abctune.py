@@ -1,11 +1,18 @@
+import logging
 from five import grok
 from zope import schema
-from plone.namedfile.field import NamedImage
-from plone.namedfile.field import NamedFile
+from plone.namedfile.field import NamedImage , NamedBlobImage
+from plone.namedfile.field import NamedFile , NamedBlobFile
 from plone.directives import form
 import subprocess as sp
+import tempfile as tf
+from StringIO import StringIO
+
+from os import unlink
 
 from collective.abcmusic import _
+
+logger = logging.getLogger('collective.abcmusic')
 
 class IABCTune(form.Schema):
     title = schema.TextLine(
@@ -19,7 +26,7 @@ class IABCTune(form.Schema):
     abc = schema.Text(
             title = _(u"Tune abc"),
         )
-    score = NamedImage (
+    score = NamedBlobImage (
             title = _("Score"),
             description = _('The score of the tune'),
             required = False,
@@ -31,7 +38,7 @@ class IABCTune(form.Schema):
             required = False,
         )
     form.primary('mp3')
-    mp3 = NamedFile (
+    mp3 = NamedBlobFile (
             title = _("mp3"),
             description = _('The mp3 sound of the tune'),
             required = False,
@@ -41,12 +48,31 @@ class View(grok.View):
     grok.context(IABCTune)
     grok.require('zope2.View')
     
-    def analyzeABC(self):
+    def make_midi(self):
         """
-        return True if the abc if ok
+        peut etre utile : http://stackoverflow.com/questions/12298136/dynamic-source-for-plone-dexterity-relationlist
+        pour les donnees binaires : http://plone.org/products/dexterity/documentation/manual/developer-manual/advanced/files-and-images
         """
-        p = sp.Popen(["abc2midi"], stdout=sp.PIPE, stderr=sp.PIPE)
+        abc = self.context.abc
+        
+        abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
+        fabctemp = open(abctemp , 'w')
+        for l in abc:
+            fabctemp.write(l)
+        fabctemp.write('\n\n')
+        fabctemp.close()
+        miditemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.midi', delete = False).name
+        p = sp.Popen(["abc2midi", abctemp,'-o', miditemp], stdout=sp.PIPE, stderr=sp.PIPE)
+        p.wait()
+        iomidi = StringIO()
+        fmiditemp = open(miditemp , 'r')
+        buffmidi = fmiditemp.read()
+        iomidi.write(buffmidi)
+        logger.info(len(iomidi.getvalue()))
+        self.context.midi = iomidi.getvalue()
         output, errors = p.communicate()
+        unlink(abctemp)
+        # unlink(miditemp)
         return output
         
         

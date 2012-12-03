@@ -55,4 +55,4 @@ Si on ajoute le behavior flowplayer, il semble qu'il soit necessaire d'avoir un
 champ 'filename' sinon on a l'erreur :
   Module collective.flowplayer.dexterity, line 36, in update_media_info
 AttributeError: 'unicode' object has no attribute 'filename'
-<--
+-->
