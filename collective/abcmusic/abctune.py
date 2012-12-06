@@ -32,15 +32,15 @@ class IABCTune(form.Schema):
             required = False,
         )
     form.primary('midi')
-    midi = NamedFile (
+    midi = NamedBlobFile (
             title = _("Midi"),
             description = _('Midi sound of the tune'),
             required = False,
         )
-    form.primary('mp3')
-    mp3 = NamedBlobFile (
-            title = _("mp3"),
-            description = _('The mp3 sound of the tune'),
+    form.primary('sound')
+    sound = NamedBlobFile (
+            title = _("sound"),
+            description = _('The sound of the tune'),
             required = False,
         )
 
@@ -68,10 +68,14 @@ class View(grok.View):
         fmiditemp = open(miditemp , 'r')
         buffmidi = fmiditemp.read()
         iomidi.write(buffmidi)
-        logger.info(len(iomidi.getvalue()))
-        self.context.midi = iomidi.getvalue()
+        # logger.info(len(iomidi.getvalue()))
+        self.context.midi.data = iomidi.getvalue()
+        self.context.midi.filename = u'MidiFicher.mid'
+        self.context.midi.contentType = u'audio/mid'
+        # pour mp3 : u'audio/mpeg'
         output, errors = p.communicate()
         unlink(abctemp)
+        # import pdb;pdb.set_trace()
         # unlink(miditemp)
         return output
         
