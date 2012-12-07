@@ -19,7 +19,6 @@
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
 
-    dans la macro MAINnn....
     <span tal:content="structure view/make_midi">sdfsdf</span>
     <p />
     <span tal:content="structure view/make_score">sdfsdf</span>
