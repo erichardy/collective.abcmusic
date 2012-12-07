@@ -70,14 +70,42 @@ class View(grok.View):
         iomidi.write(buffmidi)
         # logger.info(len(iomidi.getvalue()))
         self.context.midi.data = iomidi.getvalue()
-        self.context.midi.filename = u'MidiFicher.mid'
+        self.context.midi.filename = u'MidiFichier.mid'
         self.context.midi.contentType = u'audio/mid'
         # pour mp3 : u'audio/mpeg'
         output, errors = p.communicate()
         unlink(abctemp)
+        unlink(miditemp)
         # import pdb;pdb.set_trace()
-        # unlink(miditemp)
         return output
         
+    def make_score(self):
+        abc = self.context.abc
         
+        abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
+        fabctemp = open(abctemp , 'w')
+        for l in abc:
+            fabctemp.write(l)
+        fabctemp.write('\n\n')
+        fabctemp.close()
+        pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
+        p = sp.Popen(["abcm2ps", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
+        p.wait()
+        # convert ${PSFILE} -filter Catrom  -resize 600 $PNG"
+        pngtemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.png', delete = False).name
+        p = sp.Popen(["convert", pstemp,'-filter', 'Catrom', '-resize', '600', pngtemp], stdout=sp.PIPE, stderr=sp.PIPE)
+        p.wait()
+        io_png = StringIO()
+        fpngtemp = open(pngtemp ,'r')
+        buff_score = fpngtemp.read()
+        io_png.write(buff_score)
+        self.context.score.data = io_png.getvalue()
+        self.context.score.filename = u'ScoreFichier.png'
+        self.context.score.contentType = u'image/png'
+        output, errors = p.communicate()
+        unlink(abctemp)
+        unlink(pstemp)
+        unlink(pngtemp)
+        # import pdb;pdb.set_trace()
+        return output
     
