@@ -20,6 +20,7 @@
     <tal:main-macro metal:define-macro="main">
 
     <span tal:content="structure view/make_midi">sdfsdf</span>
+
     <p />
     <span tal:content="structure view/make_score">sdfsdf</span>
     <p />
@@ -45,6 +46,7 @@
                                  width score/_width | nothing;"
                 />
         </div>
+
     <p />
     <p />
     <!-- 

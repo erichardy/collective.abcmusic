@@ -1,8 +1,8 @@
 import logging
 from five import grok
 from zope import schema
-from plone.namedfile.field import NamedImage , NamedBlobImage
-from plone.namedfile.field import NamedFile , NamedBlobFile
+from plone.namedfile.field import NamedBlobImage
+from plone.namedfile.field import NamedBlobFile
 from plone.directives import form
 import subprocess as sp
 import tempfile as tf
@@ -11,8 +11,6 @@ import datetime
 from os import unlink
 
 from collective.abcmusic import _
-
-# DateTime : http://pypi.python.org/pypi/DateTime/3.0.2
 
 logger = logging.getLogger('collective.abcmusic')
 
@@ -27,22 +25,24 @@ class IABCTune(form.Schema):
     form.primary('abc')
     abc = schema.Text(
             title = _(u"Tune abc"),
+            description = _(u'The tunb in abc format'),
         )
+    # form.primary('score')
     score = NamedBlobImage (
-            title = _("Score"),
-            description = _('The score of the tune'),
+            title = _(u"Score"),
+            description = _(u'The score of the tune'),
             required = False,
         )
-    form.primary('midi')
+    # form.primary('midi')
     midi = NamedBlobFile (
-            title = _("Midi"),
-            description = _('Midi sound of the tune'),
+            title = _(u"Midi"),
+            description = _(u'Midi sound of the tune'),
             required = False,
         )
-    form.primary('sound')
+    # form.primary('sound')
     sound = NamedBlobFile (
-            title = _("sound"),
-            description = _('The mp3 sound of the tune'),
+            title = _(u"sound"),
+            description = _(u'The mp3 sound of the tune'),
             required = False,
         )
     abcTime = schema.Datetime(
@@ -124,43 +124,49 @@ class View(grok.View):
         peut etre utile : http://stackoverflow.com/questions/12298136/dynamic-source-for-plone-dexterity-relationlist
         pour les donnees binaires : http://plone.org/products/dexterity/documentation/manual/developer-manual/advanced/files-and-images
         """
-        context = self.context
-        if context.midiTime and (context.midiTime > context.abcTime):
+        # context = self.context
+        if self.context.midiTime and (self.context.midiTime > self.context.abcTime):
             """ We do nothing, it's done
             """
             logger.info("midi plus recent que abc")
             return
-        abc = context.abc
+        abc = self.context.abc
         abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
         fabctemp = open(abctemp , 'w')
         for l in abc:
             fabctemp.write(l)
         fabctemp.write('\n\n')
         fabctemp.close()
-        miditemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.midi', delete = False).name
+        miditemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.mid', delete = False).name
         p = sp.Popen(["abc2midi", abctemp,'-o', miditemp], stdout=sp.PIPE, stderr=sp.PIPE)
         p.wait()
         iomidi = StringIO()
         fmiditemp = open(miditemp , 'r')
         buffmidi = fmiditemp.read()
         iomidi.write(buffmidi)
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         # logger.info(len(iomidi.getvalue()))
-        self.context.midi.data = iomidi.getvalue()
-        context.midi.filename = u'MidiFichier.mid'
-        context.midi.contentType = u'audio/mid'
-        context.midiTime = datetime.datetime.now()
+        blobMidi = NamedBlobFile()
+        blobMidi.filename = u'MidiFichier.mid'
+        blobMidi.data = iomidi.getvalue()
+        blobMidi.contentType = u'audio/mid'
+        self.context.midi = blobMidi
+        
+        # self.context.midi.data = iomidi.getvalue()
+        # context.midi.filename = u'MidiFichier.mid'
+        # context.midi.contentType = u'audio/mid'
+        # context.midiTime = datetime.datetime.now()
         # pour mp3 : u'audio/mpeg'
         output, errors = p.communicate()
-        unlink(abctemp)
-        unlink(miditemp)
+        # unlink(abctemp)
+        # unlink(miditemp)
         # import pdb;pdb.set_trace()
         return output
         
     def make_score(self):
-        context = self.context
-        abc = context.abc
-        if context.scoreTime and (context.scoreTime > context.abcTime):
+        # context = self.context
+        abc = self.context.abc
+        if self.context.scoreTime and (self.context.scoreTime > self.context.abcTime):
             """ We do nothing, it's done
             """
             logger.info("score plus recent que abc")
@@ -179,18 +185,25 @@ class View(grok.View):
         pngtemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.png', delete = False).name
         p = sp.Popen(["convert", pstemp,'-filter', 'Catrom', '-resize', '600', pngtemp], stdout=sp.PIPE, stderr=sp.PIPE)
         p.wait()
-        io_png = StringIO()
+        iopng = StringIO()
         fpngtemp = open(pngtemp ,'r')
         buff_score = fpngtemp.read()
-        io_png.write(buff_score)
-        context.score.data = io_png.getvalue()
-        context.score.filename = u'ScoreFichier.png'
-        context.score.contentType = u'image/png'
-        context.scoreTime = datetime.datetime.now()
+        iopng.write(buff_score)
+        # import pdb;pdb.set_trace()
+        blobScore = NamedBlobImage()
+        blobScore.filename = u'ScoreFichier.png'
+        blobScore.data = iopng.getvalue()
+        blobScore.contentType = u'image/png'
+        self.context.score = blobScore
+        # self.context.score.data = io_png.getvalue()
+        # self.context.score.filename = u'ScoreFichier.png'
+        # self.context.score.contentType = u'image/png'
+        self.context.scoreTime = datetime.datetime.now()
         output, errors = p.communicate()
-        unlink(abctemp)
-        unlink(pstemp)
-        unlink(pngtemp)
+        logger.info(abctemp)
+        # unlink(abctemp)
+        # unlink(pstemp)
+        # unlink(pngtemp)
         # import pdb;pdb.set_trace()
         return output
     
