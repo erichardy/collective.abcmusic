@@ -205,5 +205,6 @@ class View(grok.View):
         # unlink(pstemp)
         # unlink(pngtemp)
         # import pdb;pdb.set_trace()
+
         return output
     
