@@ -1,4 +1,3 @@
 <object name="portal_types">
- <object meta_type="Dexterity FTI" name="xtune" />
  <object meta_type="Dexterity FTI" name="abctune" />
 </object>
