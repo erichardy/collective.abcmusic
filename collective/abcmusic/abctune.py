@@ -195,6 +195,8 @@ class View(grok.View):
         blobScore.data = iopng.getvalue()
         blobScore.contentType = u'image/png'
         self.context.score = blobScore
+        import pdb;pdb.set_trace()
+
         # self.context.score.data = io_png.getvalue()
         # self.context.score.filename = u'ScoreFichier.png'
         # self.context.score.contentType = u'image/png'

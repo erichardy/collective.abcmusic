@@ -22,4 +22,4 @@ var
 *.pyc
 *.pyo
 *.tmp*
-
+*~

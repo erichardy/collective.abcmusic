@@ -46,6 +46,8 @@
                                  width score/_width | nothing;"
                 />
         </div>
+            <img tal:attributes="src context/score/data"
+                />
 
     <p />
     <p />
