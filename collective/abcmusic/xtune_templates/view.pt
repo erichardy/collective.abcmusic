@@ -50,6 +50,8 @@
     <span tal:content="string:${context/score/filename}">
     
     </span>
+        <img tal:attributes="src context/score/data"
+                />
 
     <p />
     <p />
