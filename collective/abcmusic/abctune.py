@@ -5,7 +5,11 @@ from zope import schema
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
 from z3c.blobfile import file, image
-from plone.directives import form
+from plone.directives import form, dexterity
+from z3c.form import button, field
+# for events handlers
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent,IObjectModifiedEvent
+# END for events handlers
 import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
@@ -29,44 +33,24 @@ class IABCTune(form.Schema):
             title = _(u"Tune abc"),
             description = _(u'The tunb in abc format'),
         )
-    # form.primary('score')
+    form.omitted('score')
     score = NamedBlobImage (
             title = _(u"Score"),
             description = _(u'The score of the tune'),
             required = False,
         )
-    # form.primary('midi')
+    form.omitted('midi')
     midi = NamedBlobFile (
             title = _(u"Midi"),
             description = _(u'Midi sound of the tune'),
             required = False,
         )
-    # form.primary('sound')
+    form.omitted('sound')
     sound = NamedBlobFile (
             title = _(u"sound"),
             description = _(u'The mp3 sound of the tune'),
             required = False,
         )
-    abcTime = schema.Datetime(
-            title = _(u'abc time'),
-            description = _(u'the last modification time of abc'),
-            required = False,
-            )
-    scoreTime = schema.Datetime(
-            title = _(u'score time'),
-            description = _(u'the last modification time of score'),
-            required = False,
-            )
-    midiTime = schema.Datetime(
-            title = _(u'midi time'),
-            description = _(u'the last modification time of midi'),
-            required = False,
-            )
-    soundTime = schema.Datetime(
-            title = _(u'sound time'),
-            description = _(u'the last modification time of sound'),
-            required = False,
-            )
 
 @form.default_value(field=IABCTune['abc'])
 def abcDefaultValue(data):
@@ -92,31 +76,8 @@ P:A
 """
     return tune
 
-@form.default_value(field=IABCTune['abcTime'])
-def abcTimeDefaultValue(data):
-    # http://docs.python.org/2.6/whatsnew/2.3.html#date-time-type
-    # To get hold of the folder, do: context = data.context
-    return datetime.datetime.now()
-
-@form.default_value(field=IABCTune['scoreTime'])
-def scoreTimeDefaultValue(data):
-    # http://docs.python.org/2.6/whatsnew/2.3.html#date-time-type
-    # To get hold of the folder, do: context = data.context
-    return datetime.datetime.now() - datetime.timedelta(1)
-
-@form.default_value(field=IABCTune['midiTime'])
-def midiTimeDefaultValue(data):
-    # http://docs.python.org/2.6/whatsnew/2.3.html#date-time-type
-    # To get hold of the folder, do: context = data.context
-    return datetime.datetime.now() - datetime.timedelta(1)
-
-@form.default_value(field=IABCTune['soundTime'])
-def soundTimeDefaultValue(data):
-    # http://docs.python.org/2.6/whatsnew/2.3.html#date-time-type
-    # To get hold of the folder, do: context = data.context
-    return datetime.datetime.now() - datetime.timedelta(1)
-
-
+# for hidden fields, see : http://packages.python.org/z3c.form/form.html#hidden-fields
+# to use in the add and edit forms 
 class View(grok.View):
     grok.context(IABCTune)
     grok.require('zope2.View')
@@ -126,85 +87,83 @@ class View(grok.View):
         return
         import pdb;pdb.set_trace()
     """
+        
+def _make_midi(context):
+    """
+    peut etre utile : http://stackoverflow.com/questions/12298136/dynamic-source-for-plone-dexterity-relationlist
+    pour les donnees binaires : http://plone.org/products/dexterity/documentation/manual/developer-manual/advanced/files-and-images
+    """
+    abc = context.abc
+    abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
+    fabctemp = open(abctemp , 'w')
+    for l in abc:
+        fabctemp.write(l)
+    fabctemp.write('\n\n')
+    fabctemp.close()
+    miditemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.mid', delete = False).name
+    p = sp.Popen(["abc2midi", abctemp,'-o', miditemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p.wait()
+    iomidi = StringIO()
+    fmiditemp = open(miditemp , 'r')
+    buffmidi = fmiditemp.read()
+    iomidi.write(buffmidi)
+
+    blobMidi = file.File()
+    blobMidi.filename = u'MidiFichier.mid'
+    blobMidi.data = iomidi.getvalue()
+    blobMidi.contentType = u'audio/mid'
+    # pour mp3 : u'audio/mpeg'
+    context.midi = blobMidi    
+    output, errors = p.communicate()
+    unlink(abctemp)
+    unlink(miditemp)
+    return output
+        
+def _make_score(context):
+    abc = context.abc
+    abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
+    fabctemp = open(abctemp , 'w')
+    for l in abc:
+        fabctemp.write(l)
+    fabctemp.write('\n\n')
+    fabctemp.close()
+    pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
+    p = sp.Popen(["abcm2ps", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p.wait()
+    # convert ${PSFILE} -filter Catrom  -resize 600 $PNG"
+    pngtemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.png', delete = False).name
+    p = sp.Popen(["convert", pstemp,'-filter', 'Catrom', '-resize', '600', pngtemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p.wait()
+    iopng = StringIO()
+    fpngtemp = open(pngtemp ,'r')
+    buff_score = fpngtemp.read()
+    iopng.write(buff_score)
+
+    blobScore = image.Image()
+    blobScore.filename = u'ScoreFichier.png'
+    blobScore.data = iopng.getvalue()
+    blobScore.contentType = u'image/png'
+    context.score = blobScore
+    output, errors = p.communicate()
+    logger.info(abctemp)
+    unlink(abctemp)
+    unlink(pstemp)
+    unlink(pngtemp)
+    return output
+
+@grok.subscribe(IABCTune, IObjectCreatedEvent)
+def newAbcTune(context , event):
+    logger.info("abc CREE !")
+    _make_midi(context)
+    _make_score(context)
+    # import pdb;pdb.set_trace()
+
+@grok.subscribe(IABCTune, IObjectModifiedEvent)
+def updateAbcTune(context , event):
+    logger.info("abc EDITE/MODIFIE !")
+    # import pdb;pdb.set_trace()
+    _make_midi(context)
+    _make_score(context)
     
-    def make_midi(self):
-        """
-        peut etre utile : http://stackoverflow.com/questions/12298136/dynamic-source-for-plone-dexterity-relationlist
-        pour les donnees binaires : http://plone.org/products/dexterity/documentation/manual/developer-manual/advanced/files-and-images
-        """
-        if self.context.midiTime and (self.context.midiTime > self.context.abcTime):
-            """ We do nothing, it's done
-            """
-            logger.info("midi plus recent que abc")
-            return
-        abc = self.context.abc
-        abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
-        fabctemp = open(abctemp , 'w')
-        for l in abc:
-            fabctemp.write(l)
-        fabctemp.write('\n\n')
-        fabctemp.close()
-        miditemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.mid', delete = False).name
-        p = sp.Popen(["abc2midi", abctemp,'-o', miditemp], stdout=sp.PIPE, stderr=sp.PIPE)
-        p.wait()
-        iomidi = StringIO()
-        fmiditemp = open(miditemp , 'r')
-        buffmidi = fmiditemp.read()
-        iomidi.write(buffmidi)
 
-        blobMidi = file.File()
-        blobMidi.filename = u'MidiFichier.mid'
-        blobMidi.data = iomidi.getvalue()
-        blobMidi.contentType = u'audio/mid'
-        # pour mp3 : u'audio/mpeg'
-        self.context.midi = blobMidi
-
-        self.context.midiTime = datetime.datetime.now()
-        
-        output, errors = p.communicate()
-        unlink(abctemp)
-        unlink(miditemp)
-        # import pdb;pdb.set_trace()
-        return output
-        
-    def make_score(self):
-        abc = self.context.abc
-        if self.context.scoreTime and (self.context.scoreTime > self.context.abcTime):
-            """ We do nothing, it's done
-            """
-            logger.info("score plus recent que abc")
-            return
-        abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
-        fabctemp = open(abctemp , 'w')
-        for l in abc:
-            fabctemp.write(l)
-        fabctemp.write('\n\n')
-        fabctemp.close()
-        pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
-        p = sp.Popen(["abcm2ps", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
-        p.wait()
-        # convert ${PSFILE} -filter Catrom  -resize 600 $PNG"
-        pngtemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.png', delete = False).name
-        p = sp.Popen(["convert", pstemp,'-filter', 'Catrom', '-resize', '600', pngtemp], stdout=sp.PIPE, stderr=sp.PIPE)
-        p.wait()
-        iopng = StringIO()
-        fpngtemp = open(pngtemp ,'r')
-        buff_score = fpngtemp.read()
-        iopng.write(buff_score)
-
-        blobScore = image.Image()
-        blobScore.filename = u'ScoreFichier.png'
-        blobScore.data = iopng.getvalue()
-        blobScore.contentType = u'image/png'
-        self.context.score = blobScore
-
-        self.context.scoreTime = datetime.datetime.now()
-        output, errors = p.communicate()
-        logger.info(abctemp)
-        unlink(abctemp)
-        unlink(pstemp)
-        unlink(pngtemp)
-        # import pdb;pdb.set_trace()
-
-        return output
     

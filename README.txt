@@ -21,3 +21,14 @@ See web sites for more informations :
 * abcm2ps : http://moinejf.free.fr/
 * abcMIDI : http://abc.sourceforge.net/abcMIDI/
 * abcjs : http://code.google.com/p/abcjs/
+
+Bug
+===
+a bug like this sometimes appears (but not always) :
+'_DummyThread' object has no attribute '_Thread__block'",) in <module 'threading'
+See comments at :
+http://stackoverflow.com/questions/13193278/understand-python-threading-bug
+code to be added :
+    # import threading
+    # threading._DummyThread._Thread__stop = lambda x: 42
+

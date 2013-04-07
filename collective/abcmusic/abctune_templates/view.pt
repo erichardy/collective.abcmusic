@@ -7,25 +7,22 @@
       i18n:domain="example.conference">
 
 <head>
+
+<span tal:replace="nothing">
     <metal:block fill-slot="style_slot">
         <link rel="stylesheet" type="text/css"
             tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-            tal:attributes="href string:${navroot}/++resource++collective.abctune/css/collective-abctune.css"
+            tal:attributes="href string:${navroot}/++resource++collective.abcmusic/css/abcmusic.css"
             />
     </metal:block>
+</span>
+
 </head>
 
 <body>
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
 
-    <span tal:content="structure view/make_midi">sdfsdf</span>
-
-    <p />
-    <span tal:content="structure view/make_score">sdfsdf</span>
-    <p />
-    <span tal:content="structure string:${here/abc}">abc</span>
-    <p />
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
 
     <object tal:define="midi nocall:context/midi"
@@ -39,7 +36,7 @@
                    type="audio/mid">
             </embed>
     </object>
-    
+   
     <div tal:define="score nocall:context/score"
              tal:condition="nocall:score">
             <img tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
@@ -47,8 +44,10 @@
                                  width score/_width | nothing;"
                 />
         </div>
+    <textarea cols="100" rows="18" tal:content="structure string:${here/abc}"/>
+
     <span tal:content="string:${context/score/filename}">
-    
+   
     </span>
 
     <p />
