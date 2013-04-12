@@ -34,6 +34,7 @@ setup(name='collective.abcmusic',
           'plone.formwidget.namedfile',
 	      'collective.autopermission',
           'collective.flowplayer',
+	  'collective.js.abcjs',
           # -*- Extra requirements: -*-
       ],
       extras_require = dict(
