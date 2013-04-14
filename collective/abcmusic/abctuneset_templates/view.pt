@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.abcmusic">
+
+<head>
+
+<span tal:replace="nothing">
+    <metal:block fill-slot="style_slot">
+        <link rel="stylesheet" type="text/css"
+            tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+            tal:attributes="href string:${navroot}/++resource++collective.abcmusic/css/abcmusic.css"
+            />
+    </metal:block>
+</span>
+
+</head>
+
+<body>
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+
+    ici le contenu...du folder
+    <br />
+    <span tal:repeat="tune view/abctunesList">
+	    <span tal:content="tune/Title">title</span>
+	    <br />
+
+    </span>
+
+    </tal:main-macro>
+</metal:main>
+
+
+</body>
+</html>
+    
