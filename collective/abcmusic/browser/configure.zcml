@@ -4,19 +4,29 @@
     i18n_domain="collective.abcmusic">
 
   <interface
-      interface=".interfaces.ILayer"
+      interface=".interfaces.IABCMusicLayer"
       name="collective.abcmusic"
       />
   
-  
-  <!-- EXAMPLE:
+    <browser:viewletManager
+        name="collective.abcmusic"
+        provides=".interfaces.IABCMusicViewletManager"
+        permission="zope2.View"
+        class="plone.app.viewletmanager.manager.OrderedViewletManager"
+        layer=".interfaces.IABCMusicLayer"
+        />
+
   <browser:viewlet
-      name="collective.someviewlet"
-      manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
-      class=".viewlets.MyViewlet"
-      layer=".interfaces.ILayer"
+      name="collective.abcmusic.midi"
+      manager=".interfaces.IABCMusicViewletManager"
+      class=".viewlets.MidiViewlet"
+      template="midi.pt"
+      layer=".interfaces.IABCMusicLayer"
       permission="zope2.View"
       />
+  
+  <!-- EXAMPLE:
+      
   <include package="plone.app.contentmenu" />
   <browser:page
       for="*"

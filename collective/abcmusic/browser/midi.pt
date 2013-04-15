@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.abcmusic">
+
+
+    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
+
+    <object 
+            tal:define="midi nocall:context/midi"
+            tal:condition="nocall:midi">
+            <param name="autostart" value="false">
+            <param name="src" tal:attributes="value string:${context/absolute_url}/@@download/midi/${midi/filename}">
+            <param name="autoplay" value="true">
+            <param name="controller" value="true">
+            <embed height="30" autostart=false src=""
+                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
+                   type="audio/mid">
+            </embed>
+    </object>
+    <p />
+    Le viewlet midi...!<br />
+    <span tal:content="context/Title">Title</span>
+    <p />
+    <!-- 
+    <span tal:content="structure string:${here/midi}">midi</span>
+    -->
+    <hr />
+</html>
+    

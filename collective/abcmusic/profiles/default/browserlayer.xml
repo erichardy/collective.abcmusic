@@ -1,4 +1,4 @@
 <layers>
     <layer name="collective.abcmusic"
-           interface="collective.abcmusic.browser.interfaces.ILayer" />
+           interface="collective.abcmusic.browser.interfaces.IABCMusicLayer" />
 </layers>

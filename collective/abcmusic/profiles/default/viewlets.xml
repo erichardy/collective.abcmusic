@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object>
+ <order manager="collective.abcmusic" skinname="*">
+  <viewlet name="collective.abcmusic.midi"/>
+ </order>
+</object>
