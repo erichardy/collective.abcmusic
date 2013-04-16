@@ -16,13 +16,21 @@
             />
     </metal:block>
 </span>
+    <metal:block fill-slot="javascript_head_slot">
+        <link rel="javascript" type="text/javascript"
+            tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+            tal:attributes="href string:${navroot}/++resource++collective.abcmusic/js/abcmusic.js"
+            />
+    </metal:block>
 
 </head>
 
 <body>
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-<div tal:replace="structure provider:collective.abcmusic" />
+    <span tal:replace="nothing">
+    	<div tal:replace="structure provider:collective.abcmusic" />
+    </span>
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
 
     <object tal:define="midi nocall:context/midi"
@@ -44,7 +52,7 @@
                                  width score/_width | nothing;"
                 />
         </div>
-    <textarea cols="100" rows="18" tal:content="structure string:${here/abc}"/>
+    <textarea id="abc-text" cols="100" rows="18" tal:content="structure string:${here/abc}"/>
 
     <span tal:content="string:${context/score/filename}">
    
@@ -52,9 +60,10 @@
 
     <p />
     <p />
-    <!-- 
-    <span tal:content="structure string:${here/midi}">midi</span>
-    -->
+    <div id="slider"></div>
+    <span id="slider-value"></span>
+    <div id="midi-edit">midi</div>
+    <div id="abc-edit">score</div>
     </tal:main-macro>
 </metal:main>
 
