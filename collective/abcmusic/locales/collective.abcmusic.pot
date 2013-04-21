@@ -1,16 +1,148 @@
-# Gettext Message File for collective.abcmusic
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: collective.abcmusic\n"
-"POT-Creation-Date: 2010-11-10 11:05+0000\n"
-"PO-Revision-Date: 2008-02-04 18:00+0000\n"
-"Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
-"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2013-04-21 15:52+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.abcmusic\n"
+
+#: ./profiles/default/types/xtune.xml
+msgid "A X tune in abc format"
+msgstr ""
+
+#: ./profiles/default/types/abctuneset.xml
+msgid "A set fo ABC Tunes"
+msgstr ""
+
+#: ./profiles/default/types/abctune.xml
+msgid "A tune in abc format"
+msgstr ""
+
+#: ./profiles/default/types/abctuneset.xml
+msgid "ABC Tune Set"
+msgstr ""
+
+#: ./addtune.py:29
+msgid "Add a new tune"
+msgstr ""
+
+#: ./addtune.py:56
+msgid "Cancel"
+msgstr ""
+
+#: ./addtune.py:39
+msgid "Create"
+msgstr ""
+
+#: ./addtune.py:30
+msgid "Form used to add a new tune"
+msgstr ""
+
+#: ./addtune.py:15
+msgid "Hornpipe"
+msgstr ""
+
+#: ./addtune.py:15
+msgid "Jig"
+msgstr ""
+
+#: ./abctune.py:44
+#: ./xtune.py:38
+msgid "Midi"
+msgstr ""
+
+#: ./abctune.py:45
+#: ./xtune.py:39
+msgid "Midi sound of the tune"
+msgstr ""
+
+#: ./addtune.py:15
+msgid "Reel"
+msgstr ""
+
+#: ./abctune.py:38
+#: ./xtune.py:32
+msgid "Score"
+msgstr ""
+
+#: ./addtune.py:49
+msgid "Thank you for your order. We will contact you shortly"
+msgstr ""
+
+#: ./abctune.py:51
+msgid "The mp3 sound of the tune"
+msgstr ""
+
+#: ./abctune.py:39
+#: ./xtune.py:33
+msgid "The score of the tune"
+msgstr ""
+
+#: ./xtune.py:45
+msgid "The sound of the tune"
+msgstr ""
+
+#: ./abctune.py:34
+msgid "The tunb in abc format"
+msgstr ""
+
+#: ./addtune.py:14
+msgid "Tune Type"
+msgstr ""
+
+#: ./abctune.py:33
+#: ./xtune.py:29
+msgid "Tune abc"
+msgstr ""
+
+#: ./abctune.py:25
+#: ./xtune.py:21
+msgid "Tune name"
+msgstr ""
+
+#: ./abctuneset.py:27
+msgid "Tune set name"
+msgstr ""
+
+#: ./abctuneset.py:30
+msgid "Tune set summary"
+msgstr ""
+
+#: ./abctune.py:28
+#: ./xtune.py:24
+msgid "Tune summary"
+msgstr ""
+
+#: ./addtune.py:18
+msgid "Your full name"
+msgstr ""
+
+#: ./profiles/default/types/abctune.xml
+msgid "abctune"
+msgstr ""
+
+#: ./abctune.py:50
+#: ./xtune.py:44
+msgid "sound"
+msgstr ""
+
+#. Default: "speed :"
+#: ./abctune_templates/view.pt:58
+msgid "speed : "
+msgstr ""
+
+#: ./profiles/default/types/xtune.xml
+msgid "xtune"
+msgstr ""
+

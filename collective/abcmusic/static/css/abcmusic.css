@@ -2,7 +2,15 @@
 	display: block;
 }
 
-#form-widgets-abc {
+#form-widgets-abc, #abc-text {
 	width: 600px !important ;
     height: 300px;
+}
+
+#slider, #slider-value {
+	display: block;
+}
+
+.speed-slider td {
+	valign: center;
 }

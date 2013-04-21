@@ -41,8 +41,9 @@ jq(document).ready(function() {
 	}
 	function updateABC() {
 		var input = jq("#abc-text").val();
+		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
 		updateSlider() ;
-		ABCJS.renderAbc('abc-edit', input, {}, {scale:0.8});
+		ABCJS.renderAbc('abc-edit', input, {}, {scale:scoreSize});
 		ABCJS.renderMidi('midi-edit',input, {});
 	};
 	function updateSpeedFromSlider() {
@@ -52,23 +53,39 @@ jq(document).ready(function() {
 		jq("#abc-text").val(abcText);
 		updateABC();
 	}
-
+	function resizeABCscore(){
+		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
+		ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale: scoreSize});
+	}
 	minSpeed = 20 ;
 	maxSpeed = 400 ;
 	stepSpeed = 5 ;
 	jq("#slider").slider({
-		step : stepSpeed , 
 		min: minSpeed , 
 		max: maxSpeed , 
-		range: false, 
+		from: minSpeed ,
+		to: maxSpeed ,
+		step : stepSpeed , 
 		animate: "fast" ,
+		round: 0 ,
+		format: {format:"###"} ,
+		skin: "round" ,
+		dimension: '&nbsp;QQQ' ,
 		change: function(event,ui){if (event.originalEvent){updateSpeedFromSlider()} }
 		});
-
 	speed = getSpeed() ;
 	jq("#slider").width("350px") ;
 	jq("#slider").slider("option" , "value" , speed);
 	jq("#slider-value").text(speed);
+	jq("#abc-edit-slider-size").slider ({
+		min: 0.1 ,
+		max: 1 ,
+		step: 0.1 ,
+		orientation: "vertical" ,
+		change: function(event,ui){if (event.originalEvent){resizeABCscore()} }
+	});
+	scoreSize = 0.8 ;
+	jq("#abc-edit-slider-size").slider("option" , "value" , scoreSize);
 	ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale:0.8});
 	ABCJS.renderMidi('midi-edit',jq("#abc-text").text(), {}) ;
 	jq('#abc-text').keyup(updateABC);
