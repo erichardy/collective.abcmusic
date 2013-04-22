@@ -55,7 +55,8 @@ jq(document).ready(function() {
 	}
 	function resizeABCscore(){
 		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
-		ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale: scoreSize});
+		var input = jq("#abc-text").val();
+		ABCJS.renderAbc('abc-edit', input , {}, {scale: scoreSize});
 	}
 	minSpeed = 20 ;
 	maxSpeed = 400 ;

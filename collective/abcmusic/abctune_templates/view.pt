@@ -8,19 +8,6 @@
 
 <head>
 
-    <metal:block fill-slot="style_slot">
-        <link rel="stylesheet" type="text/css"
-            tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-            tal:attributes="href string:${navroot}/++resource++collective.abcmusic/css/abcmusic.css"
-            />
-    </metal:block>
-    <metal:block fill-slot="javascript_head_slot">
-        <link rel="javascript" type="text/javascript"
-            tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-            tal:attributes="href string:${navroot}/++resource++collective.abcmusic/js/abcmusic.js"
-            />
-    </metal:block>
-
 </head>
 
 <body>
@@ -30,28 +17,6 @@
         pour activer le viewlet, supprimer la ligne ci-dessus
     	<div tal:replace="structure provider:collective.abcmusic" />
     </span>
-<span tal:replace="nothing">
-    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
-    <object tal:define="midi nocall:context/midi"
-            tal:condition="nocall:midi">
-            <param name="autostart" value="false">
-            <param name="src" tal:attributes="value string:${context/absolute_url}/@@download/midi/${midi/filename}">
-            <param name="autoplay" value="true">
-            <param name="controller" value="true">
-            <embed height="30" autostart=false src=""
-                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
-                   type="audio/mid">
-            </embed>
-    </object>
-    <div tal:define="score nocall:context/score"
-             tal:condition="nocall:score">
-            <img tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
-                                 height score/_height | nothing;
-                                 width score/_width | nothing;"
-                />
-        </div>
-    <span tal:content="string:${context/score/filename}">score filename</span>
-</span>
 	<table border="0">
 	<tbody>
 	<tr class="speed-slider">
@@ -83,6 +48,29 @@
     </tr>
 	</tbody>
 	</table>
+
+
+    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
+    <object tal:define="midi nocall:context/midi"
+            tal:condition="nocall:midi">
+            <param name="autostart" value="false">
+            <param name="src" tal:attributes="value string:${context/absolute_url}/@@download/midi/${midi/filename}">
+            <param name="autoplay" value="true">
+            <param name="controller" value="true">
+            <embed height="30" autostart=false src=""
+                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
+                   type="audio/mid">
+            </embed>
+    </object>
+    <div tal:define="score nocall:context/score"
+             tal:condition="nocall:score">
+            <img tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
+                                 height score/_height | nothing;
+                                 width score/_width | nothing;"
+                />
+        </div>
+    <span tal:content="string:${context/score/filename}">score filename</span>
+
 
     </tal:main-macro>
 </metal:main>
