@@ -29,6 +29,7 @@ setup(name='collective.abcmusic',
       install_requires=[
           'setuptools',
 	      'Plone',
+          'plone.api',
 	      'plone.app.dexterity',
           'plone.namedfile[blobs]',
           'plone.formwidget.namedfile',

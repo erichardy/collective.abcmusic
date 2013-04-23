@@ -32,4 +32,13 @@
     name="collective.abcmusic"
     directory="static" />
 
+  <!-- Control panel -->
+  <browser:page
+     name="abcmusic-settings"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     class=".controlpanel.ABCMusicSettingsFormSettingsControlPanel"
+     permission="cmf.ManagePortal"
+  />
+
+
 </configure>

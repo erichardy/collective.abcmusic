@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+    
+ <configlet
+    title="collective ABC Music"
+    action_id="abcmusic"
+    appId="collective.abcmusic"
+    category="Products"
+    condition_expr=""
+    url_expr="string:${portal_url}/@@abcmusic-settings"
+    visible="True" i18n:attributes="title">
+   <permission>cmf.ManagePortal</permission>
+  </configlet>
+ 
+</object>

@@ -5,7 +5,7 @@ from zope import schema
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
 from z3c.blobfile import file, image
-from plone.directives import form, dexterity
+from plone.directives import form
 from z3c.form import button, field
 # for events handlers
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent,IObjectModifiedEvent
@@ -13,7 +13,6 @@ from zope.lifecycleevent.interfaces import IObjectCreatedEvent,IObjectModifiedEv
 import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
-import datetime
 from os import unlink
 
 from collective.abcmusic import _
