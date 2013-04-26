@@ -3,7 +3,6 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.abcmusic">
 
 <head>
@@ -11,49 +10,6 @@
 </head>
 
 <body>
-<metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main">
-    <span tal:replace="nothing">
-        pour activer le viewlet, supprimer la ligne ci-dessus
-    	<div tal:replace="structure provider:collective.abcmusic" />
-    </span>
-    Le bouton ci-dessous est a utiliser pour envoyer au serveur les donnees contenues
-    dans le textarea #abc-text et pour rafraichir l'objet abctune avec ces nouvelles donnees
-    <button id="record" type="button" value="enregistrer">Cliquer ici</button>
-	
-	<table border="0">
-	<tbody>
-	<tr class="speed-slider">
-		<td width="60px" i18n:translate="speed : ">speed : </td>
-		<td>
-			<div id="slider" type="slider" />
-		</td>
-		<td width="40px">
-			<span id="slider-value"></span>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="3">
-			<div id="midi-edit">midi</div>
-		</td>
-	</tr>
-	<tr>
-	<td colspan = "2">
-    	<div id="abc-edit">score</div>
-    </td>
-    <td>
-    	<div id="abc-edit-slider-size"></div>
-    </td>
-    </tr>
-    <tr>
-    <td colspan="3">
-    	<textarea id="abc-text" cols="100" rows="18" tal:content="structure string:${here/abc}"/>
-    </td>
-    </tr>
-	</tbody>
-	</table>
-
-
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
     <object tal:define="midi nocall:context/midi"
             tal:condition="nocall:midi">
@@ -74,11 +30,6 @@
                 />
         </div>
     <span tal:content="string:${context/score/filename}">score filename</span>
-
-
-    </tal:main-macro>
-</metal:main>
-
 
 </body>
 </html>

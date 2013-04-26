@@ -25,6 +25,13 @@
       permission="zope2.View"
       />
   
+  <browser:page
+  	for="*"
+   	name="actualScoreAndMidi"
+   	template="actualScoreAndMidi.pt"
+    permission="zope2.View"
+  />
+  
   <!-- EXAMPLE:
       
   <include package="plone.app.contentmenu" />

@@ -4,7 +4,13 @@ jq(document).ready(function() {
  
 });
 */
+
 jq(document).ready(function() {
+	jq("#record").click(function(){
+		alert('apres submit...');
+		return false;
+	});
+
 	function getSpeed() {
 		abcInput = jq("#abc-text").val();
 		lines = abcInput.split('\n');
