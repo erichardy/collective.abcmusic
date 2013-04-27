@@ -42,6 +42,7 @@
     	<div id="abc-edit">score</div>
     </td>
     <td>
+    <span id="abcscale">abcscale</span>
     	<div id="abc-edit-slider-size"></div>
     </td>
     </tr>
@@ -57,18 +58,14 @@
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
     <object tal:define="midi nocall:context/midi"
             tal:condition="nocall:midi">
-            <param name="autostart" value="false">
-            <param name="src" tal:attributes="value string:${context/absolute_url}/@@download/midi/${midi/filename}">
-            <param name="autoplay" value="true">
-            <param name="controller" value="true">
-            <embed height="30" autostart=false src=""
+            <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
                    tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
                    type="audio/mid">
             </embed>
     </object>
     <div tal:define="score nocall:context/score"
              tal:condition="nocall:score">
-            <img tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
+            <img id="abctuneScore" tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
                                  height score/_height | nothing;
                                  width score/_width | nothing;"
                 />

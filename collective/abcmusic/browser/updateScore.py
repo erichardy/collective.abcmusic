@@ -9,9 +9,9 @@ logger = logging.getLogger('collective.abcmusic')
 
 class updateScore(BrowserView):
     def __call__(self , abctext , abctuneURL):
-        logger.info("dans __call_ de updateScore:" + abctext)
+        logger.info("dans __call_ de updateScore:")
         abctune = api.content.get(path=abctuneURL)
         abctune.abc = abctext
         _make_score(abctune)
         # import pdb;pdb.set_trace()
-        return True
+        return abctune.score.filename

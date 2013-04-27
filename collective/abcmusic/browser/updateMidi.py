@@ -9,9 +9,9 @@ logger = logging.getLogger('collective.abcmusic')
 
 class updateMidi(BrowserView):
     def __call__(self , abctext , abctuneURL):
-        logger.info("dans __call_ de updateMidi:" + abctext)
+        logger.info("dans __call_ de updateMidi:")
         abctune = api.content.get(path=abctuneURL)
         abctune.abc = abctext
         _make_midi(abctune)
         # import pdb;pdb.set_trace()
-        return True
+        return abctune.midi.filename

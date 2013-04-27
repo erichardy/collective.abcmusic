@@ -9,8 +9,12 @@ jq(document).ready(function() {
 	jq("#record").click(function(){
 		var pathname = window.location.pathname;
 		abctext = jq("#abc-text").val()
-		var aaa = jq.post("@@updateMidi" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){alert(data)});
-		var aaa = jq.post("@@updateScore" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){alert(data)});
+		var newMidi  = jq.post("@@updateMidi" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
+			jq('#abctuneMidi').attr('src', pathname+'/@@download/midi/' + data) ;
+			alert(pathname+'/@@download/midi/' + data) ;
+			});
+		var newScore = jq.post("@@updateScore" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){alert(data)});
+		// alert(window.location.href) ;
 		return false;
 	});
 
@@ -52,7 +56,7 @@ jq(document).ready(function() {
 		var input = jq("#abc-text").val();
 		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
 		updateSlider() ;
-		ABCJS.renderAbc('abc-edit', input, {}, {scale:scoreSize});
+		ABCJS.renderAbc('abc-edit', input, {}, {scale:scoreSize},{});
 		ABCJS.renderMidi('midi-edit',input, {});
 	};
 	function updateSpeedFromSlider() {
@@ -65,7 +69,8 @@ jq(document).ready(function() {
 	function resizeABCscore(){
 		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
 		var input = jq("#abc-text").val();
-		ABCJS.renderAbc('abc-edit', input , {}, {scale: scoreSize});
+		jq("#abcscale").text(scoreSize) ;
+		ABCJS.renderAbc('abc-edit', input , {}, {scale: scoreSize},{});
 	}
 	minSpeed = 20 ;
 	maxSpeed = 400 ;
@@ -89,14 +94,15 @@ jq(document).ready(function() {
 	jq("#slider-value").text(speed);
 	jq("#abc-edit-slider-size").slider ({
 		min: 0.1 ,
-		max: 1 ,
+		max: 3 ,
 		step: 0.1 ,
 		orientation: "vertical" ,
 		change: function(event,ui){if (event.originalEvent){resizeABCscore()} }
 	});
-	scoreSize = 0.8 ;
+	scoreSize = .8 ;
 	jq("#abc-edit-slider-size").slider("option" , "value" , scoreSize);
-	ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale:0.8});
+	jq("#abcscale").text(scoreSize) ;
+	ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale: scoreSize},{});
 	ABCJS.renderMidi('midi-edit',jq("#abc-text").text(), {}) ;
 	jq('#abc-text').keyup(updateABC);
 	

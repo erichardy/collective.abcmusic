@@ -34,7 +34,6 @@ setup(name='collective.abcmusic',
           'plone.namedfile[blobs]',
           'plone.formwidget.namedfile',
 	      'collective.autopermission',
-          'collective.flowplayer',
 	      'collective.js.abcjs',
           # -*- Extra requirements: -*-
       ],
