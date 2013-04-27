@@ -7,7 +7,10 @@ jq(document).ready(function() {
 
 jq(document).ready(function() {
 	jq("#record").click(function(){
-		alert('apres submit...');
+		var pathname = window.location.pathname;
+		abctext = jq("#abc-text").val()
+		var aaa = jq.post("@@updateMidi" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){alert(data)});
+		var aaa = jq.post("@@updateScore" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){alert(data)});
 		return false;
 	});
 

@@ -20,7 +20,7 @@
     Le bouton ci-dessous est a utiliser pour envoyer au serveur les donnees contenues
     dans le textarea #abc-text et pour rafraichir l'objet abctune avec ces nouvelles donnees
     <button id="record" type="button" value="enregistrer">Cliquer ici</button>
-	
+	<div id="ajax-retour">ajax_retour</div>
 	<table border="0">
 	<tbody>
 	<tr class="speed-slider">

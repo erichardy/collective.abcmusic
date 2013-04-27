@@ -31,6 +31,18 @@
    	template="actualScoreAndMidi.pt"
     permission="zope2.View"
   />
+  <browser:page
+    for="*"
+    name="updateMidi"
+    class=".updateMidi.updateMidi"
+    permission="zope2.View"
+  />
+  <browser:page
+    for="*"
+    name="updateScore"
+    class=".updateScore.updateScore"
+    permission="zope2.View"
+  />
   
   <!-- EXAMPLE:
       
