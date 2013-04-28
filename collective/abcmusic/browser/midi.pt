@@ -20,12 +20,9 @@
                    type="audio/mid">
             </embed>
     </object>
-    <p />
-    Le viewlet midi...!<br />
-    <span tal:content="context/Title">Title</span>
-    <p />
     <!-- 
-    <span tal:content="structure string:${here/midi}">midi</span>
+    to activate this viewlet, add the line below in a template :
+    <div tal:replace="structure provider:collective.abcmusic" />
     -->
     <hr />
 </html>

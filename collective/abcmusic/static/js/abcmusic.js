@@ -4,24 +4,34 @@ jq(document).ready(function() {
  
 });
 */
+jq(document).ready(function() {
+	jq( "#accordion" ).accordion();
+});
 
 jq(document).ready(function() {
-	jq("#tuneModified").submit(function(){
+	
+	jq(document).ajaxComplete(function() {
+		// alert ("ajax completed...") ;
+		location.reload() ;
+	});
+	jq("#toggleHeaders").click(function(){
+		jq("#portal-top").fadeToggle({duration: 400});
+		jq("#viewlet-above-content").fadeToggle({duration: 400});
+		jq("#edit-bar").fadeToggle({duration: 400});
+	});
+	// alert(document) ;
+	jq("#avertissementTuneModified").submit(function(){
 		var pathname = window.location.pathname;
 		abctext = jq("#abc-text").val()
-		var newMidi  = jq.post("@@updateMidi" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
-			jq('#abctuneMidi').attr('src', pathname+'/@@download/midi/' + data) ;
-			alert(pathname+'/@@download/midi/' + data) ;
+		var updatedTune  = jq.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
+			// jq('#abctuneMidi').attr('src', pathname+'/@@download/midi/' + data) ;
+			// alert(pathname+'/@@download/midi/' + data) ;
 			});
-		var newScore = jq.post("@@updateScore" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){alert(data)});
-		tuneModified = true ;
-		jq("#tuneModified").hide() ;
+		jq("#avertissementTuneModified").html(tuneNotModified);
 		// alert(window.location.href) ;
 		return false;
 	});
-	
-	var tuneModified = false ;
-	
+		
 	function getSpeed() {
 		abcInput = jq("#abc-text").val();
 		lines = abcInput.split('\n');
@@ -112,11 +122,9 @@ jq(document).ready(function() {
 	ABCJS.renderMidi('midi-edit',jq("#abc-text").text(), {}) ;
 	jq('#abc-text').keyup(updateABC);
 	tuneNotModified = jq("#tuneNotModified").html() ;
-	// alert(tuneNotModified) ;
 	jq("#tuneNotModified").hide() ;
 	tuneModified = jq("#tuneModified").html() ;
 	jq("#tuneModified").hide() ;
-	// alert(tuneModified)
 	jq("#avertissementTuneModified").html(tuneNotModified);
-	
+
 });

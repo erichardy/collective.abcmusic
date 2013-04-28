@@ -43,6 +43,12 @@
     class=".updateScore.updateScore"
     permission="zope2.View"
   />
+  <browser:page
+    for="*"
+    name="updateTune"
+    class=".updateTune.updateTune"
+    permission="zope2.View"
+  />
   
   <!-- EXAMPLE:
       

@@ -13,30 +13,23 @@
 <body>
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-    <span tal:replace="nothing">
-        pour activer le viewlet, supprimer la ligne ci-dessus
-    	<div tal:replace="structure provider:collective.abcmusic" />
-    </span>
+    <button id="toggleHeaders">&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;</button>
+    
+	<div id="accordion">
+	
+	<h3 i18n:translate="">inline editing</h3>
+	<div>
     <div id="avertissementTuneModified"></div>
     <div id="tuneNotModified">&nbsp;</div>
     <div id="tuneModified">
        <form  action="">
        <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
-       <input id="record" type="submit" value="record" />
+       <input id="saveModifications" type="submit" value="save" />
     </form>
     </div>
     <p />
 	<table border="0">
 	<tbody>
-	<tr class="speed-slider">
-		<td width="60px" i18n:translate="speed : ">speed : </td>
-		<td>
-			<div id="slider" type="slider" />
-		</td>
-		<td width="40px">
-			<span id="slider-value"></span>
-		</td>
-	</tr>
 	<tr>
 		<td colspan="3">
 			<div id="midi-edit">midi</div>
@@ -46,20 +39,31 @@
 	<td colspan = "2">
     	<div id="abc-edit">score</div>
     </td>
-    <td>
-    <span id="abcscale">abcscale</span>
-    	<div id="abc-edit-slider-size"></div>
-    </td>
+	    <td>
+	    <span id="abcscale">abcscale</span>
+	    	<div id="abc-edit-slider-size"></div>
+	    </td>
     </tr>
+    <tr class="speed-slider">
+		<td width="60px" i18n:translate="speed : ">speed : </td>
+		<td>
+			<div id="slider" type="slider" />
+		</td>
+		<td width="40px">
+			<span id="slider-value"></span>
+		</td>
+	</tr>
+    
     <tr>
-    <td colspan="3">
-    	<textarea id="abc-text" cols="100" rows="18" tal:content="structure string:${here/abc}"/>
-    </td>
+	    <td colspan="3">
+	    	<textarea id="abc-text" cols="100" rows="18" tal:content="structure string:${here/abc}"/>
+	    </td>
     </tr>
 	</tbody>
 	</table>
-
-
+</div>
+<h3 i18n:translate="">view the tune as it is stored in the database</h3>
+<div>
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
     <object tal:define="midi nocall:context/midi"
             tal:condition="nocall:midi">
@@ -75,9 +79,8 @@
                                  width score/_width | nothing;"
                 />
         </div>
-    <span tal:content="string:${context/score/filename}">score filename</span>
-
-
+</div>
+</div>
     </tal:main-macro>
 </metal:main>
 
