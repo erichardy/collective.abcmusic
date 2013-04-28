@@ -6,7 +6,7 @@ jq(document).ready(function() {
 */
 
 jq(document).ready(function() {
-	jq("#record").click(function(){
+	jq("#tuneModified").submit(function(){
 		var pathname = window.location.pathname;
 		abctext = jq("#abc-text").val()
 		var newMidi  = jq.post("@@updateMidi" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
@@ -14,10 +14,14 @@ jq(document).ready(function() {
 			alert(pathname+'/@@download/midi/' + data) ;
 			});
 		var newScore = jq.post("@@updateScore" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){alert(data)});
+		tuneModified = true ;
+		jq("#tuneModified").hide() ;
 		// alert(window.location.href) ;
 		return false;
 	});
-
+	
+	var tuneModified = false ;
+	
 	function getSpeed() {
 		abcInput = jq("#abc-text").val();
 		lines = abcInput.split('\n');
@@ -58,6 +62,7 @@ jq(document).ready(function() {
 		updateSlider() ;
 		ABCJS.renderAbc('abc-edit', input, {}, {scale:scoreSize},{});
 		ABCJS.renderMidi('midi-edit',input, {});
+		jq("#avertissementTuneModified").html(tuneModified);
 	};
 	function updateSpeedFromSlider() {
 		var speed = jq("#slider").slider("option", "value") ;
@@ -71,6 +76,7 @@ jq(document).ready(function() {
 		var input = jq("#abc-text").val();
 		jq("#abcscale").text(scoreSize) ;
 		ABCJS.renderAbc('abc-edit', input , {}, {scale: scoreSize},{});
+		// alert ('scoresize:::' + scoreSize) ;
 	}
 	minSpeed = 20 ;
 	maxSpeed = 400 ;
@@ -105,5 +111,12 @@ jq(document).ready(function() {
 	ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale: scoreSize},{});
 	ABCJS.renderMidi('midi-edit',jq("#abc-text").text(), {}) ;
 	jq('#abc-text').keyup(updateABC);
+	tuneNotModified = jq("#tuneNotModified").html() ;
+	// alert(tuneNotModified) ;
+	jq("#tuneNotModified").hide() ;
+	tuneModified = jq("#tuneModified").html() ;
+	jq("#tuneModified").hide() ;
+	// alert(tuneModified)
+	jq("#avertissementTuneModified").html(tuneNotModified);
 	
 });

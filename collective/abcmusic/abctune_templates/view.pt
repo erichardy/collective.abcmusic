@@ -17,10 +17,15 @@
         pour activer le viewlet, supprimer la ligne ci-dessus
     	<div tal:replace="structure provider:collective.abcmusic" />
     </span>
-    Le bouton ci-dessous est a utiliser pour envoyer au serveur les donnees contenues
-    dans le textarea #abc-text et pour rafraichir l'objet abctune avec ces nouvelles donnees
-    <button id="record" type="button" value="enregistrer">Cliquer ici</button>
-	<div id="ajax-retour">ajax_retour</div>
+    <div id="avertissementTuneModified"></div>
+    <div id="tuneNotModified">&nbsp;</div>
+    <div id="tuneModified">
+       <form  action="">
+       <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
+       <input id="record" type="submit" value="record" />
+    </form>
+    </div>
+    <p />
 	<table border="0">
 	<tbody>
 	<tr class="speed-slider">
