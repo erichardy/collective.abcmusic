@@ -35,9 +35,16 @@ class IABCTune(form.Schema):
     form.omitted('score')
     score = NamedBlobImage (
             title = _(u"Score"),
-            description = _(u'The score of the tune'),
+            description = _(u'The score of the tune as png image'),
             required = False,
         )
+    form.omitted('pdfScore')
+    pdfScore = NamedBlobImage (
+            title = _(u"PDF Score"),
+            description = _(u'The score of the tune as PDF'),
+            required = False,
+        )
+
     form.omitted('midi')
     midi = NamedBlobFile (
             title = _(u"Midi"),
@@ -150,11 +157,46 @@ def _make_score(context):
     unlink(pngtemp)
     return output
 
+def _make_PDFscore(context):
+    abc = context.abc
+    abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
+    fabctemp = open(abctemp , 'w')
+    for l in abc:
+        fabctemp.write(l)
+    fabctemp.write('\n\n')
+    fabctemp.close()
+    pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
+    p = sp.Popen(["ps2pdf", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p.wait()
+    # convert ${PSFILE} -filter Catrom  -resize 600 $PNG"
+    pdftemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.pdf', delete = False).name
+    
+    p = sp.Popen(["ps2pdf", pstemp, pdftemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p.wait()
+    iopdf = StringIO()
+    fpdftemp = open(pdftemp ,'r')
+    buff_score = fpdftemp.read()
+    iopdf.write(buff_score)
+
+    blobPDFScore = file.File()
+    blobPDFScore.filename = u'PDFScoreFichier.png'
+    blobPDFScore.data = iopdf.getvalue()
+    blobPDFScore.contentType = u'application/pdf'
+    context.pdfscore = blobPDFScore
+    output, errors = p.communicate()
+    logger.info('PDF' + abctemp)
+    # unlink(abctemp)
+    # unlink(pstemp)
+    # unlink(pdftemp)
+    return output
+
+
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
 def newAbcTune(context , event):
     logger.info("abc CREE !")
     _make_midi(context)
     _make_score(context)
+    _make_PDFscore(context)
     # import pdb;pdb.set_trace()
 
 @grok.subscribe(IABCTune, IObjectModifiedEvent)
@@ -163,6 +205,7 @@ def updateAbcTune(context , event):
     # import pdb;pdb.set_trace()
     _make_midi(context)
     _make_score(context)
+    _make_PDFscore(context)
     
 
     

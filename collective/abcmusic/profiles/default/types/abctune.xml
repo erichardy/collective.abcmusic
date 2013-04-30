@@ -20,9 +20,6 @@
 
  <property name="behaviors">
   <element value="plone.app.content.interfaces.INameFromTitle"/>
-  <!-- cf note ci-dessous
-  <element value="collective.flowplayer.behaviors.IFlowplayerFile"/>
-  -->
  </property>
 
 
