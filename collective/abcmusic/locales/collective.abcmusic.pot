@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-04-21 15:52+0000\n"
+"POT-Creation-Date: 2013-04-30 20:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,6 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.abcmusic\n"
 
-#: ./profiles/default/types/xtune.xml
-msgid "A X tune in abc format"
-msgstr ""
-
 #: ./profiles/default/types/abctuneset.xml
 msgid "A set fo ABC Tunes"
 msgstr ""
@@ -29,8 +25,16 @@ msgstr ""
 msgid "A tune in abc format"
 msgstr ""
 
+#: ./controlpanel.py:15
+msgid "ABC Music Settings"
+msgstr ""
+
 #: ./profiles/default/types/abctuneset.xml
 msgid "ABC Tune Set"
+msgstr ""
+
+#: ./controlpanel.py:16
+msgid "ABCMusicSettingsDescription"
 msgstr ""
 
 #: ./addtune.py:29
@@ -57,22 +61,23 @@ msgstr ""
 msgid "Jig"
 msgstr ""
 
-#: ./abctune.py:44
-#: ./xtune.py:38
+#: ./abctune.py:50
 msgid "Midi"
 msgstr ""
 
-#: ./abctune.py:45
-#: ./xtune.py:39
+#: ./abctune.py:51
 msgid "Midi sound of the tune"
+msgstr ""
+
+#: ./abctune.py:43
+msgid "PDF Score"
 msgstr ""
 
 #: ./addtune.py:15
 msgid "Reel"
 msgstr ""
 
-#: ./abctune.py:38
-#: ./xtune.py:32
+#: ./abctune.py:37
 msgid "Score"
 msgstr ""
 
@@ -80,34 +85,35 @@ msgstr ""
 msgid "Thank you for your order. We will contact you shortly"
 msgstr ""
 
-#: ./abctune.py:51
+#: ./abctune.py:57
 msgid "The mp3 sound of the tune"
 msgstr ""
 
-#: ./abctune.py:39
-#: ./xtune.py:33
-msgid "The score of the tune"
+#: ./abctune.py:44
+msgid "The score of the tune as PDF"
 msgstr ""
 
-#: ./xtune.py:45
-msgid "The sound of the tune"
+#: ./abctune.py:38
+msgid "The score of the tune as png image"
 msgstr ""
 
-#: ./abctune.py:34
+#: ./abctune.py:33
 msgid "The tunb in abc format"
+msgstr ""
+
+#: ./abctune_templates/view.pt:26
+msgid "The tune is modified, you should save it if you want to keep your work :"
 msgstr ""
 
 #: ./addtune.py:14
 msgid "Tune Type"
 msgstr ""
 
-#: ./abctune.py:33
-#: ./xtune.py:29
+#: ./abctune.py:32
 msgid "Tune abc"
 msgstr ""
 
-#: ./abctune.py:25
-#: ./xtune.py:21
+#: ./abctune.py:24
 msgid "Tune name"
 msgstr ""
 
@@ -119,8 +125,7 @@ msgstr ""
 msgid "Tune set summary"
 msgstr ""
 
-#: ./abctune.py:28
-#: ./xtune.py:24
+#: ./abctune.py:27
 msgid "Tune summary"
 msgstr ""
 
@@ -128,21 +133,32 @@ msgstr ""
 msgid "Your full name"
 msgstr ""
 
+#: ./controlpanel.py:10
+msgid "abcmusic templates description"
+msgstr ""
+
 #: ./profiles/default/types/abctune.xml
 msgid "abctune"
 msgstr ""
 
-#: ./abctune.py:50
-#: ./xtune.py:44
+#: ./abctune_templates/view.pt:20
+msgid "inline editing"
+msgstr ""
+
+#: ./abctune.py:56
 msgid "sound"
 msgstr ""
 
 #. Default: "speed :"
-#: ./abctune_templates/view.pt:58
+#: ./abctune_templates/view.pt:48
 msgid "speed : "
 msgstr ""
 
-#: ./profiles/default/types/xtune.xml
-msgid "xtune"
+#: ./controlpanel.py:9
+msgid "templates"
+msgstr ""
+
+#: ./abctune_templates/view.pt:65
+msgid "view the tune as it is stored in the database"
 msgstr ""
 
