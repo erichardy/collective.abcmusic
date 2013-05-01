@@ -15,7 +15,7 @@ One of the main web site related to abc is : http://abcnotation.com/
 
 At the starting point of this project (Dec. 2012), two ways are explored :
 - interface between dexterity content types and command line tools : abcm2ps (or abc2ps) and abcMIDI
-- use of abcjs javascripts
+- use of abcjs javascripts. See module collective.js.abcjs on github.
 
 See web sites for more informations :
 * abcm2ps : http://moinejf.free.fr/
@@ -31,4 +31,14 @@ http://stackoverflow.com/questions/13193278/understand-python-threading-bug
 code to be added :
     # import threading
     # threading._DummyThread._Thread__stop = lambda x: 42
+
+Install
+=======
+This module is not yet on pypi, so use mr.developer to checkout it from github.
+
+This module is tested for plone 4.2.x. So, be aware of versions to specify in buildout.cfg :
+collective.js.abcjs==1.4.6
+collective.js.jqueryui==1.8.16.9
+
+Not yet tested on plone 4.3
 
