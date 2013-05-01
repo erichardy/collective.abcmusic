@@ -40,7 +40,7 @@
     	<div id="abc-edit">score</div>
     </td>
 	    <td>
-	    <span id="abcscale">abcscale</span>
+	        <span id="abcscale">abcscale</span>
 	    	<div id="abc-edit-slider-size"></div>
 	    </td>
     </tr>

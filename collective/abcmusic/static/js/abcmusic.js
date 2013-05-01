@@ -70,7 +70,7 @@ jq(document).ready(function() {
 		var input = jq("#abc-text").val();
 		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
 		updateSlider() ;
-		ABCJS.renderAbc('abc-edit', input, {}, {scale:scoreSize},{});
+		ABCJS.renderAbc('abc-edit', input, {print: true}, {scale:scoreSize , editable: true},{});
 		ABCJS.renderMidi('midi-edit',input, {});
 		jq("#avertissementTuneModified").html(tuneModified);
 	};
@@ -110,7 +110,7 @@ jq(document).ready(function() {
 	jq("#slider-value").text(speed);
 	jq("#abc-edit-slider-size").slider ({
 		min: 0.1 ,
-		max: 3 ,
+		max: 1.3 ,
 		step: 0.1 ,
 		orientation: "vertical" ,
 		change: function(event,ui){if (event.originalEvent){resizeABCscore()} }
@@ -126,5 +126,4 @@ jq(document).ready(function() {
 	tuneModified = jq("#tuneModified").html() ;
 	jq("#tuneModified").hide() ;
 	jq("#avertissementTuneModified").html(tuneNotModified);
-
 });
