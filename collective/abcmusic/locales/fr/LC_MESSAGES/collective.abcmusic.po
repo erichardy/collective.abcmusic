@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.abcmusic\n"
-"POT-Creation-Date: 2013-04-30 20:13+0000\n"
+"POT-Creation-Date: 2013-05-01 21:07+0000\n"
 "PO-Revision-Date: 2010-11-13 11:07+0100\n"
 "Last-Translator: YOURNAME <name@email.com>\n"
 "Language-Team: French <plone-fr@lists.plone.org>\n"
@@ -17,9 +17,13 @@ msgstr ""
 "Domain: collective.abcmusic\n"
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
+#: ./abctune_templates/view.pt:16
+msgid "&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;"
+msgstr "&nbsp;&nbsp;&nbsp;Cacher/Montrer l'entête des pages&nbsp;&nbsp;&nbsp;"
+
 #: ./profiles/default/types/abctuneset.xml
 msgid "A set fo ABC Tunes"
-msgstr ""
+msgstr "Un ensemble de morceaux au format ABC"
 
 #: ./profiles/default/types/abctune.xml
 msgid "A tune in abc format"
@@ -27,11 +31,11 @@ msgstr "Un morceau de musique au format ABC"
 
 #: ./controlpanel.py:15
 msgid "ABC Music Settings"
-msgstr ""
+msgstr "Configuration de ABC Music (collective.abcmusic)"
 
 #: ./profiles/default/types/abctuneset.xml
 msgid "ABC Tune Set"
-msgstr ""
+msgstr "Répertoire de morceaux de musique"
 
 #: ./controlpanel.py:16
 msgid "ABCMusicSettingsDescription"
@@ -39,15 +43,15 @@ msgstr ""
 
 #: ./addtune.py:29
 msgid "Add a new tune"
-msgstr ""
+msgstr "Ajouter un morceau"
 
 #: ./addtune.py:56
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: ./addtune.py:39
 msgid "Create"
-msgstr ""
+msgstr "Ajouter"
 
 #: ./addtune.py:30
 msgid "Form used to add a new tune"
@@ -55,31 +59,31 @@ msgstr ""
 
 #: ./addtune.py:15
 msgid "Hornpipe"
-msgstr ""
+msgstr "Hornpipe"
 
 #: ./addtune.py:15
 msgid "Jig"
-msgstr ""
+msgstr "Jig"
 
 #: ./abctune.py:50
 msgid "Midi"
-msgstr ""
+msgstr "Midi"
 
 #: ./abctune.py:51
 msgid "Midi sound of the tune"
-msgstr ""
+msgstr "Ecouter le morceau en MIDI"
 
 #: ./abctune.py:43
 msgid "PDF Score"
-msgstr ""
+msgstr "La partition en PDF"
 
 #: ./addtune.py:15
 msgid "Reel"
-msgstr ""
+msgstr "Reel"
 
 #: ./abctune.py:37
 msgid "Score"
-msgstr ""
+msgstr "La Partition"
 
 #: ./addtune.py:49
 msgid "Thank you for your order. We will contact you shortly"
@@ -87,15 +91,15 @@ msgstr ""
 
 #: ./abctune.py:57
 msgid "The mp3 sound of the tune"
-msgstr ""
+msgstr "Le morceau en MP3"
 
 #: ./abctune.py:44
 msgid "The score of the tune as PDF"
-msgstr ""
+msgstr "La Partition en PDF"
 
 #: ./abctune.py:38
 msgid "The score of the tune as png image"
-msgstr ""
+msgstr "La partition en image PNG"
 
 #: ./abctune.py:33
 msgid "The tunb in abc format"
@@ -103,7 +107,7 @@ msgstr ""
 
 #: ./abctune_templates/view.pt:26
 msgid "The tune is modified, you should save it if you want to keep your work :"
-msgstr ""
+msgstr "Le morceau a été modifié. IL faut l'enregistrer pour conserver votre travail..."
 
 #: ./addtune.py:14
 msgid "Tune Type"
@@ -139,11 +143,11 @@ msgstr ""
 
 #: ./profiles/default/types/abctune.xml
 msgid "abctune"
-msgstr ""
+msgstr "Un morceau de musique en ABC"
 
 #: ./abctune_templates/view.pt:20
 msgid "inline editing"
-msgstr ""
+msgstr "Edition du morceau en direct"
 
 #: ./abctune.py:56
 msgid "sound"
@@ -156,9 +160,9 @@ msgstr "Vitesse : "
 
 #: ./controlpanel.py:9
 msgid "templates"
-msgstr ""
+msgstr "Modèles"
 
 #: ./abctune_templates/view.pt:65
 msgid "view the tune as it is stored in the database"
-msgstr ""
+msgstr "Voir le morceau tel qu'il est enregistré"
 

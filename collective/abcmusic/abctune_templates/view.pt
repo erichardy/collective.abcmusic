@@ -7,20 +7,24 @@
       i18n:domain="collective.abcmusic">
 
 <head>
+<metal:js fill-slot="javascript_head_slot">
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.js.abcjs/abcjs_plugin_1.4.user.js"></script>
 
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.abcmusic/js/abcmusic.js"></script>
+</metal:js>
 </head>
 
 <body>
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-    <button id="toggleHeaders">&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;</button>
-    
+    <button id="toggleHeaders" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;</button>
 	<div id="accordion">
 	
 	<h3 i18n:translate="">inline editing</h3>
 	<div>
     <div id="avertissementTuneModified"></div>
     <div id="tuneNotModified">&nbsp;</div>
+    
     <div id="tuneModified">
        <form  action="">
        <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
