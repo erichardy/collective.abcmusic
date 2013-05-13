@@ -34,20 +34,6 @@
     <p />
 	<table border="0">
 	<tbody>
-	<tr>
-		<td colspan="3">
-			<div id="midi-edit">midi</div>
-		</td>
-	</tr>
-	<tr>
-	<td colspan = "2">
-    	<div id="abc-edit">score</div>
-    </td>
-	    <td>
-	        <span id="abcscale">abcscale</span>
-	    	<div id="abc-edit-slider-size"></div>
-	    </td>
-    </tr>
     <tr class="speed-slider">
 		<td width="60px" i18n:translate="speed : ">speed : </td>
 		<td>
@@ -63,6 +49,21 @@
 	    	<textarea id="abc-text" cols="100" rows="18" tal:content="structure string:${here/abc}"/>
 	    </td>
     </tr>
+	<tr>
+		<td colspan="3">
+			<div id="midi-edit">midi</div>
+		</td>
+	</tr>
+	<tr>
+	<td colspan = "2">
+    	<div id="abc-edit">score</div>
+    </td>
+	    <td>
+	        <span id="abcscale">abcscale</span>
+	    	<div id="abc-edit-slider-size"></div>
+	    </td>
+    </tr>
+
 	</tbody>
 	</table>
 </div>
@@ -85,6 +86,14 @@
         </div>
 </div>
 </div>
+<script type="text/javascript"> 
+jq("#toggleHeaders").click(function(){
+	jq("#portal-top").toggle("fast");
+	jq("#viewlet-above-content").toggle("fast");
+	jq("#edit-bar").toggle("fast");
+});
+</script>
+
     </tal:main-macro>
 </metal:main>
 

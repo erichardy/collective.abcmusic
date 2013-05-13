@@ -14,11 +14,13 @@ jq(document).ready(function() {
 		// alert ("ajax completed...") ;
 		location.reload() ;
 	});
+	/*
 	jq("#toggleHeaders").click(function(){
-		jq("#portal-top").fadeToggle({duration: 400});
+		jq("#portal-header").fadeToggle({duration: 400});
 		jq("#viewlet-above-content").fadeToggle({duration: 400});
 		jq("#edit-bar").fadeToggle({duration: 400});
 	});
+	*/
 	// alert(document) ;
 	jq("#avertissementTuneModified").submit(function(){
 		var pathname = window.location.pathname;
@@ -69,10 +71,14 @@ jq(document).ready(function() {
 	function updateABC() {
 		var input = jq("#abc-text").val();
 		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
+		// return ;
 		updateSlider() ;
 		ABCJS.renderAbc('abc-edit', input, {print: true}, {scale:scoreSize , editable: true},{});
 		ABCJS.renderMidi('midi-edit',input, {});
-		jq("#avertissementTuneModified").html(tuneModified);
+		if ( ! isModified ) {
+			jq("#avertissementTuneModified").html(tuneModified);
+			isMidified = true ;
+		}
 	};
 	function updateSpeedFromSlider() {
 		var speed = jq("#slider").slider("option", "value") ;
@@ -125,5 +131,6 @@ jq(document).ready(function() {
 	jq("#tuneNotModified").hide() ;
 	tuneModified = jq("#tuneModified").html() ;
 	jq("#tuneModified").hide() ;
+	isModified = false ;
 	jq("#avertissementTuneModified").html(tuneNotModified);
 });
