@@ -19,7 +19,7 @@ msgstr ""
 
 #: ./abctune_templates/view.pt:16
 msgid "&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;"
-msgstr "&nbsp;&nbsp;&nbsp;Cacher/Montrer l'entête des pages&nbsp;&nbsp;&nbsp;"
+msgstr "&nbsp;&nbsp;&nbsp;Cacher/Montrer l'entête du site&nbsp;&nbsp;&nbsp;"
 
 #: ./profiles/default/types/abctuneset.xml
 msgid "A set fo ABC Tunes"
@@ -39,7 +39,7 @@ msgstr "Répertoire de morceaux de musique"
 
 #: ./controlpanel.py:16
 msgid "ABCMusicSettingsDescription"
-msgstr ""
+msgstr "Panneau de configuration de collective.abcmusic"
 
 #: ./addtune.py:29
 msgid "Add a new tune"
@@ -55,7 +55,7 @@ msgstr "Ajouter"
 
 #: ./addtune.py:30
 msgid "Form used to add a new tune"
-msgstr ""
+msgstr "Formulaire d'ajout d'un morceau"
 
 #: ./addtune.py:15
 msgid "Hornpipe"
@@ -107,31 +107,31 @@ msgstr ""
 
 #: ./abctune_templates/view.pt:26
 msgid "The tune is modified, you should save it if you want to keep your work :"
-msgstr "Le morceau a été modifié. IL faut l'enregistrer pour conserver votre travail..."
+msgstr "Le morceau a été modifié. Il faut l'enregistrer pour conserver votre travail..."
 
 #: ./addtune.py:14
 msgid "Tune Type"
-msgstr ""
+msgstr "Type de morceau"
 
 #: ./abctune.py:32
 msgid "Tune abc"
-msgstr ""
+msgstr "La partie abc"
 
 #: ./abctune.py:24
 msgid "Tune name"
-msgstr ""
+msgstr "Le nom du morceau"
 
 #: ./abctuneset.py:27
 msgid "Tune set name"
-msgstr ""
+msgstr "Nom de ce répertoire"
 
 #: ./abctuneset.py:30
 msgid "Tune set summary"
-msgstr ""
+msgstr "Quel est ce répertoire"
 
 #: ./abctune.py:27
 msgid "Tune summary"
-msgstr ""
+msgstr "Quel est ce morceau"
 
 #: ./addtune.py:18
 msgid "Your full name"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: ./controlpanel.py:10
 msgid "abcmusic templates description"
-msgstr ""
+msgstr "Les modèles disponibles"
 
 #: ./profiles/default/types/abctune.xml
 msgid "abctune"
