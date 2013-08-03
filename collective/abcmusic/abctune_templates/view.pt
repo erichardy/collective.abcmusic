@@ -9,8 +9,9 @@
 <head>
 <metal:js fill-slot="javascript_head_slot">
 	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.js.abcjs/abcjs_plugin_1.4.user.js"></script>
-
-	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.abcmusic/js/abcmusic.js"></script>
+<!--
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.abcmusic/js/abcmusic-tuneView.js"></script>
+-->
 </metal:js>
 </head>
 
@@ -18,19 +19,27 @@
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
     <button id="toggleHeaders" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;</button>
+    &nbsp;&nbsp;&nbsp;
+    <button id="toggleABCTextarea" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show abcTextarea&nbsp;&nbsp;&nbsp;</button>
 	<div id="accordion">
 	
 	<h3 i18n:translate="">inline editing</h3>
 	<div>
     <div id="avertissementTuneModified"></div>
+    <div id="XavertissementTuneModified"></div>
     <div id="tuneNotModified">&nbsp;</div>
     
     <div id="tuneModified">
        <form  action="">
        <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
-       <input id="saveModifications" type="submit" value="save" />
+       <input id="saveModifications" type="submit" value="save" i18n:domain="plone" i18n:attributes="value label_save;"/>
     </form>
     </div>
+    <div id="XtuneModified">
+       <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
+       <button id="saveModifications" i18n:translate="">Save</button>
+    </div>
+
     <p />
 	<table border="0">
 	<tbody>
@@ -77,6 +86,12 @@
                    type="audio/mid">
             </embed>
     </object>
+
+    <div tal:define="pdfscore nocall:context/pdfscore"
+             tal:condition="nocall:pdfscore">
+            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;">PDF</a>
+        </div>
+
     <div tal:define="score nocall:context/score"
              tal:condition="nocall:score">
             <img id="abctuneScore" tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
@@ -92,6 +107,10 @@ jq("#toggleHeaders").click(function(){
 	jq("#viewlet-above-content").toggle("fast");
 	jq("#edit-bar").toggle("fast");
 });
+jq("#toggleABCTextarea").click(function(){
+	jq("#abc-text").toggle("fast");
+});
+
 </script>
 
     </tal:main-macro>

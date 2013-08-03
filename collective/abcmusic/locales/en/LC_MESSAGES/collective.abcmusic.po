@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.abcmusic\n"
-"POT-Creation-Date: 2013-05-01 21:07+0000\n"
+"POT-Creation-Date: 2013-08-03 20:06+0000\n"
 "PO-Revision-Date: 2008-02-04 18:00+0000\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -15,7 +15,11 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.abcmusic\n"
 
-#: ./abctune_templates/view.pt:16
+#: ./abctune_templates/view.pt:23
+msgid "&nbsp;&nbsp;&nbsp;hide/show abcTextarea&nbsp;&nbsp;&nbsp;"
+msgstr ""
+
+#: ./abctune_templates/view.pt:21
 msgid "&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;"
 msgstr ""
 
@@ -103,7 +107,7 @@ msgstr ""
 msgid "The tunb in abc format"
 msgstr ""
 
-#: ./abctune_templates/view.pt:26
+#: ./abctune_templates/view.pt:33
 msgid "The tune is modified, you should save it if you want to keep your work :"
 msgstr ""
 
@@ -143,7 +147,7 @@ msgstr ""
 msgid "abctune"
 msgstr ""
 
-#: ./abctune_templates/view.pt:20
+#: ./abctune_templates/view.pt:26
 msgid "inline editing"
 msgstr ""
 
@@ -152,7 +156,7 @@ msgid "sound"
 msgstr ""
 
 #. Default: "speed :"
-#: ./abctune_templates/view.pt:48
+#: ./abctune_templates/view.pt:41
 msgid "speed : "
 msgstr ""
 
@@ -160,7 +164,7 @@ msgstr ""
 msgid "templates"
 msgstr ""
 
-#: ./abctune_templates/view.pt:65
+#: ./abctune_templates/view.pt:73
 msgid "view the tune as it is stored in the database"
 msgstr ""
 

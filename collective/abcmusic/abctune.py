@@ -2,6 +2,8 @@ import logging
 from five import grok
 from plone.namedfile.interfaces import HAVE_BLOBS
 from zope import schema
+from zope.component import getUtility
+from plone.i18n.normalizer.interfaces import INormalizer
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
 from z3c.blobfile import file, image
@@ -30,7 +32,7 @@ class IABCTune(form.Schema):
     form.primary('abc')
     abc = schema.Text(
             title = _(u"Tune abc"),
-            description = _(u'The tunb in abc format'),
+            description = _(u'The tune in abc format'),
         )
     form.omitted('score')
     score = NamedBlobImage (
@@ -38,8 +40,8 @@ class IABCTune(form.Schema):
             description = _(u'The score of the tune as png image'),
             required = False,
         )
-    form.omitted('pdfScore')
-    pdfScore = NamedBlobImage (
+    form.omitted('pdfscore')
+    pdfscore = NamedBlobFile (
             title = _(u"PDF Score"),
             description = _(u'The score of the tune as PDF'),
             required = False,
@@ -126,7 +128,11 @@ def _make_midi(context):
     return output
         
 def _make_score(context):
+    # make score as png AND PDF
     abc = context.abc
+    title = context.title
+    normalizer = getUtility(INormalizer)
+    normalizedTitle = normalizer.normalize(title, locale = 'fr')
     abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
     fabctemp = open(abctemp , 'w')
     for l in abc:
@@ -146,15 +152,36 @@ def _make_score(context):
     iopng.write(buff_score)
 
     blobScore = image.Image()
-    blobScore.filename = u'ScoreFichier.png'
+    # blobScore.filename = u'ScoreFichier.png'
+    blobScore.filename = normalizedTitle + '.png'
     blobScore.data = iopng.getvalue()
     blobScore.contentType = u'image/png'
     context.score = blobScore
     output, errors = p.communicate()
+    
     logger.info(abctemp)
+    
+    pdftemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.pdf', delete = False).name
+    pdf_create = sp.Popen(["ps2pdf", pstemp, pdftemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    pdf_create.wait()
+    iopdf = StringIO()
+    fpdftemp = open(pdftemp ,'r')
+    buff_pdfscore = fpdftemp.read()
+    iopdf.write(buff_pdfscore)
+    blobPDF = file.File()
+    # blobPDF.filename = u'PDF_File.pdf'
+    blobPDF.filename = normalizedTitle + '.pdf'
+    blobPDF.data = iopdf.getvalue()
+    blobPDF.contentType = u'application/pdf'
+    context.pdfscore = blobPDF
+    logger.info(pdftemp)
+    
+    output, errors = pdf_create.communicate()
+    
     unlink(abctemp)
     unlink(pstemp)
     unlink(pngtemp)
+    unlink(pdftemp)
     return output
 
 def _make_PDFscore(context):
@@ -179,15 +206,15 @@ def _make_PDFscore(context):
     iopdf.write(buff_score)
 
     blobPDFScore = file.File()
-    blobPDFScore.filename = u'PDFScoreFichier.png'
+    blobPDFScore.filename = u'PDFScoreFichier.pdf'
     blobPDFScore.data = iopdf.getvalue()
     blobPDFScore.contentType = u'application/pdf'
     context.pdfscore = blobPDFScore
     output, errors = p.communicate()
-    logger.info('PDF' + abctemp)
-    # unlink(abctemp)
-    # unlink(pstemp)
-    # unlink(pdftemp)
+    logger.info('PDF: ' + abctemp)
+    unlink(abctemp)
+    unlink(pstemp)
+    unlink(pdftemp)
     return output
 
 
@@ -196,7 +223,7 @@ def newAbcTune(context , event):
     logger.info("abc CREE !")
     _make_midi(context)
     _make_score(context)
-    _make_PDFscore(context)
+    # _make_PDFscore(context)
     # import pdb;pdb.set_trace()
 
 @grok.subscribe(IABCTune, IObjectModifiedEvent)
@@ -205,7 +232,8 @@ def updateAbcTune(context , event):
     # import pdb;pdb.set_trace()
     _make_midi(context)
     _make_score(context)
-    _make_PDFscore(context)
+    # _make_PDFscore(context)
+    
     
 
     

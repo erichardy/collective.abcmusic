@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.abcmusic\n"
-"POT-Creation-Date: 2013-05-01 21:07+0000\n"
+"POT-Creation-Date: 2013-08-03 20:06+0000\n"
 "PO-Revision-Date: 2010-11-13 11:07+0100\n"
 "Last-Translator: YOURNAME <name@email.com>\n"
 "Language-Team: French <plone-fr@lists.plone.org>\n"
@@ -17,7 +17,11 @@ msgstr ""
 "Domain: collective.abcmusic\n"
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
-#: ./abctune_templates/view.pt:16
+#: ./abctune_templates/view.pt:23
+msgid "&nbsp;&nbsp;&nbsp;hide/show abcTextarea&nbsp;&nbsp;&nbsp;"
+msgstr "&nbsp;&nbsp;&nbsp;Cacher/Montrer le texte ABC&nbsp;&nbsp;&nbsp;"
+
+#: ./abctune_templates/view.pt:21
 msgid "&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;"
 msgstr "&nbsp;&nbsp;&nbsp;Cacher/Montrer l'entête du site&nbsp;&nbsp;&nbsp;"
 
@@ -105,7 +109,7 @@ msgstr "La partition en image PNG"
 msgid "The tunb in abc format"
 msgstr ""
 
-#: ./abctune_templates/view.pt:26
+#: ./abctune_templates/view.pt:33
 msgid "The tune is modified, you should save it if you want to keep your work :"
 msgstr "Le morceau a été modifié. Il faut l'enregistrer pour conserver votre travail..."
 
@@ -145,7 +149,7 @@ msgstr "Les modèles disponibles"
 msgid "abctune"
 msgstr "Un morceau de musique en ABC"
 
-#: ./abctune_templates/view.pt:20
+#: ./abctune_templates/view.pt:26
 msgid "inline editing"
 msgstr "Edition du morceau en direct"
 
@@ -154,7 +158,7 @@ msgid "sound"
 msgstr ""
 
 #. Default: "speed :"
-#: ./abctune_templates/view.pt:48
+#: ./abctune_templates/view.pt:41
 msgid "speed : "
 msgstr "Vitesse : "
 
@@ -162,7 +166,7 @@ msgstr "Vitesse : "
 msgid "templates"
 msgstr "Modèles"
 
-#: ./abctune_templates/view.pt:65
+#: ./abctune_templates/view.pt:73
 msgid "view the tune as it is stored in the database"
 msgstr "Voir le morceau tel qu'il est enregistré"
 

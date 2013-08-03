@@ -4,6 +4,7 @@ from plone import api
 
 from collective.abcmusic.abctune import _make_midi
 from collective.abcmusic.abctune import _make_score
+from collective.abcmusic.abctune import _make_PDFscore
 
 from collective.abcmusic import _
 
@@ -16,5 +17,6 @@ class updateTune(BrowserView):
         abctune.abc = abctext
         _make_midi(abctune)
         _make_score(abctune)
+        # _make_PDFscore(abctune)
         # import pdb;pdb.set_trace()
         return abctune.midi.filename
