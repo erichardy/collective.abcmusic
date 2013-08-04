@@ -22,7 +22,13 @@ jq(document).ready(function() {
 		jq("#avertissementTuneModified").html(tuneNotModified);
 		return false;
 	});
-		
+	// pour tester comment stocker l'etat de la fenetre en cours en vue de la remettre
+	// dans le meme etat a l'appel suivant.
+	// Pour cela, il faudra utiliser les fonctionnalites HTML5 : localStorage
+	// cf : http://www.w3schools.com/html/html5_webstorage.asp
+	jq("#slider-value").mouseenter(function(){
+		alert(jq('#portal-top').is(':hidden'));
+	});
 	function getSpeed() {
 		abcInput = jq("#abc-text").val();
 		lines = abcInput.split('\n');

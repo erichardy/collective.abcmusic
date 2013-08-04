@@ -88,7 +88,7 @@
 
     <div tal:define="pdfscore nocall:context/pdfscore"
              tal:condition="nocall:pdfscore">
-            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;">PDF</a>
+            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
         </div>
 
     <div id="scoreView" tal:define="score nocall:context/score"
@@ -106,6 +106,7 @@ jq("#toggleHeaders").click(function(){
 	jq("#viewlet-above-content").toggle("fast");
 	jq("#edit-bar").toggle("fast");
 });
+// jq("#abc-text").hide();
 jq("#toggleABCTextarea").click(function(){
 	jq("#abc-text").toggle("fast");
 });
