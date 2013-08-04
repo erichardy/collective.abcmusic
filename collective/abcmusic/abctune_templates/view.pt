@@ -26,19 +26,18 @@
 	<h3 i18n:translate="">inline editing</h3>
 	<div>
     <div id="avertissementTuneModified"></div>
-    <div id="XavertissementTuneModified"></div>
     <div id="tuneNotModified">&nbsp;</div>
     
     <div id="tuneModified">
-       <form  action="">
-       <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
-       <input id="saveModifications" type="submit" value="save" i18n:domain="plone" i18n:attributes="value label_save;"/>
-    </form>
-    </div>
-    <div id="XtuneModified">
        <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
        <button id="saveModifications" i18n:translate="">Save</button>
     </div>
+    
+<span tal:replace="nothing">
+       <form  action="">
+       <input id="XsaveModifications" type="submit" value="save" i18n:domain="plone" i18n:attributes="value label_save;"/>
+    </form>
+</span>
 
     <p />
 	<table border="0">
@@ -79,7 +78,7 @@
 <h3 i18n:translate="">view the tune as it is stored in the database</h3>
 <div>
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
-    <object tal:define="midi nocall:context/midi"
+    <object id="midiView" tal:define="midi nocall:context/midi"
             tal:condition="nocall:midi">
             <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
                    tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
@@ -92,7 +91,7 @@
             <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;">PDF</a>
         </div>
 
-    <div tal:define="score nocall:context/score"
+    <div id="scoreView" tal:define="score nocall:context/score"
              tal:condition="nocall:score">
             <img id="abctuneScore" tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
                                  height score/_height | nothing;
