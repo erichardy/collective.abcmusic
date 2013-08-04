@@ -9,18 +9,18 @@ jq(document).ready(function() {
 });
 
 jq(document).ready(function() {
-	
+	/*
 	jq(document).ajaxComplete(function() {
 		// alert ("ajax completed...") ;
 		location.reload() ;
 	});
-	
+	*/
 	jq("#avertissementTuneModified").submit(function(){
 		var pathname = window.location.pathname;
-		abctext = jq("#abc-text").val()
+		abctext = jq("#abc-text").val();
 		var updatedTune  = jq.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
 			// jq('#abctuneMidi').attr('src', pathname+'/@@download/midi/' + data) ;
-			// alert(pathname+'/@@download/midi/' + data) ;
+			alert(pathname+'/@@download/midi/' + data) ;
 			});
 		jq("#avertissementTuneModified").html(tuneNotModified);
 		// alert(window.location.href) ;
@@ -28,12 +28,20 @@ jq(document).ready(function() {
 	});
 	jq("#XavertissementTuneModified").click(function(){
 		var pathname = window.location.pathname;
-		abctext = jq("#abc-text").val()
+		abctext = jq("#abc-text").val();
+		// alert(abctext);
+		jq("#XavertissementTuneModified").load("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname}, function(data)
+				{
+					alert('dfrzerze');
+				}
+		);
+		/*
 		var updatedTune  = jq.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
 			// jq('#abctuneMidi').attr('src', pathname+'/@@download/midi/' + data) ;
 			// alert(pathname+'/@@download/midi/' + data) ;
 			});
-		jq("#XavertissementTuneModified").html(tuneNotModified);
+		 */
+		// jq("#XavertissementTuneModified").html(tuneNotModified);
 		// alert(window.location.href) ;
 		return false;
 	});

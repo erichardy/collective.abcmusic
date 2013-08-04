@@ -49,6 +49,18 @@
     class=".updateTune.updateTune"
     permission="zope2.View"
   />
+  <browser:page
+    for="*"
+    name="currentScore"
+    class=".updateTune.currentScore"
+    permission="zope2.View"
+  />
+  <browser:page
+    for="*"
+    name="currentMidi"
+    class=".updateTune.currentMidi"
+    permission="zope2.View"
+  />
   
   <browser:page
     for="*"

@@ -20,3 +20,15 @@ class updateTune(BrowserView):
         # _make_PDFscore(abctune)
         # import pdb;pdb.set_trace()
         return abctune.midi.filename
+
+class currentScore(BrowserView):
+    """ TODO """
+    def __call__(self, abctuneURL):
+        abctune = api.content.get(path=abctuneURL)
+        return 'une image'
+
+class currentMidi(BrowserView):
+    """ TODO """
+    def __call__(self, abctuneURL):
+        abctune = api.content.get(path=abctuneURL)
+        return 'un contenu midi'
