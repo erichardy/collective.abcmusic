@@ -26,8 +26,31 @@ jq(document).ready(function() {
 	// dans le meme etat a l'appel suivant.
 	// Pour cela, il faudra utiliser les fonctionnalites HTML5 : localStorage
 	// cf : http://www.w3schools.com/html/html5_webstorage.asp
+	
 	jq("#slider-value").mouseenter(function(){
-		alert(jq('#portal-top').is(':hidden'));
+		alert('#portal-top : ' + jq('#portal-top').is(':hidden') + '\n' + localStorage["portalTopHidden"] + '\n' + localStorage["abcTextHidden"] + ' ' + jq('#abc-text').is(':hidden'));
+	});
+	// Il faut maintenant stocker l'URL de la page en cours pour retrouver la config
+	// par page, et non globalement
+	jq('#storeConfig').click(function(){
+		if (jq('#abc-text').is(':hidden'))
+			{
+			localStorage.setItem('abcTextHidden' , 1);
+			}
+		else 
+			{
+			localStorage.setItem('abcTextHidden' , 0);
+			};
+		
+		if (jq('#portal-top').is(':hidden'))
+			{
+			localStorage.setItem('portalTopHidden' , 1); 
+			}
+		else 
+			{
+			localStorage.setItem('portalTopHidden' , 0);
+			};
+		alert(localStorage.getItem('abcTextHidden') + ' ' + localStorage.getItem('portalTopHidden')) ;
 	});
 	function getSpeed() {
 		abcInput = jq("#abc-text").val();
@@ -128,4 +151,12 @@ jq(document).ready(function() {
 	jq("#tuneModified").hide() ;
 	isModified = false ;
 	jq("#avertissementTuneModified").html(tuneNotModified);
+	if (localStorage["portalTopHidden"] == 1) {
+		jq("#portal-top").hide();
+		jq("#viewlet-above-content").hide();
+		jq("#edit-bar").hide();
+	}
+	if (localStorage["abcTextHidden"] == 1) {
+		jq('#abc-text').hide();
+	}
 });

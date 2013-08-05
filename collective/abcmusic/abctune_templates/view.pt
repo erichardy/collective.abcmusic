@@ -21,6 +21,7 @@
     <button id="toggleHeaders" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;</button>
     &nbsp;&nbsp;&nbsp;
     <button id="toggleABCTextarea" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show abcTextarea&nbsp;&nbsp;&nbsp;</button>
+    <button id="storeConfig" i18n:translate="">&nbsp;&nbsp;&nbsp;Store the configuration&nbsp;&nbsp;&nbsp;</button>
 	<div id="accordion">
 	
 	<h3 i18n:translate="">inline editing</h3>
