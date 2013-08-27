@@ -61,7 +61,12 @@
     class=".updateTune.currentMidi"
     permission="zope2.View"
   />
-  
+  <browser:page
+    for="*"
+    name="import-abc"
+    class=".importAbc.importAbc"
+    permission="zope2.View"
+  />
   <browser:page
     for="*"
     name="abcDebug"
