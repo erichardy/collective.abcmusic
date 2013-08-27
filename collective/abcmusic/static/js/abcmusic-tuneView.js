@@ -28,29 +28,28 @@ jq(document).ready(function() {
 	// cf : http://www.w3schools.com/html/html5_webstorage.asp
 	
 	jq("#slider-value").mouseenter(function(){
-		alert('#portal-top : ' + jq('#portal-top').is(':hidden') + '\n' + localStorage["portalTopHidden"] + '\n' + localStorage["abcTextHidden"] + ' ' + jq('#abc-text').is(':hidden'));
+		alert('#portal-top : ' + jq('#portal-top').is(':hidden') + '\n' + localStorage["portalTopHidden"] + '\n' + localStorage["abcTextHidden"] + ' ' + jq('#abc-text').is(':hidden') + ' ' + window.location.href);
 	});
-	// Il faut maintenant stocker l'URL de la page en cours pour retrouver la config
-	// par page, et non globalement
 	jq('#storeConfig').click(function(){
+		var currentPage = window.location.href ;
 		if (jq('#abc-text').is(':hidden'))
 			{
-			localStorage.setItem('abcTextHidden' , 1);
+			abcTextHidden = '1' ;
 			}
 		else 
 			{
-			localStorage.setItem('abcTextHidden' , 0);
+			abcTextHidden = '0' ;
 			};
 		
 		if (jq('#portal-top').is(':hidden'))
 			{
-			localStorage.setItem('portalTopHidden' , 1); 
+			portalTopHidden = '1' ;
 			}
 		else 
 			{
-			localStorage.setItem('portalTopHidden' , 0);
+			portalTopHidden = '0' ;
 			};
-		alert(localStorage.getItem('abcTextHidden') + ' ' + localStorage.getItem('portalTopHidden')) ;
+			localStorage.setItem (currentPage  , abcTextHidden + portalTopHidden)
 	});
 	function getSpeed() {
 		abcInput = jq("#abc-text").val();
@@ -151,12 +150,14 @@ jq(document).ready(function() {
 	jq("#tuneModified").hide() ;
 	isModified = false ;
 	jq("#avertissementTuneModified").html(tuneNotModified);
-	if (localStorage["portalTopHidden"] == 1) {
+	var currentPage = window.location.href ;
+	currentPageConfig = localStorage.getItem(currentPage);
+	if (currentPageConfig[1] == '1') {
 		jq("#portal-top").hide();
 		jq("#viewlet-above-content").hide();
 		jq("#edit-bar").hide();
 	}
-	if (localStorage["abcTextHidden"] == 1) {
+	if (currentPageConfig[0] == '1') {
 		jq('#abc-text').hide();
 	}
 });
