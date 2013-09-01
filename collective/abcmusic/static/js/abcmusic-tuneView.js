@@ -3,6 +3,7 @@ jq(document).ready(function() {
 });
 
 jq(document).ready(function() {
+
 	jq("#avertissementTuneModified").click(function(){
 		var pathname = window.location.pathname;
 		abctext = jq("#abc-text").val();
@@ -26,30 +27,12 @@ jq(document).ready(function() {
 	// dans le meme etat a l'appel suivant.
 	// Pour cela, il faudra utiliser les fonctionnalites HTML5 : localStorage
 	// cf : http://www.w3schools.com/html/html5_webstorage.asp
-	
-	jq("#slider-value").mouseenter(function(){
-		alert('#portal-top : ' + jq('#portal-top').is(':hidden') + '\n' + localStorage["portalTopHidden"] + '\n' + localStorage["abcTextHidden"] + ' ' + jq('#abc-text').is(':hidden') + ' ' + window.location.href);
+	jq("#portal-logo").mouseenter(function(){
+		// alert('#portal-top : ' + jq('#portal-top').is(':hidden') + '\n' + localStorage["portalTopHidden"] + '\n' + localStorage["abcTextHidden"] + ' ' + jq('#abc-text').is(':hidden') + ' ' + window.location.href);
+		// alert (currentPageConfig);
 	});
-	jq('#storeConfig').click(function(){
-		var currentPage = window.location.href ;
-		if (jq('#abc-text').is(':hidden'))
-			{
-			abcTextHidden = '1' ;
-			}
-		else 
-			{
-			abcTextHidden = '0' ;
-			};
-		
-		if (jq('#portal-top').is(':hidden'))
-			{
-			portalTopHidden = '1' ;
-			}
-		else 
-			{
-			portalTopHidden = '0' ;
-			};
-			localStorage.setItem (currentPage  , abcTextHidden + portalTopHidden)
+	jq('#view-nav').click(function(){
+		jq("#viewlet-above-content").show();
 	});
 	function getSpeed() {
 		abcInput = jq("#abc-text").val();
@@ -109,8 +92,12 @@ jq(document).ready(function() {
 		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
 		var input = jq("#abc-text").val();
 		jq("#abcscale").text(scoreSize) ;
+		localStorage.setItem(window.location.href + '-scoreSize' , scoreSize);
 		ABCJS.renderAbc('abc-edit', input , {}, {scale: scoreSize},{});
 	};
+
+	var currentPage = window.location.href ;
+
 	minSpeed = 20 ;
 	maxSpeed = 400 ;
 	stepSpeed = 5 ;
@@ -138,7 +125,9 @@ jq(document).ready(function() {
 		orientation: "vertical" ,
 		change: function(event,ui){if (event.originalEvent){resizeABCscore()} }
 	});
-	scoreSize = .8 ;
+	if (localStorage.getItem(window.location.href + '-scoreSize') != null) {
+		scoreSize = localStorage.getItem(window.location.href + '-scoreSize') ; }
+	else { scoreSize = .8 ; }
 	jq("#abc-edit-slider-size").slider("option" , "value" , scoreSize);
 	jq("#abcscale").text(scoreSize) ;
 	ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale: scoreSize},{});
@@ -150,14 +139,14 @@ jq(document).ready(function() {
 	jq("#tuneModified").hide() ;
 	isModified = false ;
 	jq("#avertissementTuneModified").html(tuneNotModified);
-	var currentPage = window.location.href ;
-	currentPageConfig = localStorage.getItem(currentPage);
-	if (currentPageConfig[1] == '1') {
+	jq("#view-nav").hide() ;
+	if (localStorage.getItem(window.location.href + '-portalTopHidden') == 'true') {
 		jq("#portal-top").hide();
 		jq("#viewlet-above-content").hide();
 		jq("#edit-bar").hide();
+		jq("#view-nav").show() ;
 	}
-	if (currentPageConfig[0] == '1') {
+	if (localStorage.getItem(window.location.href + '-abcTextHidden') == 'true') {
 		jq('#abc-text').hide();
 	}
 });

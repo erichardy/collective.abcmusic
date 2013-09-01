@@ -21,11 +21,35 @@
     <button id="toggleHeaders" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;</button>
     &nbsp;&nbsp;&nbsp;
     <button id="toggleABCTextarea" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show abcTextarea&nbsp;&nbsp;&nbsp;</button>
-    <button id="storeConfig" i18n:translate="">&nbsp;&nbsp;&nbsp;Store the configuration&nbsp;&nbsp;&nbsp;</button>
+    <button id="view-nav" i18n:translate="">&nbsp;&nbsp;&nbsp;View breadcrumbs&nbsp;&nbsp;&nbsp;</button>
+    <div id="navOverlay"></div>
 	<div id="accordion">
-	
+	<h3 i18n:translate="">view the tune as it is stored in the database</h3>
+	<div id="objectinDatabase">
+    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
+    <object id="midiView" tal:define="midi nocall:context/midi"
+            tal:condition="nocall:midi">
+            <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
+                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
+                   type="audio/mid">
+            </embed>
+    </object>
+
+    <div tal:define="pdfscore nocall:context/pdfscore"
+             tal:condition="nocall:pdfscore">
+            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
+        </div>
+
+    <div id="scoreView" tal:define="score nocall:context/score"
+             tal:condition="nocall:score">
+            <img id="abctuneScore" tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
+                                 height score/_height | nothing;
+                                 width score/_width | nothing;"
+                />
+        </div>
+	</div>
 	<h3 i18n:translate="">inline editing</h3>
-	<div>
+	<div id="inlineEditing">
     <div id="avertissementTuneModified"></div>
     <div id="tuneNotModified">&nbsp;</div>
     
@@ -76,42 +100,39 @@
 	</tbody>
 	</table>
 </div>
-<h3 i18n:translate="">view the tune as it is stored in the database</h3>
-<div>
-    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
-    <object id="midiView" tal:define="midi nocall:context/midi"
-            tal:condition="nocall:midi">
-            <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
-                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
-                   type="audio/mid">
-            </embed>
-    </object>
 
-    <div tal:define="pdfscore nocall:context/pdfscore"
-             tal:condition="nocall:pdfscore">
-            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
-        </div>
-
-    <div id="scoreView" tal:define="score nocall:context/score"
-             tal:condition="nocall:score">
-            <img id="abctuneScore" tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
-                                 height score/_height | nothing;
-                                 width score/_width | nothing;"
-                />
-        </div>
 </div>
-</div>
-<script type="text/javascript"> 
+<script type="text/javascript">
 jq("#toggleHeaders").click(function(){
+	portalTopHiddenConfig = window.location.href + '-portalTopHidden' ;
 	jq("#portal-top").toggle("fast");
 	jq("#viewlet-above-content").toggle("fast");
-	jq("#edit-bar").toggle("fast");
+	jq("#edit-bar").toggle("fast" , function() {
+		if (jq('#portal-top').is(':hidden')) {
+			localStorage.setItem(portalTopHiddenConfig , true) ;
+			jq("#viewlet-above-content").hide();
+			jq("#view-nav").show() ;
+		}
+		else {
+			jq("#viewlet-above-content").show();
+			jq("#view-nav").hide() ;
+			localStorage.setItem(portalTopHiddenConfig , false) ;
+		}
+	});
 });
 // jq("#abc-text").hide();
 jq("#toggleABCTextarea").click(function(){
-	jq("#abc-text").toggle("fast");
-});
+	abcTextHiddenConfig = window.location.href + '-abcTextHidden' ;
+	jq("#abc-text").toggle("slow" , function() {
+		if (jq('#abc-text').is(':hidden')) {
+			localStorage.setItem(abcTextHiddenConfig , true) ;
+		}
+		else {
+			localStorage.setItem(abcTextHiddenConfig , false);
+		}
 
+	});
+});
 </script>
 
     </tal:main-macro>

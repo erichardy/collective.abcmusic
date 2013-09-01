@@ -10,7 +10,7 @@ from z3c.blobfile import file, image
 from plone.directives import form
 from z3c.form import button, field
 # for events handlers
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent,IObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent, IObjectModifiedEvent
 # END for events handlers
 import subprocess as sp
 import tempfile as tf
@@ -21,25 +21,23 @@ from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
+
 class IABCTune(form.Schema):
-    title = schema.TextLine(
-            title=_(u"Tune name"),
-        )
-    description = schema.Text(
-            title = _(u"Tune summary"),
-            required = False,
-        )
+    title = schema.TextLine(title=_(u"Tune name"),)
+
+    description = schema.Text(title=_(u"Tune summary"),
+                              required=False,)
+
     form.primary('abc')
-    abc = schema.Text(
-            title = _(u"Tune abc"),
-            description = _(u'The tune in abc format'),
-        )
+    abc = schema.Text(title=_(u"Tune abc"),
+                      description=_(u'The tune in abc format'),)
+
     form.omitted('score')
-    score = NamedBlobImage (
-            title = _(u"Score"),
-            description = _(u'The score of the tune as png image'),
-            required = False,
-        )
+    score = NamedBlobImage(title=_(u"Score"),
+                           description=
+                                _(u'The score of the tune as png image'),
+                           required=False,)
+
     form.omitted('pdfscore')
     pdfscore = NamedBlobFile (
             title = _(u"PDF Score"),
