@@ -20,6 +20,7 @@ from zope.publisher.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 from AccessControl import getSecurityManager
 from zope.component import getUtility
+from plone.i18n.normalizer.interfaces import INormalizer
 from plone.registry.interfaces import IRegistry
 from collective.abcmusic import _
 
@@ -41,6 +42,52 @@ class importAbc(form.SchemaForm):
     label = _(u"import abc file")
     description = _(u"This will create abctune(s)")
     
+    def getTuneId(self, tune):
+        """returns an Id from the title tune"""
+        context = self.context
+        normalizer = getUtility(INormalizer)
+        for tuneLine in tune:
+            if tuneLine[:2] == 'T:':
+                title = tuneLine.split(':')[1]
+                id = normalizer.normalize(title, locale = 'fr')
+                logger.info("getTuneId:" + tuneLine + ':' + id)
+                idOrigine = id
+                i = 1
+                while id in context.keys():
+                    id = idOrigine + '-' + str(i).zfill(3)
+                    i += 1
+                return id
+        return 'collective.abctune.NoId'
+
+    def getTuneTitle(self, tune):
+        """returns a title  from the title tune"""
+        for tuneLine in tune:
+            if tuneLine[:2] == 'T:':
+                title = tuneLine.split(':')[1]
+                return title
+        return 'collective.abctune.NoTitle'
+        
+    def createTune(self, newtune=None, tuneId=None, tuneTitle=None):
+        self.context.invokeFactory(type_name='abctune' , id=tuneId, abc=newtune,title=tuneTitle)
+        logger.info('createTune:' + tuneId)
+        # tune = self.context[tuneId]
+        # tune.abc = newtune
+        # return tune
+        
+    
+    def processABC(self , data):
+        # tunes = data.split('\n')
+        rawtunes = data.split('X:')
+        for rawtune in rawtunes:
+            tune = rawtune.split('\n')[1:]
+            tune.insert(0 ,'X:1')
+            newtune = ('\n').join(tune)
+            tuneId = self.getTuneId(tune)
+            tuneTitle = self.getTuneTitle(tune)
+            if tuneId != 'collective.abctune.NoId':
+                self.createTune(newtune=newtune, tuneId=tuneId , tuneTitle=tuneTitle)  
+        # import pdb;pdb.set_trace()
+    
     @button.buttonAndHandler(u'Ok')
     def handleApply(self, action):
         data, errors = self.extractData()
@@ -49,7 +96,8 @@ class importAbc(form.SchemaForm):
             return
 
         # Do something with valid data here
-
+        tune = data["abc_file"].data
+        self.processABC(tune)
         # Set status on this form page
         # (this status message is not bind to the session and does not go thru redirects)
         self.status = "Thank you very much!"

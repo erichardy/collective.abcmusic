@@ -18,14 +18,18 @@
 <body>
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-    <button id="toggleHeaders" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;</button>
-    &nbsp;&nbsp;&nbsp;
-    <button id="toggleABCTextarea" i18n:translate="">&nbsp;&nbsp;&nbsp;hide/show abcTextarea&nbsp;&nbsp;&nbsp;</button>
-    <button id="view-nav" i18n:translate="">&nbsp;&nbsp;&nbsp;View breadcrumbs&nbsp;&nbsp;&nbsp;</button>
-    <div id="navOverlay"></div>
-	<div id="accordion">
-	<h3 i18n:translate="">view the tune as it is stored in the database</h3>
-	<div id="objectinDatabase">
+    <table border="0" class="abctune-buttons">
+    <tbody>
+	    <tr>
+		    <td><button id="toggleHeaders" i18n:translate="">hide/show top</button></td>
+		    <td><button id="toggleABCTextarea" i18n:translate="">hide/show abcTextarea</button></td>
+		    <td><button id="view-nav" i18n:translate="">View breadcrumbs</button></td>
+	    </tr>
+    </tbody>
+    </table>
+	
+	<h3 class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
+	<div>
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
     <object id="midiView" tal:define="midi nocall:context/midi"
             tal:condition="nocall:midi">
@@ -38,7 +42,7 @@
     <div tal:define="pdfscore nocall:context/pdfscore"
              tal:condition="nocall:pdfscore">
             <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
-        </div>
+    </div>
 
     <div id="scoreView" tal:define="score nocall:context/score"
              tal:condition="nocall:score">
@@ -46,10 +50,9 @@
                                  height score/_height | nothing;
                                  width score/_width | nothing;"
                 />
-        </div>
+    </div>
 	</div>
 	<h3 i18n:translate="">inline editing</h3>
-	<div id="inlineEditing">
     <div id="avertissementTuneModified"></div>
     <div id="tuneNotModified">&nbsp;</div>
     
@@ -99,9 +102,7 @@
 
 	</tbody>
 	</table>
-</div>
-
-</div>
+<h3>&nbsp;</h3>
 <script type="text/javascript">
 jq("#toggleHeaders").click(function(){
 	portalTopHiddenConfig = window.location.href + '-portalTopHidden' ;

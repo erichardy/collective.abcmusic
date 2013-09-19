@@ -219,8 +219,11 @@ def _make_PDFscore(context):
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
 def newAbcTune(context , event):
     logger.info("abc CREE !")
-    _make_midi(context)
-    _make_score(context)
+    try:
+        _make_midi(context)
+        _make_score(context)
+    except:
+        logger.info("abctune not created...")
     # _make_PDFscore(context)
     # import pdb;pdb.set_trace()
 

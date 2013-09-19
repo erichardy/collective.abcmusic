@@ -14,3 +14,19 @@
 .speed-slider td {
 	valign: center;
 }
+.abctune-buttons td {
+	valign: center;
+	padding-left: 0px;
+	padding-right: 10px;
+}
+h3.tuneCollapsedHeading {
+    cursor: hand;
+    cursor: pointer;
+}
+
+h3.tuneCollapsedHeading.tuneCollapsed:before {
+    content: "▶ ";
+}
+h3.tuneCollapsedHeading:before {
+    content: "▼ ";   
+}
