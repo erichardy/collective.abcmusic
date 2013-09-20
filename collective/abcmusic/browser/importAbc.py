@@ -6,22 +6,13 @@
 import logging
 from five import grok
 from plone.directives import form
-
 from zope import schema
 from z3c.form import button
-
 from Products.CMFCore.interfaces import ISiteRoot
-from Products.statusmessages.interfaces import IStatusMessage
-
 from plone.namedfile.field import NamedFile
-from plone.i18n.normalizer import idnormalizer
-
-from zope.publisher.browser import BrowserView
-from Products.CMFCore.utils import getToolByName
-from AccessControl import getSecurityManager
 from zope.component import getUtility
 from plone.i18n.normalizer.interfaces import INormalizer
-from plone.registry.interfaces import IRegistry
+from plone.i18n.normalizer import idnormalizer
 from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
@@ -49,15 +40,15 @@ class importAbc(form.SchemaForm):
         for tuneLine in tune:
             if tuneLine[:2] == 'T:':
                 title = tuneLine.split(':')[1]
-                id = normalizer.normalize(title, locale = 'fr')
-                logger.info("getTuneId:" + tuneLine + ':' + id)
-                idOrigine = id
+                tuneId = normalizer.normalize(title, locale = 'fr')
+                ## logger.info("getTuneId:" + tuneLine + ':' + tuneId)
+                idOrigine = tuneId
                 i = 1
-                while id in context.keys():
-                    id = idOrigine + '-' + str(i).zfill(3)
+                while tuneId in context.keys():
+                    tuneId = idOrigine + '-' + str(i).zfill(3)
                     i += 1
-                return id
-        return 'collective.abctune.NoId'
+                return tuneId
+        return 'collective.abcmusic.NoId'
 
     def getTuneTitle(self, tune):
         """returns a title  from the title tune"""
@@ -65,11 +56,11 @@ class importAbc(form.SchemaForm):
             if tuneLine[:2] == 'T:':
                 title = tuneLine.split(':')[1]
                 return title
-        return 'collective.abctune.NoTitle'
+        return 'collective.abcmusic.NoTitle'
         
     def createTune(self, newtune=None, tuneId=None, tuneTitle=None):
         self.context.invokeFactory(type_name='abctune' , id=tuneId, abc=newtune,title=tuneTitle)
-        logger.info('createTune:' + tuneId)
+        ## logger.info('createTune:' + tuneId)
         # tune = self.context[tuneId]
         # tune.abc = newtune
         # return tune
@@ -86,7 +77,7 @@ class importAbc(form.SchemaForm):
             newtune = ('\n').join(tune)
             tuneId = self.getTuneId(tune)
             tuneTitle = self.getTuneTitle(tune)
-            if tuneId != 'collective.abctune.NoId':
+            if tuneId != 'collective.abcmusic.NoId':
                 self.createTune(newtune=newtune, tuneId=tuneId , tuneTitle=tuneTitle)  
         # import pdb;pdb.set_trace()
     

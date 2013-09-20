@@ -34,7 +34,7 @@ code to be added :
 
 Install
 =======
-This module is not yet on pypi, so use mr.developer to checkout it from github.
+This module is not yet on pypi, so use mr.developer to check it out from github.
 
 This module is tested for plone 4.2.x. So, be aware of versions to specify in buildout.cfg :
 collective.js.abcjs==1.4.6
@@ -42,3 +42,9 @@ collective.js.jqueryui==1.8.16.9
 
 Not yet tested on plone 4.3
 
+TOTO
+====
+* make a method to manage png image accordingly with the real size the tune
+  (should use eps transformation...)
+* add automaticaly a field Q: if it doesn't exist
+* manage permissions... 

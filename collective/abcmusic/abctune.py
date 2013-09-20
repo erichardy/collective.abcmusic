@@ -158,8 +158,7 @@ def _make_score(context):
     blobScore.contentType = u'image/png'
     context.score = blobScore
     output, errors = p.communicate()
-    
-    logger.info(abctemp)
+    ## logger.info(abctemp)
     
     pdftemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.pdf', delete = False).name
     pdf_create = sp.Popen(["ps2pdf", pstemp, pdftemp], stdout=sp.PIPE, stderr=sp.PIPE)
@@ -174,7 +173,7 @@ def _make_score(context):
     blobPDF.data = iopdf.getvalue()
     blobPDF.contentType = u'application/pdf'
     context.pdfscore = blobPDF
-    logger.info(pdftemp)
+    ## logger.info(pdftemp)
     
     output, errors = pdf_create.communicate()
     
@@ -211,7 +210,7 @@ def _make_PDFscore(context):
     blobPDFScore.contentType = u'application/pdf'
     context.pdfscore = blobPDFScore
     output, errors = p.communicate()
-    logger.info('PDF: ' + abctemp)
+    ## logger.info('PDF: ' + abctemp)
     unlink(abctemp)
     unlink(pstemp)
     unlink(pdftemp)
@@ -225,20 +224,20 @@ def newAbcTune(context , event):
         context.abc = removeNonAscii(context.abc)
         _make_midi(context)
         _make_score(context)
-        logger.info("abc CREE !")
+        ## logger.info("abc created !")
     except:
         logger.info("abctune not created...")
-    # _make_PDFscore(context)
     # import pdb;pdb.set_trace()
 
 @grok.subscribe(IABCTune, IObjectModifiedEvent)
 def updateAbcTune(context , event):
-    context.abc = removeNonAscii(context.abc)
-    # import pdb;pdb.set_trace()
-    _make_midi(context)
-    _make_score(context)
-    logger.info("abc EDITE/MODIFIE !")
-    # _make_PDFscore(context)
+    try:
+        context.abc = removeNonAscii(context.abc)
+        _make_midi(context)
+        _make_score(context)
+    except:
+        logger.info("abctune not modified...")
+    ## logger.info("abc edited/modified !")
     
     
 
