@@ -6,6 +6,7 @@ from zope.component import getUtility
 from plone.i18n.normalizer.interfaces import INormalizer
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
+from collective import dexteritytextindexer
 from z3c.blobfile import file, image
 from plone.directives import form
 from z3c.form import button, field
@@ -28,6 +29,7 @@ class IABCTune(form.Schema):
     description = schema.Text(title=_(u"Tune summary"),
                               required=False,)
 
+    dexteritytextindexer.searchable('abc')
     form.primary('abc')
     abc = schema.Text(title=_(u"Tune abc"),
                       description=_(u'The tune in abc format'),)
@@ -215,13 +217,15 @@ def _make_PDFscore(context):
     unlink(pdftemp)
     return output
 
+def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
 def newAbcTune(context , event):
-    logger.info("abc CREE !")
     try:
+        context.abc = removeNonAscii(context.abc)
         _make_midi(context)
         _make_score(context)
+        logger.info("abc CREE !")
     except:
         logger.info("abctune not created...")
     # _make_PDFscore(context)
@@ -229,10 +233,11 @@ def newAbcTune(context , event):
 
 @grok.subscribe(IABCTune, IObjectModifiedEvent)
 def updateAbcTune(context , event):
-    logger.info("abc EDITE/MODIFIE !")
+    context.abc = removeNonAscii(context.abc)
     # import pdb;pdb.set_trace()
     _make_midi(context)
     _make_score(context)
+    logger.info("abc EDITE/MODIFIE !")
     # _make_PDFscore(context)
     
     

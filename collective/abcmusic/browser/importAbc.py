@@ -73,10 +73,12 @@ class importAbc(form.SchemaForm):
         # tune = self.context[tuneId]
         # tune.abc = newtune
         # return tune
-        
+
+    def removeNonAscii(self,s): return "".join(i for i in s if ord(i)<128)
     
     def processABC(self , data):
         # tunes = data.split('\n')
+        data = self.removeNonAscii(data)
         rawtunes = data.split('X:')
         for rawtune in rawtunes:
             tune = rawtune.split('\n')[1:]
