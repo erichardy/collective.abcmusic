@@ -47,5 +47,6 @@ TOTO
 * make a method to manage png image accordingly with the real size the tune
   (should use eps transformation...) : see score_with_eps git branch
 * add automaticaly a field Q: if it doesn't exist
+  (see score_with_eps git branch)
 * add a 'tune_type' field (for collections) automaticaly set if R: field exist
 * manage permissions... 

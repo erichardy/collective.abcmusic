@@ -222,12 +222,21 @@ def _make_PDFscore(context):
     unlink(pdftemp)
     return output
 
+def addQ(context):
+    abc = context.abc
+    if len(abc.split('Q:')) == 1:
+        labc = abc.split('\n')
+        labc.insert(1,'Q:100')
+        abc = ('\n').join(labc)
+        context.abc = abc
+
 def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
 def newAbcTune(context , event):
     try:
         context.abc = removeNonAscii(context.abc)
+        addQ(context)
         _make_midi(context)
         _make_score(context)
         ## logger.info("abc created !")
@@ -239,6 +248,7 @@ def newAbcTune(context , event):
 def updateAbcTune(context , event):
     try:
         context.abc = removeNonAscii(context.abc)
+        addQ(context)
         _make_midi(context)
         _make_score(context)
     except:
