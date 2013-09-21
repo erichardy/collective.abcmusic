@@ -27,7 +27,7 @@
 	    </tr>
     </tbody>
     </table>
-	
+	<div class="tune-view">
 	<h3 class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
 	<div>
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
@@ -52,6 +52,9 @@
                 />
     </div>
 	</div>
+	</div>
+	<p />
+	<div class="tune-edit">
 	<h3 i18n:translate="">inline editing</h3>
     <div id="avertissementTuneModified"></div>
     <div id="tuneNotModified">&nbsp;</div>
@@ -102,6 +105,7 @@
 
 	</tbody>
 	</table>
+	</div>
 <h3>&nbsp;</h3>
 <script type="text/javascript">
 jq("#toggleHeaders").click(function(){

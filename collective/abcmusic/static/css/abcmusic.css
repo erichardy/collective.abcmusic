@@ -1,7 +1,22 @@
 .abctune {
 	display: block;
 }
-
+.abctune-buttons button {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.tune-view {
+	background-color: #FFFFD6;
+	}
+.tune-view h3 {
+	color: Blue;
+}
+.tune-edit {
+	background-color: #CCE6FF;
+}
+.tune-edit textarea {
+	background-color: #F5FAFF;
+}
 #form-widgets-abc, #abc-text {
 	width: 600px !important ;
     height: 300px;

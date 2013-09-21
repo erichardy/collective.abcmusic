@@ -2,6 +2,8 @@
 <object name="portal_css">
  <stylesheet id="++resource++collective.abcmusic/css/abcmusic.css"
     title="" cacheable="True" compression="safe" cookable="True"
-    enabled="1" expression="" media="screen" rel="stylesheet" rendering="import"
+    enabled="1"
+    expression="python:context.portal_type=='abctune'"
+    media="screen" rel="stylesheet" rendering="import"
     />
 </object>
