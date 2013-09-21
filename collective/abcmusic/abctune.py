@@ -85,7 +85,7 @@ P:A
     return tune
 
 # for hidden fields, see : http://packages.python.org/z3c.form/form.html#hidden-fields
-# to use in the add and edit forms 
+# to use in the add and edit forms
 class View(grok.View):
     grok.context(IABCTune)
     grok.require('zope2.View')
@@ -117,7 +117,10 @@ def _make_midi(context):
     iomidi.write(buffmidi)
 
     blobMidi = file.File()
-    blobMidi.filename = u'MidiFichier.mid'
+    title = context.title
+    normalizer = getUtility(INormalizer)
+    normalizedTitle = normalizer.normalize(title, locale = 'fr')
+    blobMidi.filename = normalizedTitle + '.mid'
     blobMidi.data = iomidi.getvalue()
     blobMidi.contentType = u'audio/mid'
     # pour mp3 : u'audio/mpeg'
@@ -139,12 +142,12 @@ def _make_score(context):
         fabctemp.write(l)
     fabctemp.write('\n\n')
     fabctemp.close()
-    pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
-    p = sp.Popen(["abcm2ps", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    epstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.eps', delete = False).name
+    p = sp.Popen(["abcm2ps", abctemp,'-E -O', epstemp], stdout=sp.PIPE, stderr=sp.PIPE)
     p.wait()
     # convert ${PSFILE} -filter Catrom  -resize 600 $PNG"
     pngtemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.png', delete = False).name
-    p = sp.Popen(["convert", pstemp,'-filter', 'Catrom', '-resize', '600', pngtemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p = sp.Popen(["convert", epstemp.split('.eps')[0] + '001.eps' ,'-filter', 'Catrom', '-resize', '600', pngtemp], stdout=sp.PIPE, stderr=sp.PIPE)
     p.wait()
     iopng = StringIO()
     fpngtemp = open(pngtemp ,'r')
@@ -160,6 +163,9 @@ def _make_score(context):
     output, errors = p.communicate()
     ## logger.info(abctemp)
     
+    pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
+    p = sp.Popen(["abcm2ps", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p.wait()
     pdftemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.pdf', delete = False).name
     pdf_create = sp.Popen(["ps2pdf", pstemp, pdftemp], stdout=sp.PIPE, stderr=sp.PIPE)
     pdf_create.wait()
