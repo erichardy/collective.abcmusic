@@ -34,6 +34,13 @@ class IABCTune(form.Schema):
     abc = schema.Text(title=_(u"Tune abc"),
                       description=_(u'The tune in abc format'),)
 
+    dexteritytextindexer.searchable('tunetype')
+    form.omitted('tunetype')
+    tunetype = schema.TextLine (
+                        title = _(u"The type of the tune"),
+                        description = _(u"from the field R:"),
+                        required = False,
+                        )
     form.omitted('score')
     score = NamedBlobImage(title=_(u"Score"),
                            description=
@@ -230,6 +237,13 @@ def addQ(context):
         abc = ('\n').join(labc)
         context.abc = abc
 
+def addTuneType(context):
+    abc = context.abc
+    labc = abc.split('R:')
+    if len(labc) != 1:
+        tunetype = labc[1].split('\n')[0]
+        context.tunetype = tunetype.lower()
+        
 def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
@@ -237,6 +251,7 @@ def newAbcTune(context , event):
     try:
         context.abc = removeNonAscii(context.abc)
         addQ(context)
+        addTuneType(context)
         _make_midi(context)
         _make_score(context)
         ## logger.info("abc created !")
@@ -249,6 +264,7 @@ def updateAbcTune(context , event):
     try:
         context.abc = removeNonAscii(context.abc)
         addQ(context)
+        addTuneType(context)
         _make_midi(context)
         _make_score(context)
     except:

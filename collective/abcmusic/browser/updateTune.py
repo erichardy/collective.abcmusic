@@ -6,6 +6,8 @@ from z3c.blobfile import file, image
 from collective.abcmusic.abctune import _make_midi
 from collective.abcmusic.abctune import _make_score
 from collective.abcmusic.abctune import _make_PDFscore
+from collective.abcmusic.abctune import addQ
+from collective.abcmusic.abctune import addTuneType
 
 from collective.abcmusic import _
 
@@ -17,6 +19,7 @@ class updateTune(BrowserView):
         ## logger.info("dans __call_ de updateMTune:")
         abctune = api.content.get(path=abctuneURL)
         abctune.abc = abctext
+        addTuneType(abctune)
         _make_midi(abctune)
         _make_score(abctune)
         # import pdb;pdb.set_trace()

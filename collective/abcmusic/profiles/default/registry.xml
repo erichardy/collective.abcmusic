@@ -1,4 +1,20 @@
 <?xml version="1.0"?>
-<registry>
+<registry
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="collective.abcmusic"
+>
   <records interface="collective.abcmusic.controlpanel.IABCMusicSettingsForm" />
+  
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.abcTuneType">
+    <value key="title" i18n:translate="">Tune type</value>
+    <value key="description" i18n:translate="">The tune type</value>
+    <value key="enabled">True</value>
+    <value key="sortable">False</value>
+    <value key="operations">
+        <element>plone.app.querystring.operation.string.is</element>
+    </value>
+    <value key="group" i18n:translate="">Text</value>
+  </records>
+  
 </registry>
