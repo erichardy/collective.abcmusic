@@ -57,8 +57,10 @@
 	<p />
 	<div class="tune-edit">
 	<h3 i18n:translate="">inline editing</h3>
-    <div id="avertissementTuneModified"></div>
-    <div id="tuneNotModified">&nbsp;</div>
+	<span tal:condition="python:view.abcAutorized()">
+    	<div id="avertissementTuneModified"></div>
+    	<div id="tuneNotModified">&nbsp;</div>
+    </span>
     
     <div id="tuneModified">
        <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>

@@ -2,6 +2,8 @@ from zope.publisher.browser import BrowserView
 import logging
 from plone import api
 from z3c.blobfile import file, image
+from AccessControl import getSecurityManager
+from Products.CMFCore.permissions import ModifyPortalContent
 
 from collective.abcmusic.abctune import _make_midi
 from collective.abcmusic.abctune import _make_score
@@ -16,8 +18,11 @@ logger = logging.getLogger('collective.abcmusic')
 class updateTune(BrowserView):
     """ AJAX method/view"""
     def __call__(self , abctext , abctuneURL):
-        ## logger.info("dans __call_ de updateMTune:")
         abctune = api.content.get(path=abctuneURL)
+        sm = getSecurityManager()
+        if not sm.checkPermission(ModifyPortalContent, abctune):
+            return
+        ## logger.info("dans __call_ de updateMTune:")
         abctune.abc = abctext
         addTuneType(abctune)
         _make_midi(abctune)

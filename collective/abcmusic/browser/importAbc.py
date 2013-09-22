@@ -11,6 +11,7 @@ from z3c.form import button
 from Products.CMFCore.interfaces import ISiteRoot
 from plone.namedfile.field import NamedFile
 from zope.component import getUtility
+
 from plone.i18n.normalizer.interfaces import INormalizer
 from plone.i18n.normalizer import idnormalizer
 from collective.abcmusic import _

@@ -2,6 +2,8 @@ import logging
 from five import grok
 from plone.namedfile.interfaces import HAVE_BLOBS
 from zope import schema
+from AccessControl import getSecurityManager
+from Products.CMFCore.permissions import ModifyPortalContent
 from zope.component import getUtility
 from plone.i18n.normalizer.interfaces import INormalizer
 from plone.namedfile.field import NamedBlobImage
@@ -102,7 +104,12 @@ class View(grok.View):
         return
         import pdb;pdb.set_trace()
     """
-        
+    def abcAutorized(context):
+        sm = getSecurityManager()
+        if not sm.checkPermission(ModifyPortalContent, context):
+            return False
+        return True
+
 def _make_midi(context):
     """
     peut etre utile : http://stackoverflow.com/questions/12298136/dynamic-source-for-plone-dexterity-relationlist

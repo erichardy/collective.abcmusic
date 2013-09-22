@@ -35,37 +35,37 @@
     for="*"
     name="updateMidi"
     class=".updateMidi.updateMidi"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
   />
   <browser:page
     for="*"
     name="updateScore"
     class=".updateScore.updateScore"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
   />
   <browser:page
     for="*"
     name="updateTune"
     class=".updateTune.updateTune"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
   />
   <browser:page
     for="*"
     name="currentScore"
     class=".updateTune.currentScore"
-    permission="zope2.View"
+    permission="zope2.AccessContentsInformation"
   />
   <browser:page
     for="*"
     name="currentMidi"
     class=".updateTune.currentMidi"
-    permission="zope2.View"
+    permission="zope2.AccessContentsInformation"
   />
   <browser:page
     for="*"
     name="import-abc"
     class=".importAbc.importAbc"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
   />
   <browser:page
     for="*"

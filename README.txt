@@ -37,7 +37,7 @@ Install
 This module is not yet on pypi, so use mr.developer to check it out from github.
 
 This module is tested for plone 4.2.x. So, be aware of versions to specify in buildout.cfg :
-collective.js.abcjs==1.4.6
+collective.js.abcjs==1.7.0
 collective.js.jqueryui==1.8.16.9
 
 Not yet tested on plone 4.3
@@ -45,8 +45,13 @@ Not yet tested on plone 4.3
 TOTO
 ====
 * make a method to manage png image accordingly with the real size the tune
-  (should use eps transformation...) : see score_with_eps git branch
+  (should use eps transformation...) : see score_with_eps git branch (done)
 * add automaticaly a field Q: if it doesn't exist
   (see score_with_eps git branch)
+  done.
 * add a 'tune_type' field (for collections) automaticaly set if R: field exist
-* manage permissions... 
+  done.
+* manage permissions... done. (branch dev)
+* create a public tunes database from which a tune can be add to the owned folder
+  ...perhaps by a specific add form (?)
+* improve the IHM : which kind of menu?
