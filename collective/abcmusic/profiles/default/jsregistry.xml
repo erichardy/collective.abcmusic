@@ -3,4 +3,8 @@
  <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression="python:context.portal_type=='abctune'"
     id="++resource++collective.abcmusic/js/abcmusic-tuneView.js" inline="False"/>
+ <javascript cacheable="False" compression="none" cookable="True"
+    enabled="True" expression=""
+    id="++resource++collective.abcmusic/js/abcmusic.js" inline="False"/>
+ 
 </object>

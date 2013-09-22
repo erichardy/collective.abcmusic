@@ -40,7 +40,7 @@ Not yet tested on plone 4.3
 
 TODO
 ====
-* create a public tunes database from which a tune can be added to the owned folder
+* create a public database of tunes from which a tune can be added to a owned folder
   ...perhaps by a specific add form (?)
-* improve the IHM : which kind of menu?
+* improve the IHM : which kind of menus?
 * manage sets of tunes (in an another module in the future)
