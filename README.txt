@@ -13,10 +13,6 @@ The goal is to use plone to store tunes and friendly manipulate them.
 ABC music notation is the heart of this project.
 One of the main web site related to abc is : http://abcnotation.com/  
 
-At the starting point of this project (Dec. 2012), two ways are explored :
-- interface between dexterity content types and command line tools : abcm2ps (or abc2ps) and abcMIDI
-- use of abcjs javascripts. See module collective.js.abcjs on github.
-
 See web sites for more informations :
 * abcm2ps : http://moinejf.free.fr/
 * abcMIDI : http://abc.sourceforge.net/abcMIDI/
@@ -42,16 +38,9 @@ collective.js.jqueryui==1.8.16.9
 
 Not yet tested on plone 4.3
 
-TOTO
+TODO
 ====
-* make a method to manage png image accordingly with the real size the tune
-  (should use eps transformation...) : see score_with_eps git branch (done)
-* add automaticaly a field Q: if it doesn't exist
-  (see score_with_eps git branch)
-  done.
-* add a 'tune_type' field (for collections) automaticaly set if R: field exist
-  done.
-* manage permissions... done. (branch dev)
-* create a public tunes database from which a tune can be add to the owned folder
+* create a public tunes database from which a tune can be added to the owned folder
   ...perhaps by a specific add form (?)
 * improve the IHM : which kind of menu?
+* manage sets of tunes (in an another module in the future)

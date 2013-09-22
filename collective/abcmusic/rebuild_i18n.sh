@@ -1,4 +1,6 @@
 #!/bin/sh
+
+export PATH="/opt/eh/mypythontools/bin:$PATH"
 PRODUCTNAME='collective.abcmusic'
 I18NDOMAIN=$PRODUCTNAME
 

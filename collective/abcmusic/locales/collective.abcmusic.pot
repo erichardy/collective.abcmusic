@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-08-04 15:41+0000\n"
+"POT-Creation-Date: 2013-09-22 20:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,12 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.abcmusic\n"
 
-#: ./abctune_templates/view.pt:23
-msgid "&nbsp;&nbsp;&nbsp;hide/show abcTextarea&nbsp;&nbsp;&nbsp;"
-msgstr ""
-
-#: ./abctune_templates/view.pt:21
-msgid "&nbsp;&nbsp;&nbsp;hide/show top&nbsp;&nbsp;&nbsp;"
-msgstr ""
-
-#: ./profiles/default/types/abctuneset.xml
-msgid "A set fo ABC Tunes"
-msgstr ""
-
 #: ./profiles/default/types/abctune.xml
 msgid "A tune in abc format"
 msgstr ""
 
 #: ./controlpanel.py:15
 msgid "ABC Music Settings"
-msgstr ""
-
-#: ./profiles/default/types/abctuneset.xml
-msgid "ABC Tune Set"
 msgstr ""
 
 #: ./controlpanel.py:16
@@ -69,15 +53,15 @@ msgstr ""
 msgid "Jig"
 msgstr ""
 
-#: ./abctune.py:52
+#: ./abctune.py:61
 msgid "Midi"
 msgstr ""
 
-#: ./abctune.py:53
+#: ./abctune.py:62
 msgid "Midi sound of the tune"
 msgstr ""
 
-#: ./abctune.py:45
+#: ./abctune.py:54
 msgid "PDF Score"
 msgstr ""
 
@@ -85,60 +69,76 @@ msgstr ""
 msgid "Reel"
 msgstr ""
 
-#: ./abctune_templates/view.pt:33
+#: ./abctune_templates/view.pt:67
 msgid "Save"
 msgstr ""
 
-#: ./abctune.py:39
+#: ./abctune.py:47
 msgid "Score"
+msgstr ""
+
+#: ./profiles/default/registry.xml
+msgid "Text"
 msgstr ""
 
 #: ./addtune.py:49
 msgid "Thank you for your order. We will contact you shortly"
 msgstr ""
 
-#: ./abctune.py:59
+#: ./abctune.py:68
 msgid "The mp3 sound of the tune"
 msgstr ""
 
-#: ./abctune.py:46
+#: ./abctune.py:55
 msgid "The score of the tune as PDF"
 msgstr ""
 
-#: ./abctune.py:40
+#: ./abctune.py:49
 msgid "The score of the tune as png image"
 msgstr ""
 
-#: ./abctune.py:35
+#: ./abctune.py:37
 msgid "The tune in abc format"
 msgstr ""
 
-#: ./abctune_templates/view.pt:32
+#: ./abctune_templates/view.pt:66
 msgid "The tune is modified, you should save it if you want to keep your work :"
+msgstr ""
+
+#: ./profiles/default/registry.xml
+msgid "The tune type"
+msgstr ""
+
+#: ./abctune.py:42
+msgid "The type of the tune"
+msgstr ""
+
+#: ./browser/importAbc.py:35
+msgid "This will create abctune(s)"
 msgstr ""
 
 #: ./addtune.py:14
 msgid "Tune Type"
 msgstr ""
 
-#: ./abctune.py:34
+#: ./abctune.py:36
 msgid "Tune abc"
 msgstr ""
 
-#: ./abctune.py:26
+#: ./abctune.py:29
 msgid "Tune name"
 msgstr ""
 
-#: ./abctuneset.py:27
-msgid "Tune set name"
-msgstr ""
-
-#: ./abctuneset.py:30
-msgid "Tune set summary"
-msgstr ""
-
-#: ./abctune.py:29
+#: ./abctune.py:31
 msgid "Tune summary"
+msgstr ""
+
+#: ./profiles/default/registry.xml
+msgid "Tune type"
+msgstr ""
+
+#: ./abctune_templates/view.pt:27
+msgid "View breadcrumbs"
 msgstr ""
 
 #: ./addtune.py:18
@@ -153,16 +153,36 @@ msgstr ""
 msgid "abctune"
 msgstr ""
 
+#: ./abctune.py:43
+msgid "from the field R:"
+msgstr ""
+
 #: ./abctune_templates/view.pt:26
+msgid "hide/show abcTextarea"
+msgstr ""
+
+#: ./abctune_templates/view.pt:25
+msgid "hide/show top"
+msgstr ""
+
+#: ./browser/importAbc.py:23
+msgid "import a file containing one or more abc tunes"
+msgstr ""
+
+#: ./browser/importAbc.py:34
+msgid "import abc file"
+msgstr ""
+
+#: ./abctune_templates/view.pt:59
 msgid "inline editing"
 msgstr ""
 
-#: ./abctune.py:58
+#: ./abctune.py:67
 msgid "sound"
 msgstr ""
 
 #. Default: "speed :"
-#: ./abctune_templates/view.pt:46
+#: ./abctune_templates/view.pt:80
 msgid "speed : "
 msgstr ""
 
@@ -170,7 +190,7 @@ msgstr ""
 msgid "templates"
 msgstr ""
 
-#: ./abctune_templates/view.pt:78
-msgid "view the tune as it is stored in the database"
+#: ./abctune_templates/view.pt:32
+msgid "the tune as it is stored in the database"
 msgstr ""
 
