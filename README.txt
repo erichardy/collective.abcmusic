@@ -32,14 +32,21 @@ Install
 =======
 This module is not yet on pypi, so use mr.developer to check it out from github.
 
-This module is tested for plone 4.2.x. So, be aware of versions to specify in buildout.cfg :
+This module is tested for plone 4.2.x. So, be aware of versions to specify in setup.py :
 collective.js.abcjs==1.7.0
 collective.js.jqueryui==1.8.16.9
 
 Not yet tested on plone 4.3
 
+Features
+========
+
+A dexterity content type is defined so it can be added in a folder.
+
+
 TODO
 ====
+* manage O: field in multiple tunes at once in a folder (for example add O: field)
 * create a public database of tunes from which a tune can be added to a owned folder
   ...perhaps by a specific add form (?)
 * improve the IHM : which kind of menus?

@@ -11,8 +11,16 @@
   <index name="abcTuneType" meta_type="FieldIndex">
     <indexed_attr value="tunetype"/>
   </index>
+  <index name="abcTuneArea" meta_type="FieldIndex">
+    <indexed_attr value="tunearea"/>
+  </index>
+  <index name="abcTuneCountry" meta_type="FieldIndex">
+    <indexed_attr value="tunecountry"/>
+  </index>
   
   <column value="abc"/>
   <column value="tunetype"/>
+  <column value="tunearea"/>
+  <column value="tunecountry"/>
   
 </object>

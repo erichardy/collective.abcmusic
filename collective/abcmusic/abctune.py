@@ -43,6 +43,22 @@ class IABCTune(form.Schema):
                         description = _(u"from the field R:"),
                         required = False,
                         )
+    # NOTE: as specified in the v2.1 standard, A: field is deprecated
+    # so, only O: is used to specified country and areas... separated
+    # by ';'
+    dexteritytextindexer.searchable('tunearea')
+    tunearea = schema.TextLine (
+                        title = _(u"The area from which the tune is from"),
+                        description = _(u"More detailed origin of the tune, from O: field"),
+                        required = False,
+                        )
+    dexteritytextindexer.searchable('tunecountry')
+    tunecountry = schema.TextLine (
+                        title = _(u"The origin country of the tune, from first part of O: field"),
+                        description = _(u"The country"),
+                        required = False,
+                        )
+
     form.omitted('score')
     score = NamedBlobImage(title=_(u"Score"),
                            description=
@@ -104,7 +120,8 @@ class View(grok.View):
         return
         import pdb;pdb.set_trace()
     """
-    def abcAutorized(context):
+    def abcAutorized(self):
+        context = self.context
         sm = getSecurityManager()
         if not sm.checkPermission(ModifyPortalContent, context):
             return False
@@ -250,7 +267,17 @@ def addTuneType(context):
     if len(labc) != 1:
         tunetype = labc[1].split('\n')[0]
         context.tunetype = tunetype.lower()
+
+def addOrigins(context):
+    abc = context.abc
+    labc = abc.split('O:')
+    if len(labc) > 1:
+        tuneOrigins = labc[1].split('\n')[0].split(';')
+        context.tunecountry = tuneOrigins[0]
+        if len(tuneOrigins) != 1:
+            context.tunearea = ';'.join(tuneOrigins[1:])
         
+
 def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
@@ -259,6 +286,7 @@ def newAbcTune(context , event):
         context.abc = removeNonAscii(context.abc)
         addQ(context)
         addTuneType(context)
+        addOrigins(context)
         _make_midi(context)
         _make_score(context)
         ## logger.info("abc created !")
@@ -272,6 +300,7 @@ def updateAbcTune(context , event):
         context.abc = removeNonAscii(context.abc)
         addQ(context)
         addTuneType(context)
+        addOrigins(context)
         _make_midi(context)
         _make_score(context)
     except:
