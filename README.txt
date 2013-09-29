@@ -46,7 +46,8 @@ A dexterity content type is defined so it can be added in a folder.
 
 TODO
 ====
-* manage O: field in multiple tunes at once in a folder (for example add O: field)
+* add CSS for standard addForm
+* manage O: field in multiple tunes at once in a folder (for example : add O: field)
 * create a public database of tunes from which a tune can be added to a owned folder
   ...perhaps by a specific add form (?)
 * improve the IHM : which kind of menus?

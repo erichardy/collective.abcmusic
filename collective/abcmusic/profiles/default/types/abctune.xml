@@ -5,7 +5,7 @@
    
  <property name="title" i18n:translate="">abctune</property>
  <property name="description" i18n:translate="">A tune in abc format</property>
- <property name="icon_expr">string:${portal_url}/document_icon.png</property>
+ <property name="icon_expr">string:${portal_url}/++resource++collective.abcmusic/images/abcTune.png</property>
  <property name="allow_discussion">True</property>
  <property name="global_allow">True</property>
  <property name="filter_content_types">True</property>

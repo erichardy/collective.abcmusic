@@ -10,6 +10,7 @@ from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
 from collective import dexteritytextindexer
 from z3c.blobfile import file, image
+from plone.directives import dexterity
 from plone.directives import form
 from z3c.form import button, field
 # for events handlers
@@ -47,12 +48,14 @@ class IABCTune(form.Schema):
     # so, only O: is used to specified country and areas... separated
     # by ';'
     dexteritytextindexer.searchable('tunearea')
+    form.omitted('tunearea')
     tunearea = schema.TextLine (
                         title = _(u"The area from which the tune is from"),
                         description = _(u"More detailed origin of the tune, from O: field"),
                         required = False,
                         )
     dexteritytextindexer.searchable('tunecountry')
+    form.omitted('tunecountry')
     tunecountry = schema.TextLine (
                         title = _(u"The origin country of the tune, from first part of O: field"),
                         description = _(u"The country"),
@@ -306,7 +309,11 @@ def updateAbcTune(context , event):
     except:
         logger.info("abctune not modified...")
     ## logger.info("abc edited/modified !")
-    
-    
+
+# for addForm, see : https://pypi.python.org/pypi/plone.directives.form/1.1
+# class Add(dexterity.AddForm):
+#    grok.name('abctune')
+#    grok.template('addAbcTune')
+
 
     
