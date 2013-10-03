@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.2.dev0'
+version = '0.3.dev0'
 
 setup(name='collective.abcmusic',
       version=version,
@@ -13,9 +13,7 @@ setup(name='collective.abcmusic',
       classifiers=[
         "Programming Language :: Python",
         "Framework :: Plone",
-        "Framework :: Plone :: 4.0",
-        "Framework :: Plone :: 4.1",
-        "Framework :: Plone :: 4.2",
+        "Framework :: Plone :: 4.3",
         ],
       keywords='',
       author='',
@@ -30,12 +28,16 @@ setup(name='collective.abcmusic',
           'setuptools',
 	      'Plone',
           'plone.api',
+          'five.grok',
+          'z3c.blobfile',
+          'plone.directives.dexterity',
+          'plone.directives.form',
 	      'plone.app.dexterity',
           'collective.dexteritytextindexer',
           'plone.namedfile[blobs]',
           'plone.formwidget.namedfile',
 	      'collective.autopermission',
-          'collective.js.jqueryui==1.8.16.9',
+          'collective.js.jqueryui',
 	      'collective.js.abcjs==1.7.0',
           # -*- Extra requirements: -*-
       ],
