@@ -1,36 +1,39 @@
-jq(document).ready(function() {
-	jq( "#accordion" ).accordion();
+/*
+$(document).ready(function() {
+	$( "#accordion" ).accordion();
 });
+*/
+jQuery(document).ready(function($) {
 
-jq(document).ready(function() {
-	jq("h3.tuneCollapsedHeading").click(function() {
-		jq(this).nextUntil("h1 , h2 ,h3").slideToggle("fast");
-		jq(this).toggleClass("tuneCollapsed");
+$(document).ready(function() {
+	$("h3.tuneCollapsedHeading").click(function() {
+		$(this).nextUntil("h1 , h2 ,h3").slideToggle("fast");
+		$(this).toggleClass("tuneCollapsed");
 	});
-	jq("#avertissementTuneModified").click(function(){
+	$("#avertissementTuneModified").click(function(){
 		var pathname = window.location.pathname;
-		abctext = jq("#abc-text").val();
-		var updatedTune  = jq.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
-			jq.post("@@currentScore", {'abctuneURL':pathname}, function(data){
-				width = jq("#scoreView").attr('width');
-				height = jq("#scoreView").attr('height');
-				jq("#scoreView").html(data);
+		abctext = $("#abc-text").val();
+		var updatedTune  = $.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
+			$.post("@@currentScore", {'abctuneURL':pathname}, function(data){
+				width = $("#scoreView").attr('width');
+				height = $("#scoreView").attr('height');
+				$("#scoreView").html(data);
 				});
 			// I don't understand why: without doing anything, the midi div is automaticaly updated...???
 			// but I force it anyway !
-			jq.post("@@currentMidi", {'abctuneURL':pathname}, function(data){
-				jq("#midiView").html(data);
+			$.post("@@currentMidi", {'abctuneURL':pathname}, function(data){
+				$("#midiView").html(data);
 				});
 			});
 		isModified = false ;
-		jq("#avertissementTuneModified").html(tuneNotModified);
+		$("#avertissementTuneModified").html(tuneNotModified);
 		return false;
 	});
-	jq('#view-nav').click(function(){
-		jq("#viewlet-above-content").show();
+	$('#view-nav').click(function(){
+		$("#viewlet-above-content").show();
 	});
 	function getSpeed() {
-		abcInput = jq("#abc-text").val();
+		abcInput = $("#abc-text").val();
 		lines = abcInput.split('\n');
 		i = 0 ;
 		for (i ; i < lines.length ; i++) {
@@ -41,7 +44,7 @@ jq(document).ready(function() {
 		return 0
 	};
 	function setSpeed(q) {
-		abcInput = jq("#abc-text").val();
+		abcInput = $("#abc-text").val();
 		lines = abcInput.split('\n');
 		i = 0 ;
 		for (i ; i < lines.length ; i++) {
@@ -61,32 +64,32 @@ jq(document).ready(function() {
 	};
 	function updateSlider() {
 		speed = getSpeed() ;
-		jq('#slider').slider("option" , "value" , speed) ;
-		jq("#slider-value").text(speed);
+		$('#slider').slider("option" , "value" , speed) ;
+		$("#slider-value").text(speed);
 
 	};
 	function updateABC() {
-		var input = jq("#abc-text").val();
-		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
+		var input = $("#abc-text").val();
+		var scoreSize = $("#abc-edit-slider-size").slider("option", "value") ;
 		updateSlider() ;
 		ABCJS.renderAbc('abc-edit', input, {print: true}, {scale:scoreSize , editable: true},{});
 		ABCJS.renderMidi('midi-edit',input, {});
 		if ( ! isModified ) {
-			jq("#avertissementTuneModified").html(tuneModified);
+			$("#avertissementTuneModified").html(tuneModified);
 			isModified = true ;
 		}
 	};
 	function updateSpeedFromSlider() {
-		var speed = jq("#slider").slider("option", "value") ;
-		jq("#slider-value").text(jq("#slider").slider("option", "value"));
+		var speed = $("#slider").slider("option", "value") ;
+		$("#slider-value").text($("#slider").slider("option", "value"));
 		abcText = setSpeed(speed) ;
-		jq("#abc-text").val(abcText);
+		$("#abc-text").val(abcText);
 		updateABC();
 	};
 	function resizeABCscore(){
-		var scoreSize = jq("#abc-edit-slider-size").slider("option", "value") ;
-		var input = jq("#abc-text").val();
-		jq("#abcscale").text(scoreSize) ;
+		var scoreSize = $("#abc-edit-slider-size").slider("option", "value") ;
+		var input = $("#abc-text").val();
+		$("#abcscale").text(scoreSize) ;
 		localStorage.setItem(window.location.href + '-scoreSize' , scoreSize);
 		ABCJS.renderAbc('abc-edit', input , {}, {scale: scoreSize},{});
 	};
@@ -96,7 +99,7 @@ jq(document).ready(function() {
 	minSpeed = 20 ;
 	maxSpeed = 400 ;
 	stepSpeed = 5 ;
-	jq("#slider").slider({
+	$("#slider").slider({
 		min: minSpeed , 
 		max: maxSpeed , 
 		from: minSpeed ,
@@ -110,10 +113,10 @@ jq(document).ready(function() {
 		change: function(event,ui){if (event.originalEvent){updateSpeedFromSlider()} }
 		});
 	speed = getSpeed() ;
-	jq("#slider").width("350px") ;
-	jq("#slider").slider("option" , "value" , speed);
-	jq("#slider-value").text(speed);
-	jq("#abc-edit-slider-size").slider ({
+	$("#slider").width("350px") ;
+	$("#slider").slider("option" , "value" , speed);
+	$("#slider-value").text(speed);
+	$("#abc-edit-slider-size").slider ({
 		min: 0.1 ,
 		max: 1.3 ,
 		step: 0.1 ,
@@ -123,25 +126,27 @@ jq(document).ready(function() {
 	if (localStorage.getItem(window.location.href + '-scoreSize') != null) {
 		scoreSize = localStorage.getItem(window.location.href + '-scoreSize') ; }
 	else { scoreSize = .8 ; }
-	jq("#abc-edit-slider-size").slider("option" , "value" , scoreSize);
-	jq("#abcscale").text(scoreSize) ;
-	ABCJS.renderAbc('abc-edit', jq("#abc-text").text() , {}, {scale: scoreSize},{});
-	ABCJS.renderMidi('midi-edit',jq("#abc-text").text(), {}) ;
-	jq('#abc-text').keyup(updateABC);
-	tuneNotModified = jq("#tuneNotModified").html() ;
-	jq("#tuneNotModified").hide() ;
-	tuneModified = jq("#tuneModified").html() ;
-	jq("#tuneModified").hide() ;
+	$("#abc-edit-slider-size").slider("option" , "value" , scoreSize);
+	$("#abcscale").text(scoreSize) ;
+	ABCJS.renderAbc('abc-edit', $("#abc-text").text() , {}, {scale: scoreSize},{});
+	ABCJS.renderMidi('midi-edit',$("#abc-text").text(), {}) ;
+	$('#abc-text').keyup(updateABC);
+	tuneNotModified = $("#tuneNotModified").html() ;
+	$("#tuneNotModified").hide() ;
+	tuneModified = $("#tuneModified").html() ;
+	$("#tuneModified").hide() ;
 	isModified = false ;
-	jq("#avertissementTuneModified").html(tuneNotModified);
-	jq("#view-nav").hide() ;
+	$("#avertissementTuneModified").html(tuneNotModified);
+	$("#view-nav").hide() ;
 	if (localStorage.getItem(window.location.href + '-portalTopHidden') == 'true') {
-		jq("#portal-top").hide();
-		jq("#viewlet-above-content").hide();
-		jq("#edit-bar").hide();
-		jq("#view-nav").show() ;
+		$("#portal-top").hide();
+		$("#viewlet-above-content").hide();
+		$("#edit-bar").hide();
+		$("#view-nav").show() ;
 	}
 	if (localStorage.getItem(window.location.href + '-abcTextHidden') == 'true') {
-		jq('#abc-text').hide();
+		$('#abc-text').hide();
 	}
+});
+
 });

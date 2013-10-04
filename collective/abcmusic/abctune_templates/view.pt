@@ -8,7 +8,9 @@
 
 <head>
 <metal:js fill-slot="javascript_head_slot">
-	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.js.abcjs/abcjs_plugin_1.4.user.js"></script>
+<!-- -->
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.js.abcjs/abcjs_plugin_1.7.user.js"></script>
+<!-- -->
 <!--
 	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.abcmusic/js/abcmusic-tuneView.js"></script>
 -->
@@ -110,28 +112,28 @@
 	</div>
 <h3>&nbsp;</h3>
 <script type="text/javascript">
-jq("#toggleHeaders").click(function(){
+$("#toggleHeaders").click(function(){
 	portalTopHiddenConfig = window.location.href + '-portalTopHidden' ;
-	jq("#portal-top").toggle("fast");
-	jq("#viewlet-above-content").toggle("fast");
-	jq("#edit-bar").toggle("fast" , function() {
-		if (jq('#portal-top').is(':hidden')) {
+	$("#portal-top").toggle("fast");
+	$("#viewlet-above-content").toggle("fast");
+	$("#edit-bar").toggle("fast" , function() {
+		if ($('#portal-top').is(':hidden')) {
 			localStorage.setItem(portalTopHiddenConfig , true) ;
-			jq("#viewlet-above-content").hide();
-			jq("#view-nav").show() ;
+			$("#viewlet-above-content").hide();
+			$("#view-nav").show() ;
 		}
 		else {
-			jq("#viewlet-above-content").show();
-			jq("#view-nav").hide() ;
+			$("#viewlet-above-content").show();
+			$("#view-nav").hide() ;
 			localStorage.setItem(portalTopHiddenConfig , false) ;
 		}
 	});
 });
-// jq("#abc-text").hide();
-jq("#toggleABCTextarea").click(function(){
+// $("#abc-text").hide();
+$("#toggleABCTextarea").click(function(){
 	abcTextHiddenConfig = window.location.href + '-abcTextHidden' ;
-	jq("#abc-text").toggle("slow" , function() {
-		if (jq('#abc-text').is(':hidden')) {
+	$("#abc-text").toggle("slow" , function() {
+		if ($('#abc-text').is(':hidden')) {
 			localStorage.setItem(abcTextHiddenConfig , true) ;
 		}
 		else {

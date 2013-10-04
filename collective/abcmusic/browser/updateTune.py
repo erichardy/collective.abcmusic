@@ -1,7 +1,7 @@
 from zope.publisher.browser import BrowserView
 import logging
 from plone import api
-from z3c.blobfile import file, image
+# from z3c.blobfile import file, image
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
 

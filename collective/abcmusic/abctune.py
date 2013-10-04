@@ -8,8 +8,12 @@ from zope.component import getUtility
 from plone.i18n.normalizer.interfaces import INormalizer
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
+
+from plone.namedfile.file import NamedBlobImage as nbi
+from plone.namedfile.file import NamedBlobFile as nbf
+
 from collective import dexteritytextindexer
-from z3c.blobfile import file, image
+# from z3c.blobfile import file, image
 from plone.directives import dexterity
 from plone.directives import form
 from z3c.form import button, field
@@ -149,7 +153,8 @@ def _make_midi(context):
     fmiditemp = open(miditemp , 'r')
     buffmidi = fmiditemp.read()
     iomidi.write(buffmidi)
-
+    """
+    # was for plone 4.2 
     blobMidi = file.File()
     title = context.title
     normalizer = getUtility(INormalizer)
@@ -158,7 +163,26 @@ def _make_midi(context):
     blobMidi.data = iomidi.getvalue()
     blobMidi.contentType = u'audio/mid'
     # pour mp3 : u'audio/mpeg'
-    context.midi = blobMidi    
+    # context.midi = blobMidi
+    """
+    # import pdb;pdb.set_trace()
+    title = context.title
+    normalizer = getUtility(INormalizer)
+    normalizedTitle = normalizer.normalize(title, locale = 'fr')
+    midiFilename = unicode(normalizedTitle + '.mid')
+    midiData = iomidi.getvalue()
+    midiContentType = u'audio/mid'
+    # import pdb;pdb.set_trace()
+    
+    # logger.info('avant nbf')
+    # import pdb;pdb.set_trace()
+    blobMidi = nbf(midiData, contentType=midiContentType, filename=midiFilename)
+    # blobMidi.data = midiData
+    # blobMidi.filename = midiFilename
+    # blobMidi.contentType = midiContentType
+    context.midi = blobMidi
+    # logger.info('juste apres nbf')
+
     output, errors = p.communicate()
     unlink(abctemp)
     unlink(miditemp)
@@ -187,15 +211,27 @@ def _make_score(context):
     fpngtemp = open(pngtemp ,'r')
     buff_score = fpngtemp.read()
     iopng.write(buff_score)
-
+    """
+    # was for plone 4.2
     blobScore = image.Image()
     # blobScore.filename = u'ScoreFichier.png'
     blobScore.filename = normalizedTitle + '.png'
     blobScore.data = iopng.getvalue()
     blobScore.contentType = u'image/png'
     context.score = blobScore
+    """
+    # import pdb;pdb.set_trace()
+    scoreData = iopng.getvalue()
+    scoreFilename = unicode(normalizedTitle + '.png')
+    scoreContentType = u'image/png'
+    blobScore = nbi(scoreData , contentType=scoreContentType, filename=scoreFilename)
+    # blobScore.filename = normalizedTitle + '.png'
+    # blobScore.data = iopng.getvalue()
+    # blobScore.contentType = u'image/png'
+    
+    context.score = blobScore
     output, errors = p.communicate()
-    ## logger.info(abctemp)
+    # logger.info(abctemp)
     
     pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
     p = sp.Popen(["abcm2ps", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
@@ -207,13 +243,20 @@ def _make_score(context):
     fpdftemp = open(pdftemp ,'r')
     buff_pdfscore = fpdftemp.read()
     iopdf.write(buff_pdfscore)
+    """
     blobPDF = file.File()
     # blobPDF.filename = u'PDF_File.pdf'
     blobPDF.filename = normalizedTitle + '.pdf'
     blobPDF.data = iopdf.getvalue()
     blobPDF.contentType = u'application/pdf'
     context.pdfscore = blobPDF
-    ## logger.info(pdftemp)
+    """
+    PDFScoreFilename = u'PDFScoreFichier.pdf'
+    PDFScoreData = iopdf.getvalue()
+    PDFScoreContentType = u'application/pdf'
+    blobPDFScore = nbf(PDFScoreData,contentType=PDFScoreContentType, filename=PDFScoreFilename)
+    context.pdfscore = blobPDFScore
+    # logger.info(pdftemp)
     
     output, errors = pdf_create.communicate()
     
@@ -243,12 +286,18 @@ def _make_PDFscore(context):
     fpdftemp = open(pdftemp ,'r')
     buff_score = fpdftemp.read()
     iopdf.write(buff_score)
-
+    """
     blobPDFScore = file.File()
     blobPDFScore.filename = u'PDFScoreFichier.pdf'
     blobPDFScore.data = iopdf.getvalue()
     blobPDFScore.contentType = u'application/pdf'
     context.pdfscore = blobPDFScore
+    """
+    blobPDFScore = context.pdfscore
+    blobPDFScore.filename = u'PDFScoreFichier.pdf'
+    blobPDFScore.data = iopdf.getvalue()
+    blobPDFScore.contentType = u'application/pdf'
+    
     output, errors = p.communicate()
     ## logger.info('PDF: ' + abctemp)
     unlink(abctemp)
@@ -292,7 +341,7 @@ def newAbcTune(context , event):
         addOrigins(context)
         _make_midi(context)
         _make_score(context)
-        ## logger.info("abc created !")
+        logger.info("abc created !")
     except:
         logger.info("abctune not created...")
     # import pdb;pdb.set_trace()
