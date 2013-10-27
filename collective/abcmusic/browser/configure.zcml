@@ -24,6 +24,14 @@
       layer=".interfaces.IABCMusicLayer"
       permission="zope2.View"
       />
+
+  <browser:page
+  	for="collective.abcmusic.abctune.IABCTune"
+   	name="midijs-view"
+   	template="midijsview.pt"
+   	class = ".midijsview.midijsView"
+    permission="zope2.View"
+  />
   
   <browser:page
   	for="*"
