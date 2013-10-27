@@ -33,6 +33,8 @@
     name="collective.abcmusic"
     directory="static" />
 
+  <cmf:registerDirectory name="abcmusic" recursive="True"/>
+  
   <!-- Control panel -->
   <browser:page
      name="abcmusic-settings"

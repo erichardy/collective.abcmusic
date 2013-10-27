@@ -29,6 +29,7 @@
  <property name="default_view_fallback">False</property>
  <property name="view_methods">
   <element value="view"/>
+  <element value="midijs-view" title="View with MIDIjs"/>
  </property>
  
  
@@ -43,6 +44,11 @@
    url_expr="string:${object_url}" visible="True">
   <permission value="View"/>
  </action>
+ <action title="MIDIjs View" action_id="midijs-view" category="object" condition_expr=""
+   url_expr="string:${object_url}" visible="True" i18n:attributes="title">
+  <permission value="View"/>
+ </action>
+
  <action title="Edit" action_id="edit" category="object" condition_expr=""
     url_expr="string:${object_url}/edit" visible="True">
   <permission value="Modify portal content"/>

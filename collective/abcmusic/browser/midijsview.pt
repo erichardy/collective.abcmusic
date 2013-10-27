@@ -49,8 +49,8 @@
 
 <div class="player" style="height: 42px; box-shadow: 0 -1px #000; margin-bottom: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0;">
   <div style="margin: 0 auto; width: 160px; float: right;">
-  <input type="image" src="images/pause.png" align="absmiddle" value="pause" onclick="pausePlayStop();" id="pausePlayStop">
-  <input type="image" src="images/stop.png" align="absmiddle" value="stop" onclick="pausePlayStop(true);">
+  <input type="image" src="pause.png" align="absmiddle" value="pause" onclick="pausePlayStop();" id="pausePlayStop">
+  <input type="image" src="stop.png" align="absmiddle" value="stop" onclick="pausePlayStop(true);">
   </div>
   <div class="time-controls" style="float: left; margin: 0; position: relative; top: 5px;">
    <span id="time1" class="time">0:00</span>
@@ -80,12 +80,12 @@ var pausePlayStop = function(stop) {
 	var d = document.getElementById("pausePlayStop");
 	if (stop) {
 		MIDI.Player.stop();
-		d.src = "images/play.png";
+		d.src = "play.png";
 	} else if (MIDI.Player.playing) {
-		d.src = "images/play.png";
+		d.src = "play.png";
 		MIDI.Player.pause(true);
 	} else {
-		d.src = "images/pause.png";
+		d.src = "pause.png";
 		MIDI.Player.resume();
 	}
 };
@@ -101,7 +101,7 @@ Event.add(window, "load", function(event) {
 		player = MIDI.Player;
 		player.timeWarp = 1; // speed the song is played back
 		player.loadFile(song, player.stop);
-		d.src = "images/play.png";
+		d.src = "play.png";
 		//
 		MIDIPlayerPercentage(player);
 	});
@@ -140,7 +140,7 @@ var MIDIPlayerPercentage = function(player) {
         var end = data.end >> 0; // end of song
         if (now === end) {
         	MIDI.Player.stop();
-        	d.src = "images/play.png";
+        	d.src = "play.png";
         }   
         // display the information to the user
         timeCursor.style.width = (percent * 100) + "%";

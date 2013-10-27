@@ -2,6 +2,7 @@ import logging
 from zope.publisher.browser import BrowserView
 from plone.namedfile.interfaces import HAVE_BLOBS
 from zope import schema
+from zope.interface import implements
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
 from zope.component import getUtility
@@ -23,15 +24,17 @@ import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
 from os import unlink
+
 from collective.abcmusic.abctune import IABCTune
 from collective.abcmusic import _
+
 
 logger = logging.getLogger('collective.abcmusic')
 
 class midijsView(BrowserView):
     """Use MIDIjs for an ABCTune
     """
-
+    
     def update(self):
         context = self.context
 

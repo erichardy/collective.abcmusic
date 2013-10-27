@@ -30,6 +30,7 @@
    	name="midijs-view"
    	template="midijsview.pt"
    	class = ".midijsview.midijsView"
+   	layer = ".interfaces.IABCMusicLayer"
     permission="zope2.View"
   />
   
