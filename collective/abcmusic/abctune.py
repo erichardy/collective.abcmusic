@@ -24,6 +24,7 @@ import tempfile as tf
 from StringIO import StringIO
 from os import unlink
 
+from collective.abcmusic.mp3 import _make_mp3
 from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
@@ -298,6 +299,7 @@ def newAbcTune(context , event):
         addOrigins(context)
         _make_midi(context)
         _make_score(context)
+        _make_mp3(context)
         logger.info("abc created !")
     except:
         logger.info("abctune not created...")
