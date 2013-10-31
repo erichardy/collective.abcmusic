@@ -29,35 +29,46 @@ from collective.abcmusic import _
 logger = logging.getLogger('collective.abcmusic')
 
 def _make_mp3(context):
-    """if midi doesn't exists, we do nothing
-    """
+    
     midi = context.midi
     mididata = midi.data
     miditemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.mid',delete = False).name
     fmiditemp = open(miditemp, 'w')
     fmiditemp.write(mididata)
-    import pdb;pdb.set_trace()
+    fmiditemp.close()
+    
     aifftemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.aiff',delete = False).name
-    p = sp.Popen(["timidity", miditemp,'-A 400 -EFchorus=2,50 -EFreverb=2' + ' miditemp ' + '-Oa', aifftemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    timidity = ["timidity",'-A 400','-EFchorus=2,50','-EFreverb=2',miditemp ,'-o', aifftemp,'-Oa']
+    
+    p = sp.Popen(timidity, stdout=sp.PIPE, stderr=sp.PIPE)
     p.wait()
     output, errors = p.communicate()
-    import pdb;pdb.set_trace()
+    logger.info(errors)
+    logger.info(output)
+    #
     mp3temp = tf.NamedTemporaryFile(mode='w+b', suffix = '.mp3',delete = False).name
-    p = sp.Popen(["lame", aifftemp,'--cbr -b 32 -f --quiet', mp3temp], stdout=sp.PIPE, stderr=sp.PIPE)
+    lame = ["lame",'--cbr','-b 32','-f','--quiet',aifftemp, mp3temp]
+    
+    p = sp.Popen(lame, stdout=sp.PIPE, stderr=sp.PIPE)
+    p.wait()
+    
     output, errors = p.communicate()
-    import pdb;pdb.set_trace()
+    logger.info(errors)
+    logger.info(output)
+    #
     iomp3 = StringIO()
-    fmp3temp = open(mp3temp,'w')
+    fmp3temp = open(mp3temp,'r')
     buff_mp3 = fmp3temp.read()
+    fmp3temp.close()
     iomp3.write(buff_mp3)
-    logger.info(mp3temp)
+    #
     MP3Filename = u'sound.mp3'
     MP3Data = iomp3.getvalue()
     MP3ContentType =  u'audio/mp3'
     blobMP3 = nbf(MP3Data,contentType=MP3ContentType, filename=MP3Filename)
     context.sound = blobMP3
-    # unlink(miditemp)
-    # unlink(aifftemp)
-    # unlink(mp3temp)
-    import pdb;pdb.set_trace()
+    unlink(miditemp)
+    unlink(aifftemp)
+    unlink(mp3temp)
+    
     return output, errors
