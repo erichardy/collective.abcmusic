@@ -40,6 +40,7 @@
                    type="audio/mid">
             </embed>
     </object>
+    <span tal:replace=nothing>
     <object id="mp3View" tal:define="sound nocall:context/sound"
             tal:condition="nocall:sound">
             <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
@@ -47,6 +48,7 @@
                    type="audio/mp3">
             </embed>
     </object>
+    </span>
 
     <div tal:define="pdfscore nocall:context/pdfscore"
              tal:condition="nocall:pdfscore">

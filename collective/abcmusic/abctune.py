@@ -164,8 +164,8 @@ def _make_midi(context):
     context.midi = blobMidi
 
     output, errors = p.communicate()
-    logger.info(errors)
-    logger.info(output)
+    # logger.info(errors)
+    # logger.info(output)
     unlink(abctemp)
     unlink(miditemp)
     return output
@@ -201,8 +201,8 @@ def _make_score(context):
     
     context.score = blobScore
     output, errors = p.communicate()
-    logger.info(errors)
-    logger.info(output)
+    # logger.info(errors)
+    # logger.info(output)
     # logger.info(abctemp)
     
     pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
@@ -224,8 +224,8 @@ def _make_score(context):
     # logger.info(pdftemp)
     
     output, errors = pdf_create.communicate()
-    logger.info(errors)
-    logger.info(output)
+    # logger.info(errors)
+    # logger.info(output)
     
     unlink(abctemp)
     unlink(pstemp)
@@ -263,8 +263,8 @@ def _make_PDFscore(context):
     blobPDFScore.contentType = u'application/pdf'
     
     output, errors = p.communicate()
-    logger.info(errors)
-    logger.info(output)
+    # logger.info(errors)
+    # logger.info(output)
     ## logger.info('PDF: ' + abctemp)
     unlink(abctemp)
     unlink(pstemp)
@@ -307,7 +307,7 @@ def newAbcTune(context , event):
         addOrigins(context)
         _make_midi(context)
         _make_score(context)
-        _make_mp3(context)
+        # _make_mp3(context)
         logger.info("abc created !")
     except:
         logger.info("abctune not created...")
@@ -321,7 +321,7 @@ def updateAbcTune(context , event):
         addOrigins(context)
         _make_midi(context)
         _make_score(context)
-        _make_mp3(context)
+        # _make_mp3(context)
     except:
         logger.info("abctune not modified...")
     ## logger.info("abc edited/modified !")
