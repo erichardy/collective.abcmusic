@@ -30,39 +30,40 @@
     </tbody>
     </table>
 	<div class="tune-view">
-	<h3 class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
-	<div>
-    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
-    <object id="midiView" tal:define="midi nocall:context/midi"
-            tal:condition="nocall:midi">
-            <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
-                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
-                   type="audio/mid">
-            </embed>
-    </object>
-    <span tal:replace=nothing>
-    <object id="mp3View" tal:define="sound nocall:context/sound"
-            tal:condition="nocall:sound">
-            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
-                   tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}"
-                   type="audio/mp3">
-            </embed>
-    </object>
-    </span>
-
-    <div tal:define="pdfscore nocall:context/pdfscore"
-             tal:condition="nocall:pdfscore">
-            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
-    </div>
-
-    <div id="scoreView" tal:define="score nocall:context/score"
-             tal:condition="nocall:score">
-            <img id="abctuneScore" tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
-                                 height score/_height | nothing;
-                                 width score/_width | nothing;"
-                />
-    </div>
-	</div>
+		<h3 class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
+		<div>
+		    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
+		    <object id="midiView" tal:define="midi nocall:context/midi"
+		            tal:condition="nocall:midi">
+		            <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
+		                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
+		                   type="audio/mid">
+		            </embed>
+		    </object>
+		    <span tal:replace=nothing>
+			    <object id="mp3View" tal:define="sound nocall:context/sound"
+			            tal:condition="nocall:sound">
+			            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
+			                   tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}"
+			                   type="audio/mp3">
+			            </embed>
+			    </object>
+		    </span>
+		
+		    <div tal:define="pdfscore nocall:context/pdfscore"
+		         tal:condition="nocall:pdfscore">
+		            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
+		    </div>
+		
+		    <div id="scoreView"
+		         tal:define="score nocall:context/score"
+		         tal:condition="nocall:score">
+		         <img id="abctuneScore"
+		              tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
+		                              height score/_height | nothing;
+		                              width score/_width | nothing;"/>
+		    </div>
+		</div>
 	</div>
 	<p />
 	<div class="tune-edit">
@@ -77,49 +78,42 @@
        <button id="saveModifications" i18n:translate="">Save</button>
     </div>
     
-<span tal:replace="nothing">
-       <form  action="">
-       <input id="XsaveModifications" type="submit" value="save" i18n:domain="plone" i18n:attributes="value label_save;"/>
-    </form>
-</span>
-
     <p />
 	<table border="0">
 	<tbody>
-    <tr class="speed-slider">
-		<td width="60px" i18n:translate="speed : ">speed : </td>
-		<td>
-			<div id="slider" type="slider" />
-		</td>
-		<td width="40px">
-			<span id="slider-value"></span>
-		</td>
-	</tr>
-    
-    <tr>
-	    <td colspan="3">
-	    	<textarea id="abc-text" cols="100" rows="18" tal:content="structure string:${here/abc}"/>
+	    <tr class="speed-slider">
+			<td width="60px" i18n:translate="speed : ">speed : </td>
+			<td>
+				<div id="slider" type="slider" />
+			</td>
+			<td width="40px">
+				<span id="slider-value"></span>
+			</td>
+		</tr>
+	    <tr>
+		    <td colspan="3">
+		    	<textarea id="abc-text" cols="100" rows="18" tal:content="structure string:${here/abc}"/>
+		    </td>
+	    </tr>
+		<tr>
+			<td colspan="3">
+				<div id="midi-edit">midi</div>
+			</td>
+		</tr>
+		<tr>
+		<td colspan = "2">
+	    	<div id="abc-edit">score</div>
 	    </td>
-    </tr>
-	<tr>
-		<td colspan="3">
-			<div id="midi-edit">midi</div>
-		</td>
-	</tr>
-	<tr>
-	<td colspan = "2">
-    	<div id="abc-edit">score</div>
-    </td>
-	    <td>
-	        <span id="abcscale">abcscale</span>
-	    	<div id="abc-edit-slider-size"></div>
-	    </td>
-    </tr>
-
+		    <td>
+		        <span id="abcscale">abcscale</span>
+		    	<div id="abc-edit-slider-size"></div>
+		    </td>
+	    </tr>
 	</tbody>
 	</table>
 	</div>
 <h3>&nbsp;</h3>
+
 <script type="text/javascript">
 $("#toggleHeaders").click(function(){
 	portalTopHiddenConfig = window.location.href + '-portalTopHidden' ;
@@ -153,10 +147,7 @@ $("#toggleABCTextarea").click(function(){
 });
 </script>
 
-    </tal:main-macro>
+</tal:main-macro>
 </metal:main>
-
-
 </body>
 </html>
-    
