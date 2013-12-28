@@ -4,13 +4,16 @@
 <dt class="portletHeader">
   Tunes in this folder
 </dt>
-<dd class="portletItem">
-  <select size="20">
+<dd class="portletItem portletTunesListing">
+  <select tal:attributes="size view/portlet_size">
     <span tal:repeat="obj view/tunes_items">
-      <option tal:attributes="value python:obj.getURL()"><span tal:content="string:${obj/Title}">title</span></option>
+      <option tal:define="portaltype python:'portletTunesListingItem_'+obj.portal_type" 
+        class="portletTunesListingItem"
+        tal:attributes="value python:obj.getURL();
+                        class string:portletTunesListingItem ${portaltype}">
+              <span tal:content="string:${obj/Title}">title</span>
+      </option>
     </span>
-  
   </select>
-  
 </dd>
 </dl>

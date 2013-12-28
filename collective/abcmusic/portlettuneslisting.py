@@ -68,6 +68,15 @@ class Renderer(base.Renderer):
         # return not self.anonymous and len(self._data())
         return True
 
+    def portlet_size(self):
+        count = self.data.count
+        nb_results = len(self._data())
+        if nb_results < count:
+            return nb_results
+        else:
+            return count
+                          
+        
     def tunes_items(self):
         return self._data()
 
@@ -76,15 +85,14 @@ class Renderer(base.Renderer):
 
     @memoize
     def _data(self):
-        context = self.context
-        logger.info(context)
-        logger.info(context.aq_parent)
-        folder_path = '/'.join(context.getPhysicalPath())
+        context = aq_inner(self.context)
+        # logger.info(context)
+        # logger.info(context.aq_parent)
         if context.portal_type == 'Folder':
-            results = self.catalog(path={'query': folder_path, 'depth': 1})
+            folder_path = '/'.join(context.getPhysicalPath())
         else:
-            results = self.catalog(path={'query': folder_path, 'depth': 2})
-
-                    
-        results = self.catalog(path={'query': folder_path, 'depth': 1})
+            folder_path = '/'.join(context.aq_parent.getPhysicalPath())
+        results = self.catalog(
+                       Type = "abctune",
+                       path={'query': folder_path, 'depth': 1})
         return results
