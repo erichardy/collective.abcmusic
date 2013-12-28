@@ -17,6 +17,7 @@
   <grok:grok package="." />
 
   <include package=".browser" />
+  <include package="plone.app.portlets"/>
 
   <i18n:registerTranslations directory="locales" />
 
@@ -42,6 +43,15 @@
      class=".controlpanel.ABCMusicSettingsFormSettingsControlPanel"
      permission="cmf.ManagePortal"
   />
+  <!-- Portlet -->
+  <plone:portlet
+        name="collective.abcmusic.portlettuneslisting"
+        interface=".portlettuneslisting.ITunesListingPortlet"
+        assignment=".portlettuneslisting.Assignment"
+        renderer=".portlettuneslisting.Renderer"
+        addview=".portlettuneslisting.AddForm"
+        editview=".portlettuneslisting.EditForm"
+        />
 
 
 </configure>

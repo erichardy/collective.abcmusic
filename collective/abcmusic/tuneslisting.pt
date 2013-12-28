@@ -1,0 +1,16 @@
+<dl class="portlet portletTunesListing"
+    i18n:domain="collectibe.abcmusic"
+    >
+<dt class="portletHeader">
+  Tunes in this folder
+</dt>
+<dd class="portletItem">
+  <select size="20">
+    <span tal:repeat="obj view/tunes_items">
+      <option tal:attributes="value python:obj.getURL()"><span tal:content="string:${obj/Title}">title</span></option>
+    </span>
+  
+  </select>
+  
+</dd>
+</dl>
