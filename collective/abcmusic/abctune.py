@@ -31,10 +31,6 @@ logger = logging.getLogger('collective.abcmusic')
 
 
 class IABCTune(form.Schema):
-    title = schema.TextLine(title=_(u"Tune name"),)
-
-    description = schema.Text(title=_(u"Tune summary"),
-                              required=False,)
 
     dexteritytextindexer.searchable('abc')
     form.primary('abc')
@@ -133,6 +129,13 @@ class View(grok.View):
         if not sm.checkPermission(ModifyPortalContent, context):
             return False
         return True
+    
+    def javascript(self):
+        js = u"""<script type="text/javascript">\n"""
+        js += u'tuneModified = ' + _(u"'The tune was modified... continue ?'") + u';\n'
+        js += u'</script>'
+        # import pdb;pdb.set_trace()
+        return js
 
 def _make_midi(context):
     """

@@ -11,7 +11,7 @@ $(document).ready(function() {
 			window.location.replace(url);
 		}
 		else {
-			if (confirm("tune changed... continue ?")){
+			if (confirm(tuneModified)){
 				window.location.replace(url);
 			};
 		}

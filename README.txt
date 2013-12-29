@@ -46,6 +46,11 @@ A dexterity content type is defined so it can be added in a folder.
 
 TODO
 ====
+* manage better switching with MidiJS view
+* overlaies for help and explanations
+* keyboard bindings : i.e. to start play with a key pressed
+* choose to create MP3 when a tune is created, also for batch import of abc file containing many tunes
+* create indexes in the catalog for use with collections (catalog.xml and registry.xml)
 * add CSS for standard addForm
 * manage O: field in multiple tunes at once in a folder (for example : add O: field)
 * create a public database of tunes from which a tune can be added to a owned folder

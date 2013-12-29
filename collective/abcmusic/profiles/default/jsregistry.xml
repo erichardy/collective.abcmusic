@@ -2,10 +2,10 @@
 <object name="portal_javascripts">
  <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression="python:context.portal_type=='abctune'"
-    id="++resource++collective.abcmusic/js/abcmusic-tuneView.js" inline="False"/>
+    id="abcmusic-tuneView.js" inline="False"/>
  <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression=""
-    id="++resource++collective.abcmusic/js/abcmusic.js" inline="False"/>
+    id="abcmusic.js" inline="False"/>
  
  <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression=""

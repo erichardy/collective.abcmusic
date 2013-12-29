@@ -24,14 +24,11 @@ class updateTune(BrowserView):
         sm = getSecurityManager()
         if not sm.checkPermission(ModifyPortalContent, abctune):
             return
-        ## logger.info("dans __call_ de updateMTune:")
-        logger.info(makeMP3)
         abctune.abc = abctext
         addTuneType(abctune)
         addOrigins(abctune)
         _make_midi(abctune)
         _make_score(abctune)
-        logger.info(type(makeMP3))
         if makeMP3 != '0':
             _make_mp3(abctune)
         # import pdb;pdb.set_trace()

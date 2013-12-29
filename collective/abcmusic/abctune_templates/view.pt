@@ -10,7 +10,8 @@
 <metal:js fill-slot="javascript_head_slot">
 <!-- -->
 	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.js.abcjs/abcjs_plugin_1.7.user.js"></script>
-<!-- -->
+	<script tal:omit-tag="" tal:replace="structure view/javascript" ></script>
+	<!-- -->
 <!--
 	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.abcmusic/js/abcmusic-tuneView.js"></script>
 -->
@@ -41,15 +42,18 @@
 		            </embed>
 		    </object>
 		    
-			    <object id="mp3View" tal:define="sound nocall:context/sound"
-			            tal:condition="nocall:sound">
-			            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
-			                   tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}"
-			                   type="audio/mp3">
-			            </embed>
-			    </object>
-		    
-		
+		    <object id="mp3View" tal:define="sound nocall:context/sound"
+		            tal:condition="nocall:sound">
+		            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
+		                   tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}"
+		                   type="audio/mp3">
+		            </embed>
+		    </object>
+		    <p />----
+		    <audio title='tag audio' tal:define="sound nocall:context/sound">
+		      <source tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}" type='audio/mpeg' />
+		    </audio>
+
 		    <div tal:define="pdfscore nocall:context/pdfscore"
 		         tal:condition="nocall:pdfscore">
 		            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
@@ -75,9 +79,7 @@
          <span id="makeMP3">  MP3 ? <input id="checkboxMakeMP3" type="checkbox" name="choix1" value="1"></span>
     </div>
     </span>
-    
-    
-    
+
     <p />
 	<table border="0">
 	<tbody>
@@ -101,9 +103,9 @@
 			</td>
 		</tr>
 		<tr>
-		<td colspan = "2">
-	    	<div id="abc-edit">score</div>
-	    </td>
+			<td colspan = "2">
+		    	<div id="abc-edit">score</div>
+		    </td>
 		    <td>
 		        <span id="abcscale">abcscale</span>
 		    	<div id="abc-edit-slider-size"></div>
