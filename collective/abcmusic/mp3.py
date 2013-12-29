@@ -43,8 +43,9 @@ def _make_mp3(context):
     p = sp.Popen(timidity, stdout=sp.PIPE, stderr=sp.PIPE)
     p.wait()
     output, errors = p.communicate()
-    # logger.info(errors)
-    # logger.info(output)
+    logger.info('in _make_mp3')
+    logger.info(errors)
+    logger.info(output)
     #
     mp3temp = tf.NamedTemporaryFile(mode='w+b', suffix = '.mp3',delete = False).name
     lame = ["lame",'--cbr','-b 32','-f','--quiet',aifftemp, mp3temp]

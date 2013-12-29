@@ -10,10 +10,13 @@ $(document).ready(function() {
 		$(this).nextUntil("h1 , h2 ,h3").slideToggle("fast");
 		$(this).toggleClass("tuneCollapsed");
 	});
-	$("#avertissementTuneModified").click(function(){
+	$("#saveModifications").click(function(){
 		var pathname = window.location.pathname;
 		abctext = $("#abc-text").val();
-		var updatedTune  = $.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname} , function(data){
+		makeMP3 = 0;
+		if ($("#checkboxMakeMP3").is(':checked')) makeMP3 = 1;
+		var updatedTune  = $.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname, 'makeMP3':makeMP3} , function(data){
+			console.log(makeMP3);
 			$.post("@@currentScore", {'abctuneURL':pathname}, function(data){
 				width = $("#scoreView").attr('width');
 				height = $("#scoreView").attr('height');
@@ -24,9 +27,15 @@ $(document).ready(function() {
 			$.post("@@currentMidi", {'abctuneURL':pathname}, function(data){
 				$("#midiView").html(data);
 				});
+			if (makeMP3 == 1) {
+				$.post("@@currentMP3", {'abctuneURL':pathname}, function(data){
+					$("#mp3View").html(data);
+					});
+			}
 			});
 		isModified = false ;
-		$("#avertissementTuneModified").html(tuneNotModified);
+		// $("#avertissementTuneModified").html(tuneNotModified);
+		$("#tuneModified").hide() ;
 		return false;
 	});
 	$('#view-nav').click(function(){
@@ -75,7 +84,8 @@ $(document).ready(function() {
 		ABCJS.renderAbc('abc-edit', input, {print: true}, {scale:scoreSize , editable: true},{});
 		ABCJS.renderMidi('midi-edit',input, {});
 		if ( ! isModified ) {
-			$("#avertissementTuneModified").html(tuneModified);
+			// $("#avertissementTuneModified").html(tuneModified);
+			$("#tuneModified").show() ;
 			isModified = true ;
 		}
 	};
@@ -131,12 +141,12 @@ $(document).ready(function() {
 	ABCJS.renderAbc('abc-edit', $("#abc-text").text() , {}, {scale: scoreSize},{});
 	ABCJS.renderMidi('midi-edit',$("#abc-text").text(), {}) ;
 	$('#abc-text').keyup(updateABC);
-	tuneNotModified = $("#tuneNotModified").html() ;
-	$("#tuneNotModified").hide() ;
-	tuneModified = $("#tuneModified").html() ;
+	// tuneNotModified = $("#tuneNotModified").html() ;
+	// $("#tuneNotModified").hide() ;
+	// tuneModified = $("#tuneModified").html() ;
 	$("#tuneModified").hide() ;
 	isModified = false ;
-	$("#avertissementTuneModified").html(tuneNotModified);
+	// $("#avertissementTuneModified").html(tuneNotModified);
 	$("#view-nav").hide() ;
 	if (localStorage.getItem(window.location.href + '-portalTopHidden') == 'true') {
 		$("#portal-top").hide();

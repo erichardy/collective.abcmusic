@@ -72,6 +72,13 @@
   />
   <browser:page
     for="*"
+    name="currentMP3"
+    class=".updateTune.currentMP3"
+    permission="zope2.AccessContentsInformation"
+  />
+  
+  <browser:page
+    for="*"
     name="import-abc"
     class=".importAbc.importAbc"
     permission="cmf.ModifyPortalContent"

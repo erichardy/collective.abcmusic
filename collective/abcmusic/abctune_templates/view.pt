@@ -40,7 +40,7 @@
 		                   type="audio/mid">
 		            </embed>
 		    </object>
-		    <span tal:replace=nothing>
+		    
 			    <object id="mp3View" tal:define="sound nocall:context/sound"
 			            tal:condition="nocall:sound">
 			            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
@@ -48,7 +48,7 @@
 			                   type="audio/mp3">
 			            </embed>
 			    </object>
-		    </span>
+		    
 		
 		    <div tal:define="pdfscore nocall:context/pdfscore"
 		         tal:condition="nocall:pdfscore">
@@ -69,14 +69,14 @@
 	<div class="tune-edit">
 	<h3 i18n:translate="">inline editing</h3>
 	<span tal:condition="python:view.abcAutorized()">
-    	<div id="avertissementTuneModified"></div>
-    	<div id="tuneNotModified">&nbsp;</div>
+       <div id="tuneModified">
+         <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
+         <button id="saveModifications" i18n:translate="">Save</button>
+         <span id="makeMP3">  MP3 ? <input id="checkboxMakeMP3" type="checkbox" name="choix1" value="1"></span>
+    </div>
     </span>
     
-    <div id="tuneModified">
-       <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
-       <button id="saveModifications" i18n:translate="">Save</button>
-    </div>
+    
     
     <p />
 	<table border="0">
