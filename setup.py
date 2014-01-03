@@ -39,6 +39,7 @@ setup(name='collective.abcmusic',
           'collective.autopermission',
           'collective.js.jqueryui',
           'collective.js.abcjs==1.7.0',
+          'collective.js.midijs',
           # -*- Extra requirements: -*-
       ],
       extras_require = dict(

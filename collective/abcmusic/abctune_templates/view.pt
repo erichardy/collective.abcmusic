@@ -41,19 +41,19 @@
 		                   type="audio/mid">
 		            </embed>
 		    </object>
-		    
-		    <object id="mp3View" tal:define="sound nocall:context/sound"
-		            tal:condition="nocall:sound">
+		    <span tal:define="sound nocall:context/sound" tal:condition="nocall:sound">
+		    <object id="mp3View" >
 		            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
 		                   tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}"
 		                   type="audio/mp3">
 		            </embed>
 		    </object>
+		    
 		    <p />----
 		    <audio title='tag audio' tal:define="sound nocall:context/sound">
 		      <source tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}" type='audio/mpeg' />
 		    </audio>
-
+			</span>
 		    <div tal:define="pdfscore nocall:context/pdfscore"
 		         tal:condition="nocall:pdfscore">
 		            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
