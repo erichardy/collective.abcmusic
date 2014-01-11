@@ -5,13 +5,13 @@ from plone import api
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
 
-from collective.abcmusic.abctune import _make_midi
-from collective.abcmusic.abctune import _make_score
-from collective.abcmusic.abctune import _make_PDFscore
-from collective.abcmusic.abctune import addQ
+from collective.abcmusic.midi import _make_midi
+from collective.abcmusic.score import _make_score
+from collective.abcmusic.mp3 import _make_mp3
+
 from collective.abcmusic.abctune import addTuneType
 from collective.abcmusic.abctune import addOrigins
-from collective.abcmusic.mp3 import _make_mp3
+
 
 from collective.abcmusic import _
 
@@ -35,6 +35,7 @@ class updateTune(BrowserView):
         return 1
 
 class currentScore(BrowserView):
+    """ AJAX method/view"""
     def __call__(self, abctuneURL):
         abctune = api.content.get(path=abctuneURL)
         height = abctune.score._height
@@ -45,6 +46,7 @@ class currentScore(BrowserView):
         return retour
 
 class currentMidi(BrowserView):
+    """ AJAX method/view"""
     def __call__(self, abctuneURL):
         abctune = api.content.get(path=abctuneURL)
         retour = '<embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true"'
@@ -53,6 +55,7 @@ class currentMidi(BrowserView):
         return retour
 
 class currentMP3(BrowserView):
+    """ AJAX method/view"""
     def __call__(self, abctuneURL):
         abctune = api.content.get(path=abctuneURL)
         retour = '<embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true"'

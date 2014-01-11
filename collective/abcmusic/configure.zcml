@@ -53,5 +53,9 @@
         editview=".portlettuneslisting.EditForm"
         />
 
+  <utility
+    component=".vocabularies.abcTunetypesVocabularyFactory"
+    name="collective.abcmusic.vocabularies.abctunetypes"
+    />
 
 </configure>

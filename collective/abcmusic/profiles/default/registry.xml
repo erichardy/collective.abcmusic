@@ -10,10 +10,12 @@
     <value key="title" i18n:translate="">Tune type</value>
     <value key="description" i18n:translate="">The tune type</value>
     <value key="enabled">True</value>
-    <value key="sortable">False</value>
+    <value key="sortable">True</value>
     <value key="operations">
-        <element>plone.app.querystring.operation.string.is</element>
+        <element>plone.app.querystring.operation.selection.is</element>
     </value>
+    <value key="vocabulary">collective.abcmusic.vocabularies.abctunetypes</value>
+    <!-- see /plone/app/vocabularies/... -->
     <value key="group" i18n:translate="">Text</value>
   </records>
   

@@ -25,6 +25,8 @@ from StringIO import StringIO
 from os import unlink
 
 from collective.abcmusic.mp3 import _make_mp3
+from collective.abcmusic.score import _make_score
+from collective.abcmusic.midi import _make_midi 
 from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
@@ -136,143 +138,6 @@ class View(grok.View):
         js += u'</script>'
         # import pdb;pdb.set_trace()
         return js
-
-def _make_midi(context):
-    """
-    peut etre utile : http://stackoverflow.com/questions/12298136/dynamic-source-for-plone-dexterity-relationlist
-    pour les donnees binaires : http://plone.org/products/dexterity/documentation/manual/developer-manual/advanced/files-and-images
-    """
-    abc = context.abc
-    abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
-    fabctemp = open(abctemp , 'w')
-    for l in abc:
-        fabctemp.write(l)
-    fabctemp.write('\n\n')
-    fabctemp.close()
-    miditemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.mid', delete = False).name
-    p = sp.Popen(["abc2midi", abctemp,'-o', miditemp], stdout=sp.PIPE, stderr=sp.PIPE)
-    p.wait()
-    iomidi = StringIO()
-    fmiditemp = open(miditemp , 'r')
-    buffmidi = fmiditemp.read()
-    iomidi.write(buffmidi)
-
-    title = context.title
-    normalizer = getUtility(INormalizer)
-    normalizedTitle = normalizer.normalize(title, locale = 'fr')
-    midiFilename = unicode(normalizedTitle + '.mid')
-    midiData = iomidi.getvalue()
-    midiContentType = u'audio/mid'
-    blobMidi = nbf(midiData, contentType=midiContentType, filename=midiFilename)
-    context.midi = blobMidi
-
-    output, errors = p.communicate()
-    # logger.info(errors)
-    # logger.info(output)
-    unlink(abctemp)
-    unlink(miditemp)
-    return output
-        
-def _make_score(context):
-    # make score as png AND PDF
-    abc = context.abc
-    title = context.title
-    normalizer = getUtility(INormalizer)
-    normalizedTitle = normalizer.normalize(title, locale = 'fr')
-    abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
-    fabctemp = open(abctemp , 'w')
-    for l in abc:
-        fabctemp.write(l)
-    fabctemp.write('\n\n')
-    fabctemp.close()
-    epstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.eps', delete = False).name
-    p = sp.Popen(["abcm2ps", abctemp,'-E -O', epstemp], stdout=sp.PIPE, stderr=sp.PIPE)
-    p.wait()
-    # convert ${PSFILE} -filter Catrom  -resize 600 $PNG"
-    pngtemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.png', delete = False).name
-    p = sp.Popen(["convert", epstemp.split('.eps')[0] + '001.eps' ,'-filter', 'Catrom', '-resize', '600', pngtemp], stdout=sp.PIPE, stderr=sp.PIPE)
-    p.wait()
-    iopng = StringIO()
-    fpngtemp = open(pngtemp ,'r')
-    buff_score = fpngtemp.read()
-    iopng.write(buff_score)
-
-    scoreData = iopng.getvalue()
-    scoreFilename = unicode(normalizedTitle + '.png')
-    scoreContentType = u'image/png'
-    blobScore = nbi(scoreData , contentType=scoreContentType, filename=scoreFilename)
-    
-    context.score = blobScore
-    output, errors = p.communicate()
-    # logger.info(errors)
-    # logger.info(output)
-    # logger.info(abctemp)
-    
-    pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
-    p = sp.Popen(["abcm2ps", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
-    p.wait()
-    pdftemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.pdf', delete = False).name
-    pdf_create = sp.Popen(["ps2pdf", pstemp, pdftemp], stdout=sp.PIPE, stderr=sp.PIPE)
-    pdf_create.wait()
-    iopdf = StringIO()
-    fpdftemp = open(pdftemp ,'r')
-    buff_pdfscore = fpdftemp.read()
-    iopdf.write(buff_pdfscore)
-
-    PDFScoreFilename = u'PDFScoreFichier.pdf'
-    PDFScoreData = iopdf.getvalue()
-    PDFScoreContentType = u'application/pdf'
-    blobPDFScore = nbf(PDFScoreData,contentType=PDFScoreContentType, filename=PDFScoreFilename)
-    context.pdfscore = blobPDFScore
-    # logger.info(pdftemp)
-    
-    output, errors = pdf_create.communicate()
-    # logger.info(errors)
-    # logger.info(output)
-    
-    unlink(abctemp)
-    unlink(pstemp)
-    unlink(pngtemp)
-    unlink(pdftemp)
-    return output
-
-def _make_PDFscore(context):
-    abc = context.abc
-    abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
-    fabctemp = open(abctemp , 'w')
-    for l in abc:
-        fabctemp.write(l)
-    fabctemp.write('\n\n')
-    fabctemp.close()
-    pstemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.ps', delete = False).name
-    p = sp.Popen(["ps2pdf", abctemp,'-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
-    p.wait()
-    # convert ${PSFILE} -filter Catrom  -resize 600 $PNG"
-    pdftemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.pdf', delete = False).name
-    
-    p = sp.Popen(["ps2pdf", pstemp, pdftemp], stdout=sp.PIPE, stderr=sp.PIPE)
-    p.wait()
-    iopdf = StringIO()
-    fpdftemp = open(pdftemp ,'r')
-    buff_score = fpdftemp.read()
-    iopdf.write(buff_score)
-    """
-    Must to be modified according to the other methods above...
-    but this method is no longer used...
-    """
-    blobPDFScore = context.pdfscore
-    blobPDFScore.filename = u'PDFScoreFichier.pdf'
-    blobPDFScore.data = iopdf.getvalue()
-    blobPDFScore.contentType = u'application/pdf'
-    
-    output, errors = p.communicate()
-    # logger.info(errors)
-    # logger.info(output)
-    ## logger.info('PDF: ' + abctemp)
-    unlink(abctemp)
-    unlink(pstemp)
-    unlink(pdftemp)
-    return output
 
 def addQ(context):
     abc = context.abc
