@@ -42,20 +42,24 @@
 		            </embed>
 		    </object>
 		    <span tal:define="sound nocall:context/sound" tal:condition="nocall:sound">
-		    <object id="mp3View" >
+		        <object id="mp3View" >
 		            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
 		                   tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}"
 		                   type="audio/mp3">
 		            </embed>
-		    </object>
+		        </object>
 		    
-		    <p />----
-		    <audio title='tag audio' tal:define="sound nocall:context/sound">
-		      <source tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}" type='audio/mpeg' />
-		    </audio>
+		      <span tal:replace="nothing">
+		        <audio title='tag audio' tal:define="sound nocall:context/sound">
+		          <source tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}" type='audio/mpeg' />
+		        </audio>
+		      </span>
 			</span>
-		    <div tal:define="pdfscore nocall:context/pdfscore"
-		         tal:condition="nocall:pdfscore">
+			<span tal:define="sound nocall:context/sound" tal:condition="not:nocall:sound">
+			  <button id="createMP3" i18n:translate="">  Create MP3  </button>
+			</span>
+		    <div tal:define="pdfscore nocall:context/pdfscore;"
+		         tal:condition="nocall:context/pdfscore">
 		            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
 		    </div>
 		

@@ -41,6 +41,7 @@ A dexterity content type is defined so it can be added in a folder.
 
 TODO
 ====
+* button to create MP3 if it doesn't exist (started... to be fixed...)
 * manage better switching with MidiJS view
 * overlaies for help and explanations
 * keyboard bindings : i.e. to start play with a key pressed

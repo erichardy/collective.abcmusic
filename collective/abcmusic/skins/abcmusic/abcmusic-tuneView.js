@@ -42,6 +42,13 @@ $(document).ready(function() {
 		$("#tuneModified").hide() ;
 		return false;
 	});
+	$("#createMP3").click(function(){
+		var pathname = window.location.pathname;
+		abctext = $("#abc-text").val();
+		$.post("@@currentMP3", {'abctuneURL':pathname}, function(data){
+			$("#mp3View").html(data);
+			});
+	});
 	$('#view-nav').click(function(){
 		$("#viewlet-above-content").show();
 	});
