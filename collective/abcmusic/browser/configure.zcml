@@ -66,6 +66,12 @@
   />
   <browser:page
     for="*"
+    name="currentPDFScore"
+    class=".updateTune.currentPDFScore"
+    permission="zope2.AccessContentsInformation"
+  />
+  <browser:page
+    for="*"
     name="currentMidi"
     class=".updateTune.currentMidi"
     permission="zope2.AccessContentsInformation"

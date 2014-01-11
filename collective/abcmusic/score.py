@@ -59,7 +59,7 @@ def _make_score(context):
     buff_pdfscore = fpdftemp.read()
     iopdf.write(buff_pdfscore)
 
-    PDFScoreFilename = u'PDFScoreFichier.pdf'
+    PDFScoreFilename = unicode(normalizedTitle + '.pdf')
     PDFScoreData = iopdf.getvalue()
     PDFScoreContentType = u'application/pdf'
     blobPDFScore = nbf(PDFScoreData,contentType=PDFScoreContentType, filename=PDFScoreFilename)

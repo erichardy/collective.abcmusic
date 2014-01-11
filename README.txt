@@ -32,17 +32,12 @@ Install
 =======
 This module is not yet on pypi, so use mr.developer to check it out from github.
 
-This module is tested for plone 4.2.x. So, be aware of versions to specify in setup.py :
-collective.js.abcjs==1.7.0
-collective.js.jqueryui==1.8.16.9
-
-Not yet tested on plone 4.3
+Currently dev for Plone 4.3.x
 
 Features
 ========
 
 A dexterity content type is defined so it can be added in a folder.
-
 
 TODO
 ====
@@ -50,10 +45,10 @@ TODO
 * overlaies for help and explanations
 * keyboard bindings : i.e. to start play with a key pressed
 * choose to create MP3 when a tune is created, also for batch import of abc file containing many tunes
-* create indexes in the catalog for use with collections (catalog.xml and registry.xml)
+* create indexes in the catalog for use with collections (catalog.xml and registry.xml). Now only TuneTypes.
 * add CSS for standard addForm
 * manage O: field in multiple tunes at once in a folder (for example : add O: field)
 * create a public database of tunes from which a tune can be added to a owned folder
   ...perhaps by a specific add form (?)
 * improve the IHM : which kind of menus?
-* manage sets of tunes (in an another module in the future)
+* manage sets of tunes (in an other module in the future)

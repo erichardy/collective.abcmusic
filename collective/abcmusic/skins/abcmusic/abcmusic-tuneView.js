@@ -27,6 +27,10 @@ $(document).ready(function() {
 			$.post("@@currentMidi", {'abctuneURL':pathname}, function(data){
 				$("#midiView").html(data);
 				});
+			$.post("@@currentPDFScore", {'abctuneURL':pathname}, function(data){
+				// $("#midiView").html(data);
+				});
+			
 			if (makeMP3 == 1) {
 				$.post("@@currentMP3", {'abctuneURL':pathname}, function(data){
 					$("#mp3View").html(data);

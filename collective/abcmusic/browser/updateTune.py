@@ -7,6 +7,7 @@ from Products.CMFCore.permissions import ModifyPortalContent
 
 from collective.abcmusic.midi import _make_midi
 from collective.abcmusic.score import _make_score
+from collective.abcmusic.pdfscore import _make_PDFscore
 from collective.abcmusic.mp3 import _make_mp3
 
 from collective.abcmusic.abctune import addTuneType
@@ -29,6 +30,7 @@ class updateTune(BrowserView):
         addOrigins(abctune)
         _make_midi(abctune)
         _make_score(abctune)
+        # _make_PDFscore(abctune)
         if makeMP3 != '0':
             _make_mp3(abctune)
         # import pdb;pdb.set_trace()
@@ -45,6 +47,16 @@ class currentScore(BrowserView):
         retour = retour + '" height="' + str(height) + '" width="' + str(width) + '">'
         return retour
 
+class currentPDFScore(BrowserView):
+    """ AJAX method/view"""
+    def __call__(self, abctuneURL):
+        abctune = api.content.get(path=abctuneURL)
+        logger.info('in currentPDFScore')
+        retour = '<a id="abctunePDFScore" '
+        retour += 'href="' + abctune.absolute_url() + '/@@download/pdfscore/' + abctune.pdfscore.filename + '"'
+        retour += ' target="_blank" type="application/pdf" >PDF</a>'
+        return retour
+        
 class currentMidi(BrowserView):
     """ AJAX method/view"""
     def __call__(self, abctuneURL):

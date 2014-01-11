@@ -31,7 +31,6 @@ from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
-
 class IABCTune(form.Schema):
 
     dexteritytextindexer.searchable('abc')

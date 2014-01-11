@@ -15,6 +15,9 @@ logger = logging.getLogger('collective.abcmusic')
 
 def _make_PDFscore(context):
     abc = context.abc
+    title = context.title
+    normalizer = getUtility(INormalizer)
+    normalizedTitle = normalizer.normalize(title, locale = 'fr')
     abctemp = tf.NamedTemporaryFile(mode='w+b', suffix = '.abc', delete = False).name
     fabctemp = open(abctemp , 'w')
     for l in abc:
@@ -38,7 +41,7 @@ def _make_PDFscore(context):
     but this method is no longer used...
     """
     blobPDFScore = context.pdfscore
-    blobPDFScore.filename = u'PDFScoreFichier.pdf'
+    blobPDFScore.filename = unicode(normalizedTitle + '.pdf')
     blobPDFScore.data = iopdf.getvalue()
     blobPDFScore.contentType = u'application/pdf'
     
