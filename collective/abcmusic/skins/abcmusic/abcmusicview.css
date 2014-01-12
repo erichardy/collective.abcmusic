@@ -45,8 +45,10 @@ h3.tuneCollapsedHeading.tuneCollapsed:before {
 h3.tuneCollapsedHeading:before {
     content: "▼ ";   
 }
-object#mp3View:before {
-	content: "MP3 : " ;
+
+#abctuneMidi, #abctuneMP3 {
+	position:relative;
+	top: 10px;
 }
 td#pdfScore {
 	text-align: center;

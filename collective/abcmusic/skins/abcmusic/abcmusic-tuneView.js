@@ -28,7 +28,7 @@ $(document).ready(function() {
 				$("#midiView").html(data);
 				});
 			$.post("@@currentPDFScore", {'abctuneURL':pathname}, function(data){
-				// $("#midiView").html(data);
+				$("#pdfScore").html(data);
 				});
 			
 			if (makeMP3 == 1) {

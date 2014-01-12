@@ -33,11 +33,13 @@
 	<div class="tune-view">
 		<h3 class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
 		<div>
-		<table border="1">
+		<table border="0">
 		<tbody>
-		<tr id="ausioraw">
+		<tr id="audioraw">
 		    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
 		  <td colspan="2">
+		   <div id="midi">Midi :&nbsp;
+		   <span>
 		    <object id="midiView" tal:define="midi nocall:context/midi"
 		            tal:condition="nocall:midi">
 		            <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
@@ -45,9 +47,11 @@
 		                   type="audio/mid">
 		            </embed>
 		    </object>
+		    </span>
+		   </div>
 		  </td>
 		  <td colspan="2">
-		    <div id="mp3">
+		    <div id="mp3">MP3 :&nbsp;
 		    <span tal:define="sound nocall:context/sound" tal:condition="nocall:sound">
 		        <object id="mp3View" >
 		            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
@@ -62,8 +66,9 @@
 		        </audio>
 		      </span>
 			</span>
-			<span tal:define="sound nocall:context/sound" tal:condition="not:nocall:sound">
+			<span id="mp3View" tal:define="sound nocall:context/sound" tal:condition="not:nocall:sound">
 			  <button id="createMP3" i18n:translate="">Create MP3</button>
+			  <span i18n:translate="">clic here and wait... can be long</span>
 			</span>
 			</div>
 	     </td>

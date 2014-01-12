@@ -51,17 +51,16 @@ class currentPDFScore(BrowserView):
     """ AJAX method/view"""
     def __call__(self, abctuneURL):
         abctune = api.content.get(path=abctuneURL)
-        logger.info('in currentPDFScore')
         retour = '<a id="abctunePDFScore" '
         retour += 'href="' + abctune.absolute_url() + '/@@download/pdfscore/' + abctune.pdfscore.filename + '"'
-        retour += ' target="_blank" type="application/pdf" >PDF</a>'
+        retour += ' target="_blank" type="application/pdf" ><img src="pdf.png" /></a>'
         return retour
         
 class currentMidi(BrowserView):
     """ AJAX method/view"""
     def __call__(self, abctuneURL):
         abctune = api.content.get(path=abctuneURL)
-        retour = '<embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true"'
+        retour = '<embed id="abctuneMidi" height="30" autostart="true" controller="true" autoplay="true"'
         retour = retour + ' src="' + abctune.absolute_url() + '/@@download/midi/' + abctune.midi.filename + '"'
         retour = retour + ' type="audio/mid"> </embed>'            
         return retour
