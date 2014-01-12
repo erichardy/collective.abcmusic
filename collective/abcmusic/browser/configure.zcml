@@ -82,6 +82,12 @@
     class=".updateTune.currentMP3"
     permission="zope2.AccessContentsInformation"
   />
+  <browser:page
+    for="*"
+    name="createMP3"
+    class=".updateTune.createMP3"
+    permission="zope2.AccessContentsInformation"
+  />
   
   <browser:page
     for="*"

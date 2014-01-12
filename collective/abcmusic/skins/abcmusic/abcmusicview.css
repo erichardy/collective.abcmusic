@@ -45,3 +45,12 @@ h3.tuneCollapsedHeading.tuneCollapsed:before {
 h3.tuneCollapsedHeading:before {
     content: "▼ ";   
 }
+object#mp3View:before {
+	content: "MP3 : " ;
+}
+td#pdfScore {
+	text-align: center;
+}
+td#pdfScore a:link {
+	text-decoration: none;
+}

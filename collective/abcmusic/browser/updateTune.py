@@ -74,3 +74,17 @@ class currentMP3(BrowserView):
         retour = retour + ' src="' + abctune.absolute_url() + '/@@download/sound/' + abctune.sound.filename + '"'
         retour = retour + ' type="audio/mp3"> </embed>'            
         return retour
+
+class createMP3(BrowserView):
+    """ AJAX method/view"""
+    def __call__(self, abctext, abctuneURL):
+        abctune = api.content.get(path=abctuneURL)
+        sm = getSecurityManager()
+        if not sm.checkPermission(ModifyPortalContent, abctune):
+            return
+        abctune.abc = abctext
+        _make_mp3(abctune)
+        retour = '<embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true"'
+        retour = retour + ' src="' + abctune.absolute_url() + '/@@download/sound/' + abctune.sound.filename + '"'
+        retour = retour + ' type="audio/mp3"> </embed>'            
+        return retour

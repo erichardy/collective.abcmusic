@@ -33,7 +33,11 @@
 	<div class="tune-view">
 		<h3 class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
 		<div>
+		<table border="1">
+		<tbody>
+		<tr id="ausioraw">
 		    <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
+		  <td colspan="2">
 		    <object id="midiView" tal:define="midi nocall:context/midi"
 		            tal:condition="nocall:midi">
 		            <embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="true" src=""
@@ -41,6 +45,9 @@
 		                   type="audio/mid">
 		            </embed>
 		    </object>
+		  </td>
+		  <td colspan="2">
+		    <div id="mp3">
 		    <span tal:define="sound nocall:context/sound" tal:condition="nocall:sound">
 		        <object id="mp3View" >
 		            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
@@ -56,21 +63,29 @@
 		      </span>
 			</span>
 			<span tal:define="sound nocall:context/sound" tal:condition="not:nocall:sound">
-			  <button id="createMP3" i18n:translate="">  Create MP3  </button>
+			  <button id="createMP3" i18n:translate="">Create MP3</button>
 			</span>
-		    <div tal:define="pdfscore nocall:context/pdfscore;"
-		         tal:condition="nocall:context/pdfscore">
-		            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" >PDF</a>
-		    </div>
-		
-		    <div id="scoreView"
+			</div>
+	     </td>
+		</tr>
+		<tr id="scoreraw">
+		    <td colspan="3" id="scoreView"
 		         tal:define="score nocall:context/score"
 		         tal:condition="nocall:score">
 		         <img id="abctuneScore"
 		              tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
 		                              height score/_height | nothing;
 		                              width score/_width | nothing;"/>
-		    </div>
+		    </td>
+		    <td id="pdfScore">
+		     <span tal:define="pdfscore nocall:context/pdfscore;"
+		         tal:condition="nocall:context/pdfscore">
+		            <a id="abctunePDFScore" tal:attributes="href string:${context/absolute_url}/@@download/pdfscore/${pdfscore/filename}; target string:_blank;" type="application/pdf" ><img src="pdf.png" /></a>
+		     </span>
+		    </td>
+		 </tr>
+		</tbody>
+		</table>
 		</div>
 	</div>
 	<p />

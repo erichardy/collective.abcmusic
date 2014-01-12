@@ -45,8 +45,8 @@ $(document).ready(function() {
 	$("#createMP3").click(function(){
 		var pathname = window.location.pathname;
 		abctext = $("#abc-text").val();
-		$.post("@@currentMP3", {'abctuneURL':pathname}, function(data){
-			$("#mp3View").html(data);
+		$.post("@@createMP3", {'abctext':abctext, 'abctuneURL':pathname}, function(data){
+			$("#mp3").html(data);
 			});
 	});
 	$('#view-nav').click(function(){
