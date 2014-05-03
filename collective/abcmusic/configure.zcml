@@ -30,9 +30,11 @@
       />
   <include file="upgrades.zcml" />
 
+<!--
   <browser:resourceDirectory
     name="collective.abcmusic"
     directory="static" />
+-->
 
   <cmf:registerDirectory name="abcmusic" recursive="True"/>
   
