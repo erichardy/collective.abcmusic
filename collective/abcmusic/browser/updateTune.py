@@ -21,6 +21,7 @@ logger = logging.getLogger('collective.abcmusic')
 class updateTune(BrowserView):
     """ AJAX method/view"""
     def __call__(self , abctext , abctuneURL, makeMP3):
+        logger.info('abctuneURL:' + abctuneURL)
         abctune = api.content.get(path=abctuneURL)
         sm = getSecurityManager()
         if not sm.checkPermission(ModifyPortalContent, abctune):
