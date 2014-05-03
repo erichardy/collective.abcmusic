@@ -28,11 +28,10 @@ def removeViewInURL(url):
 class updateTune(BrowserView):
     """ AJAX method/view"""
     def __call__(self , abctext , abctuneURL, makeMP3):
-        logger.info('abctuneURL:' + abctuneURL)
         # need to remove 'view' at the end if present
         abctuneURL = removeViewInURL(abctuneURL)
         abctune = api.content.get(path=abctuneURL)
-        logger.info('__abctuneURL:' + abctuneURL)
+        logger.info('update : ' + abctuneURL)
         sm = getSecurityManager()
         if not sm.checkPermission(ModifyPortalContent, abctune):
             return
