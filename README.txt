@@ -34,6 +34,8 @@ This module is not yet on pypi, so use mr.developer to check it out from github.
 
 Currently dev for Plone 4.3.x
 
+For quicktime(R) versions, see : http://support.apple.com/downloads/#quicktime
+
 Features
 ========
 
