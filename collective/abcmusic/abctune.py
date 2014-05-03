@@ -1,5 +1,6 @@
 import logging
 from five import grok
+from plone import api
 from plone.namedfile.interfaces import HAVE_BLOBS
 from zope import schema
 from AccessControl import getSecurityManager
@@ -134,6 +135,7 @@ class View(grok.View):
     def javascript(self):
         js = u"""<script type="text/javascript">\n"""
         js += u'tuneModified = ' + _(u"'The tune was modified... continue ?'") + u';\n'
+        js += u'var uuid = "' + api.content.get_uuid(self.context) + '";\n'
         js += u'</script>'
         # import pdb;pdb.set_trace()
         return js

@@ -1,6 +1,7 @@
 from zope.publisher.browser import BrowserView
 import logging
 from plone import api
+from plone.app.uuid.utils import uuidToObject
 # from z3c.blobfile import file, image
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
@@ -23,15 +24,14 @@ def removeViewInURL(url):
     if l_url[len(l_url) - 1] == 'view':
         l_url.pop()
         url = '/'.join(l_url)
+    logger.info('update : ' + url)
     return url
 
 class updateTune(BrowserView):
     """ AJAX method/view"""
-    def __call__(self , abctext , abctuneURL, makeMP3):
+    def __call__(self , abctext , uuid, makeMP3):
         # need to remove 'view' at the end if present
-        abctuneURL = removeViewInURL(abctuneURL)
-        abctune = api.content.get(path=abctuneURL)
-        logger.info('update : ' + abctuneURL)
+        abctune = uuidToObject(uuid)
         sm = getSecurityManager()
         if not sm.checkPermission(ModifyPortalContent, abctune):
             return
@@ -48,9 +48,8 @@ class updateTune(BrowserView):
 
 class currentScore(BrowserView):
     """ AJAX method/view"""
-    def __call__(self, abctuneURL):
-        abctuneURL = removeViewInURL(abctuneURL)
-        abctune = api.content.get(path=abctuneURL)
+    def __call__(self, uuid):
+        abctune = uuidToObject(uuid)
         height = abctune.score._height
         width = abctune.score._width
         retour = '<img src="' + abctune.absolute_url() + '/@@download/score/'
@@ -60,9 +59,8 @@ class currentScore(BrowserView):
 
 class currentPDFScore(BrowserView):
     """ AJAX method/view"""
-    def __call__(self, abctuneURL):
-        abctuneURL = removeViewInURL(abctuneURL)
-        abctune = api.content.get(path=abctuneURL)
+    def __call__(self, uuid):
+        abctune = uuidToObject(uuid)
         retour = '<a id="abctunePDFScore" '
         retour += 'href="' + abctune.absolute_url() + '/@@download/pdfscore/' + abctune.pdfscore.filename + '"'
         retour += ' target="_blank" type="application/pdf" ><img src="pdf.png" /></a>'
@@ -70,9 +68,8 @@ class currentPDFScore(BrowserView):
         
 class currentMidi(BrowserView):
     """ AJAX method/view"""
-    def __call__(self, abctuneURL):
-        abctuneURL = removeViewInURL(abctuneURL)
-        abctune = api.content.get(path=abctuneURL)
+    def __call__(self, uuid):
+        abctune = uuidToObject(uuid)
         retour = '<embed id="abctuneMidi" height="30" autostart="true" controller="true" autoplay="true"'
         retour = retour + ' src="' + abctune.absolute_url() + '/@@download/midi/' + abctune.midi.filename + '"'
         retour = retour + ' type="audio/mid"> </embed>'            
@@ -80,9 +77,8 @@ class currentMidi(BrowserView):
 
 class currentMP3(BrowserView):
     """ AJAX method/view"""
-    def __call__(self, abctuneURL):
-        abctuneURL = removeViewInURL(abctuneURL)
-        abctune = api.content.get(path=abctuneURL)
+    def __call__(self, uuid):
+        abctune = uuidToObject(uuid)
         retour = '<embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true"'
         retour = retour + ' src="' + abctune.absolute_url() + '/@@download/sound/' + abctune.sound.filename + '"'
         retour = retour + ' type="audio/mp3"> </embed>'            
@@ -90,9 +86,8 @@ class currentMP3(BrowserView):
 
 class createMP3(BrowserView):
     """ AJAX method/view"""
-    def __call__(self, abctext, abctuneURL):
-        abctuneURL = removeViewInURL(abctuneURL)
-        abctune = api.content.get(path=abctuneURL)
+    def __call__(self, abctext, uuid):
+        abctune = uuidToObject(uuid)
         sm = getSecurityManager()
         if not sm.checkPermission(ModifyPortalContent, abctune):
             return

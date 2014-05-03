@@ -11,28 +11,30 @@ $(document).ready(function() {
 		$(this).toggleClass("tuneCollapsed");
 	});
 	$("#saveModifications").click(function(){
-		var pathname = window.location.pathname;
+		// var pathname = window.location.pathname;
+		var pathname = $(location).attr('href');
+		console.log(uuid);
 		abctext = $("#abc-text").val();
 		makeMP3 = 0;
 		if ($("#checkboxMakeMP3").is(':checked')) makeMP3 = 1;
-		var updatedTune  = $.post("@@updateTune" , {'abctext':abctext, 'abctuneURL':pathname, 'makeMP3':makeMP3} , function(data){
+		var updatedTune  = $.post("@@updateTune" , {'abctext':abctext, 'uuid':uuid, 'makeMP3':makeMP3} , function(data){
 			console.log(makeMP3);
-			$.post("@@currentScore", {'abctuneURL':pathname}, function(data){
+			$.post("@@currentScore", {'uuid':uuid}, function(data){
 				width = $("#scoreView").attr('width');
 				height = $("#scoreView").attr('height');
 				$("#scoreView").html(data);
 				});
 			// I don't understand why: without doing anything, the midi div is automaticaly updated...???
 			// but I force it anyway !
-			$.post("@@currentMidi", {'abctuneURL':pathname}, function(data){
+			$.post("@@currentMidi", {'uuid':uuid}, function(data){
 				$("#midiView").html(data);
 				});
-			$.post("@@currentPDFScore", {'abctuneURL':pathname}, function(data){
+			$.post("@@currentPDFScore", {'uuid':uuid}, function(data){
 				$("#pdfScore").html(data);
 				});
 			
 			if (makeMP3 == 1) {
-				$.post("@@currentMP3", {'abctuneURL':pathname}, function(data){
+				$.post("@@currentMP3", {'uuid':uuid}, function(data){
 					$("#mp3View").html(data);
 					});
 			}
@@ -45,7 +47,7 @@ $(document).ready(function() {
 	$("#createMP3").click(function(){
 		var pathname = window.location.pathname;
 		abctext = $("#abc-text").val();
-		$.post("@@createMP3", {'abctext':abctext, 'abctuneURL':pathname}, function(data){
+		$.post("@@createMP3", {'abctext':abctext, 'uuid':uuid}, function(data){
 			$("#mp3").html(data);
 			});
 	});
