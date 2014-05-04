@@ -29,7 +29,9 @@
  <property name="default_view_fallback">False</property>
  <property name="view_methods">
   <element value="view"/>
+  <!--
   <element value="midijs-view" title="View with MIDIjs"/>
+  -->
  </property>
  
  

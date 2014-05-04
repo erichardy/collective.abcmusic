@@ -6,10 +6,10 @@
  <action-provider name="portal_actions" />
  
  
- <object name="object" meta_type="CMF Action Category">
-  <object name="import" meta_type="CMF Action" i18n:domain="iuem.photorepository">
+ <object name="object_buttons" meta_type="CMF Action Category">
+  <object name="import" meta_type="CMF Action" i18n:domain="collective.abcmusic">
    <property name="title" i18n:translate="">Import ABC File</property>
-   <property name="description" i18n:translate=""></property>
+   <property name="description" i18n:translate="">Import one or many files from a wellformed abc file</property>
    <property name="url_expr">string:@@import-abc</property>
    <property name="available_expr">python:folder is object</property>
    <property name="icon_expr"></property>
@@ -19,5 +19,21 @@
    <property name="visible">True</property>
   </object>
  </object>
+ 
+ <object name="object_buttons" meta_type="CMF Action Category">
+  <object name="export-To-Abc" meta_type="CMF Action" i18n:domain="collective.abcmusic">
+   <property name="title" i18n:translate="">Export to abc file</property>
+   <property name="description" i18n:translate="">Export all the tunes of this folder to one file</property>
+   <property
+      name="url_expr">string:@@export-to-abc</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr">python:folder is object</property>
+   <property name="permissions">
+    <element value="Modify portal content"/>
+   </property>
+   <property name="visible">True</property>
+  </object>
+</object>
+ 
  
 </object> 
