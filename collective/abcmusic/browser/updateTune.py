@@ -1,6 +1,7 @@
 from zope.publisher.browser import BrowserView
 import logging
 from plone import api
+from zope.component.hooks import getSite
 from plone.app.uuid.utils import uuidToObject
 # from z3c.blobfile import file, image
 from AccessControl import getSecurityManager
@@ -40,6 +41,9 @@ class updateTune(BrowserView):
         addOrigins(abctune)
         _make_midi(abctune)
         _make_score(abctune)
+        site = getSite()
+        catalog = site.portal_catalog
+        catalog.reindexObject(abctune)
         # _make_PDFscore(abctune)
         if makeMP3 != '0':
             _make_mp3(abctune)

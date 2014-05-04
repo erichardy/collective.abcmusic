@@ -153,7 +153,9 @@ def addTuneType(context):
     labc = abc.split('R:')
     if len(labc) != 1:
         tunetype = labc[1].split('\n')[0]
-        context.tunetype = tunetype.lower()
+        context.tunetype = tunetype.strip().lower()
+    else:
+        context.tunetype = "unknown"
 
 def addOrigins(context):
     abc = context.abc
@@ -163,7 +165,8 @@ def addOrigins(context):
         context.tunecountry = tuneOrigins[0]
         if len(tuneOrigins) != 1:
             context.tunearea = ';'.join(tuneOrigins[1:])
-        
+    else:
+        context.tunearea = "unknown"
 
 def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
