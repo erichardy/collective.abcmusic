@@ -16,4 +16,6 @@ $(document).ready(function() {
 			};
 		}
 	});
+	val = '[value="' + window.location.href + '"]';
+	$('.portletTunesListing ' + val).prop('selected', true) ;
 });

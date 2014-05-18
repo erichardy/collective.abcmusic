@@ -118,7 +118,41 @@ $(document).ready(function() {
 	};
 
 	var currentPage = window.location.href ;
+	
+	// Delay for updateABC: 2000ms (2 seconds)
+	//
+	// implementation of the answer of Anderson Aug 19 '13 at 2:48
+	// in http://stackoverflow.com/questions/1909441/jquery-keyup-delay
+	var delay = (function(){
+	    var timer = 0;
+	    return function(callback, ms){
+	      clearTimeout (timer);
+	      timer = setTimeout(callback, ms);
+	    };
+	})(); 
 
+	var duplicateFilter=(function(){
+	  var lastContent;
+	  return function(content,callback){
+	    content=$.trim(content);
+	    if(content!=lastContent){
+	      callback(content);
+	    }
+	    lastContent=content;
+	  };
+	})();
+	// OLD $('#abc-text').keyup(updateABC);
+	$("#abc-text").on("keyup",function(ev){
+		  var self=this;
+		  delay(function(){
+		    duplicateFilter($(self).val(),function(c){
+		    	updateABC();
+		        // console.log(c);
+		    });
+		  }, 2000 );
+		})
+	//
+	
 	minSpeed = 20 ;
 	maxSpeed = 400 ;
 	stepSpeed = 5 ;
@@ -153,7 +187,6 @@ $(document).ready(function() {
 	$("#abcscale").text(scoreSize) ;
 	ABCJS.renderAbc('abc-edit', $("#abc-text").text() , {}, {scale: scoreSize},{});
 	ABCJS.renderMidi('midi-edit',$("#abc-text").text(), {}) ;
-	$('#abc-text').keyup(updateABC);
 	// tuneNotModified = $("#tuneNotModified").html() ;
 	// $("#tuneNotModified").hide() ;
 	// tuneModified = $("#tuneModified").html() ;
