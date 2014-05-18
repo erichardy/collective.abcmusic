@@ -59,5 +59,7 @@
     component=".vocabularies.abcTunetypesVocabularyFactory"
     name="collective.abcmusic.vocabularies.abctunetypes"
     />
-
+<!--
+  <adapter factory=".subjects.SubjectsFieldWidget" />
+-->
 </configure>
