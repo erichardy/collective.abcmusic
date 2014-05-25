@@ -1,13 +1,20 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts">
+
  <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression="python:context.portal_type=='abctune'"
     id="abcmusic-tuneView.js" inline="False"/>
+
  <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression=""
     id="abcmusic.js" inline="False"/>
- 
+
  <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression=""
     id="portlettuneslisting.js" inline="True"/>
+
+  <javascript cacheable="False" compression="none" cookable="True"
+    enabled="True" expression="python:context.portal_type=='Collection'"
+    id="abcCollectionView.js" inline="False"/>
+ 
 </object>
