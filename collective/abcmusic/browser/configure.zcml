@@ -104,6 +104,21 @@
 
   <browser:page
     for="*"
+    name="update-subjects"
+    class=".managesubjects.updateSubjects"
+    permission="cmf.ModifyPortalContent"
+  />
+  <browser:page
+    for="*"
+    name="manage-subjects"
+    class=".managesubjects.manageSubjects"
+    template="managesubjects.pt"
+    permission="cmf.ModifyPortalContent"
+  />
+
+
+  <browser:page
+    for="*"
     name="abcDebug"
     class=".abcDebug.abcDebug"
     permission="cmf.ManagePortal"

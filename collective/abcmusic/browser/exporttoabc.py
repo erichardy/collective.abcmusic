@@ -23,7 +23,7 @@ class exportToAbc(BrowserView):
         abcFile = ''
         for tune in results:
             abcFile += tune.abc
-            abcFile += '\n'
+            abcFile += '\n\n'
         self.request.response.setHeader('Content-Type', 'text/abc')
         self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s"' % filename)
         return abcFile
