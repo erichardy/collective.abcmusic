@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.abcmusic\n"
-"POT-Creation-Date: 2014-05-04 13:55+0000\n"
+"POT-Creation-Date: 2014-05-25 12:37+0000\n"
 "PO-Revision-Date: 2008-02-04 18:00+0000\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -47,7 +47,7 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: ./abctune_templates/view.pt:70
+#: ./abctune_templates/view.pt:72
 msgid "Create MP3"
 msgstr ""
 
@@ -111,7 +111,7 @@ msgstr ""
 msgid "Reel"
 msgstr ""
 
-#: ./abctune_templates/view.pt:102
+#: ./abctune_templates/view.pt:105
 msgid "Save"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr ""
 msgid "The tune in abc format"
 msgstr ""
 
-#: ./abctune_templates/view.pt:101
+#: ./abctune_templates/view.pt:104
 msgid "The tune is modified, you should save it if you want to keep your work :"
 msgstr ""
 
@@ -187,7 +187,7 @@ msgstr ""
 msgid "Tune type"
 msgstr ""
 
-#: ./abctune_templates/view.pt:29
+#: ./abctune_templates/view.pt:31
 msgid "View breadcrumbs"
 msgstr ""
 
@@ -207,7 +207,7 @@ msgstr ""
 msgid "abctunes listing"
 msgstr ""
 
-#: ./abctune_templates/view.pt:71
+#: ./abctune_templates/view.pt:73
 msgid "clic here and wait... can be long"
 msgstr ""
 
@@ -220,11 +220,11 @@ msgstr ""
 msgid "from the field R:"
 msgstr ""
 
-#: ./abctune_templates/view.pt:28
+#: ./abctune_templates/view.pt:30
 msgid "hide/show abcTextarea"
 msgstr ""
 
-#: ./abctune_templates/view.pt:27
+#: ./abctune_templates/view.pt:29
 msgid "hide/show top"
 msgstr ""
 
@@ -236,8 +236,12 @@ msgstr ""
 msgid "import abc file"
 msgstr ""
 
-#: ./abctune_templates/view.pt:98
+#: ./abctune_templates/view.pt:100
 msgid "inline editing"
+msgstr ""
+
+#: ./abctune_templates/view.pt:102
+msgid "manage subjects"
 msgstr ""
 
 #: ./portlettuneslisting.py:17
@@ -249,7 +253,7 @@ msgid "sound"
 msgstr ""
 
 #. Default: "speed :"
-#: ./abctune_templates/view.pt:111
+#: ./abctune_templates/view.pt:114
 msgid "speed : "
 msgstr ""
 
@@ -257,7 +261,7 @@ msgstr ""
 msgid "templates"
 msgstr ""
 
-#: ./abctune_templates/view.pt:34
+#: ./abctune_templates/view.pt:36
 msgid "the tune as it is stored in the database"
 msgstr ""
 

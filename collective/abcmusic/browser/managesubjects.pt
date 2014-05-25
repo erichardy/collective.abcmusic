@@ -14,16 +14,31 @@
 <tal:main-macro metal:define-macro="main">
 
 <div id="subjects-content" 
-     tal:define="subjects python:view.listSubjects()">
+     tal:define="subjects python:view.listSubjects();
+                 currents python:view.currentSubjects()">
 <form>
 <span tal:repeat="subject subjects">
- <input class="subject-value" type="checkbox" name="subject" value="string:${subject}"><span tal:content="string:  ${subject}">subject</span><p />
+  <span tal:condition="python:subject in currents">
+    <input class="subject-value" type="checkbox" name="subject" tal:attributes="value string:${subject}" checked><span tal:content="string:  ${subject}">subject</span><p />
+  </span>
+  <span tal:condition="python:not subject in currents">
+    <input class="subject-value" type="checkbox" name="subject" tal:attributes="value string:${subject}"><span tal:content="string:  ${subject}">subject</span><p />
+  </span>
 </span>
 </form>
 </div>
-
 <script type="text/javascript">
 
+$(".subject-value").change(function(){
+	var subjects = '';
+	var pathname = $(location).attr('href');
+	$(".subject-value:checked").each(function(){
+		subjects = subjects + '|' + this.value;
+	});
+	// console.log(subjects);
+	method = pathname + "/@@update-subjects"
+	updateSubjects = $.post(method,{'subjects':subjects},function(data){console.log(data)});
+});
 
 </script>
 <style type="text/css" media="screen">
