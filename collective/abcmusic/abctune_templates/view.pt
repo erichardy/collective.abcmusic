@@ -8,13 +8,15 @@
 
 <head>
 <metal:js fill-slot="javascript_head_slot">
-<!-- -->
+<!-- --> 
+    
+    
 	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.js.abcjs/abcjs_plugin_1.7.user.js"></script>
 	<script tal:omit-tag="" tal:replace="structure view/javascript" ></script>
 	<!-- -->
 <!--
-	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.abcmusic/js/abcmusic-tuneView.js"></script>
--->
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/abcmusic-tuneView.js"></script>
+--> 
 </metal:js>
 </head>
 
@@ -97,6 +99,7 @@
 	<div class="tune-edit">
 	<h3 i18n:translate="">inline editing</h3>
 	<span tal:condition="python:view.abcAutorized()">
+	<a class="a-overlay" href="" tal:attributes="href string:${context/absolute_url}/@@manage-subjects" i18n:translate="">manage subjects</a>
        <div id="tuneModified">
          <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
          <button id="saveModifications" i18n:translate="">Save</button>

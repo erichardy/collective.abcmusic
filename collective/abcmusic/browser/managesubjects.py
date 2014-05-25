@@ -18,6 +18,7 @@ class manageSubjects(BrowserView):
         catalog = self.context.portal_catalog
         subjects = list(catalog.uniqueValuesFor('Subject'))
         logger.info(subjects)
+        # import pdb;pdb.set_trace()
         logger.info(subjects.sort())
         return subjects
         

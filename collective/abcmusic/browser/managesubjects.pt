@@ -11,13 +11,29 @@
 
 <body>
 <metal:main fill-slot="main">
+<tal:main-macro metal:define-macro="main">
 
-<ul tal:define="subjects python:view.listSubjects()">
+<div id="subjects-content" 
+     tal:define="subjects python:view.listSubjects()">
+<form>
 <span tal:repeat="subject subjects">
- <li tal:content="string:${subject}">sub</li>
+ <input class="subject-value" type="checkbox" name="subject" value="string:${subject}"><span tal:content="string:  ${subject}">subject</span><p />
 </span>
-</ul>
+</form>
+</div>
 
+<script type="text/javascript">
+
+
+</script>
+<style type="text/css" media="screen">
+
+.pb-ajax {
+  width: 50%;
+  background-color: white;
+}
+</style>
+</tal:main-macro>
 </metal:main>
 
 </body>
