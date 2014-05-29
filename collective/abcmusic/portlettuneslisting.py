@@ -27,12 +27,12 @@ class Assignment(base.Assignment):
 
     @property
     def title(self):
-        return _(u"abctunes listing")
+        return _(u"Tunes listing")
 
 class AddForm(base.AddForm):
     form_fields = form.Fields(ITunesListingPortlet)
     label = _(u"Add Tunes listing Portlet")
-    description = _(u"This portlet the tunes in the current folder.")
+    description = _(u"This portlet gather the tunes in the current folder.")
 
     def create(self, data):
         return Assignment(count=data.get('count', 20))
@@ -40,7 +40,7 @@ class AddForm(base.AddForm):
 class EditForm(base.EditForm):
     form_fields = form.Fields(ITunesListingPortlet)
     label = _(u"Edit Tunes listing Portlet")
-    description = _(u"This portlet the tunes in the current folder.")
+    description = _(u"This portlet gather the tunes in the current folder.")
 
 class Renderer(base.Renderer):
     _template = ViewPageTemplateFile('tuneslisting.pt')

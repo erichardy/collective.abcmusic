@@ -1,9 +1,7 @@
 <dl class="portlet portletTunesListing"
-    i18n:domain="collectibe.abcmusic"
+    i18n:domain="collective.abcmusic"
     >
-<dt class="portletHeader">
-  Tunes in this folder
-</dt>
+<dt class="portletHeader" i18n:translate="">Tunes in this folder</dt>
 <dd class="portletItem portletTunesListing">
   <select tal:attributes="size view/portlet_size">
     <span tal:repeat="obj view/tunes_items">

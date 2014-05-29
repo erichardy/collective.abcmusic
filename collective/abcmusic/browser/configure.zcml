@@ -129,7 +129,7 @@
     class=".abcDebug.abcDebug"
     permission="cmf.ManagePortal"
   />
-  abc_collection_view
+
   <!-- EXAMPLE:
       
   <include package="plone.app.contentmenu" />

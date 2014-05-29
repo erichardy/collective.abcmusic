@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <portlets
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="collective.abcmusic">
+    >
+
   <portlet
-    addview="collective.abcmusic.portlettuneslisting"
+    i18n:domain="plone"
     title="Tunes listing"
     description="A portlet which render a listing of tunes in current folder."
-    i18n:attributes="title title_tunes_listing_portlet;
-                     description description_tunes_listing_portlet">
+    i18n:attributes="title; description"
+    addview="collective.abcmusic.portlettuneslisting">
     <for interface="plone.app.portlets.interfaces.IColumn" />
   </portlet>
 </portlets>

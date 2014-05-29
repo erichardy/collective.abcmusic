@@ -5,6 +5,15 @@ $(document).ready(function() {
 */
 jQuery(document).ready(function($) {
 
+	$( "#accordeon" ).accordion({
+		header: "dt",
+		heightStyle: "content",
+		animate: 500,
+		collapsible: true,
+		active: false,
+		});
+	
+/*
 $(document).ready(function() {
 	$("a.contenttype-abctune").prepOverlay({
         subtype: 'ajax',
@@ -13,5 +22,5 @@ $(document).ready(function() {
     });
 
 });
-
+*/
 });

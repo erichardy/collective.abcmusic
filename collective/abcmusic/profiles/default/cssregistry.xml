@@ -18,4 +18,11 @@
     expression=""
     media="screen" rel="stylesheet" rendering="import"
     />
+ <stylesheet id="abcCollectionView.css"
+    title="" cacheable="True" compression="safe" cookable="True"
+    enabled="1"
+    expression="python:context.portal_type=='Collection'"
+    media="screen" rel="stylesheet" rendering="import"
+    />
+
 </object>

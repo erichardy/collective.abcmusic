@@ -15,14 +15,14 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: collective.abcmusic\n"
+"Domain: plone\n"
 
 #: ./abctune.py:137
 msgid "'The tune was modified... continue ?'"
 msgstr ""
 
-#: ./profiles/default/types/abctune.xml
-msgid "A tune in abc format"
+#: ./profiles/default/portlets.xml
+msgid "A portlet which render a listing of tunes in current folder."
 msgstr ""
 
 #: ./controlpanel.py:15
@@ -45,24 +45,20 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: ./profiles/default/types/Collection.xml
+msgid "Collection"
+msgstr ""
+
+#: ./profiles/default/types/Collection.xml
+msgid "Collection of searchable information"
+msgstr ""
+
 #: ./addtune.py:39
 msgid "Create"
 msgstr ""
 
-#: ./abctune_templates/view.pt:72
-msgid "Create MP3"
-msgstr ""
-
 #: ./portlettuneslisting.py:42
 msgid "Edit Tunes listing Portlet"
-msgstr ""
-
-#: ./profiles/default/actions.xml
-msgid "Export all the tunes of this folder to one file"
-msgstr ""
-
-#: ./profiles/default/actions.xml
-msgid "Export to abc file"
 msgstr ""
 
 #: ./addtune.py:30
@@ -73,20 +69,8 @@ msgstr ""
 msgid "Hornpipe"
 msgstr ""
 
-#: ./profiles/default/actions.xml
-msgid "Import ABC File"
-msgstr ""
-
-#: ./profiles/default/actions.xml
-msgid "Import one or many files from a wellformed abc file"
-msgstr ""
-
 #: ./addtune.py:15
 msgid "Jig"
-msgstr ""
-
-#: ./profiles/default/types/abctune.xml
-msgid "MIDIjs View"
 msgstr ""
 
 #: ./portlettuneslisting.py:18
@@ -113,16 +97,8 @@ msgstr ""
 msgid "Reel"
 msgstr ""
 
-#: ./abctune_templates/view.pt:105
-msgid "Save"
-msgstr ""
-
 #: ./abctune.py:68
 msgid "Score"
-msgstr ""
-
-#: ./profiles/default/registry.xml
-msgid "Text"
 msgstr ""
 
 #: ./addtune.py:49
@@ -157,14 +133,6 @@ msgstr ""
 msgid "The tune in abc format"
 msgstr ""
 
-#: ./abctune_templates/view.pt:104
-msgid "The tune is modified, you should save it if you want to keep your work :"
-msgstr ""
-
-#: ./profiles/default/registry.xml
-msgid "The tune type"
-msgstr ""
-
 #: ./abctune.py:45
 msgid "The type of the tune"
 msgstr ""
@@ -185,20 +153,9 @@ msgstr ""
 msgid "Tune abc"
 msgstr ""
 
-#: ./profiles/default/registry.xml
-msgid "Tune type"
-msgstr ""
-
-#: ./tuneslisting.pt:4
-msgid "Tunes in this folder"
-msgstr ""
-
 #: ./portlettuneslisting.py:30
+#: ./profiles/default/portlets.xml
 msgid "Tunes listing"
-msgstr ""
-
-#: ./abctune_templates/view.pt:31
-msgid "View breadcrumbs"
 msgstr ""
 
 #: ./addtune.py:18
@@ -213,24 +170,13 @@ msgstr ""
 msgid "abcmusic templates description"
 msgstr ""
 
-#: ./profiles/default/types/abctune.xml
-msgid "abctune"
-msgstr ""
-
-#: ./abctune_templates/view.pt:73
-msgid "clic here and wait... can be long"
+#. Default: "There are currently no items in this folder."
+#: ./browser/abccollectionview.pt:140
+msgid "description_no_items_in_folder"
 msgstr ""
 
 #: ./abctune.py:46
 msgid "from the field R:"
-msgstr ""
-
-#: ./abctune_templates/view.pt:30
-msgid "hide/show abcTextarea"
-msgstr ""
-
-#: ./abctune_templates/view.pt:29
-msgid "hide/show top"
 msgstr ""
 
 #: ./browser/importAbc.py:23
@@ -241,14 +187,6 @@ msgstr ""
 msgid "import abc file"
 msgstr ""
 
-#: ./abctune_templates/view.pt:100
-msgid "inline editing"
-msgstr ""
-
-#: ./abctune_templates/view.pt:102
-msgid "manage subjects"
-msgstr ""
-
 #: ./portlettuneslisting.py:17
 msgid "size of the box"
 msgstr ""
@@ -257,16 +195,7 @@ msgstr ""
 msgid "sound"
 msgstr ""
 
-#. Default: "speed :"
-#: ./abctune_templates/view.pt:114
-msgid "speed : "
-msgstr ""
-
 #: ./controlpanel.py:9
 msgid "templates"
-msgstr ""
-
-#: ./abctune_templates/view.pt:36
-msgid "the tune as it is stored in the database"
 msgstr ""
 

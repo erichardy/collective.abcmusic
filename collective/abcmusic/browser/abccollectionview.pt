@@ -27,7 +27,7 @@
 
         <metal:listingmacro define-macro="listing">
         <tal:results define="b_start python:request.get('b_start', 0);
-                             batch python:context.results(b_start=b_start);
+                             batch python:context.results(b_start=0);
                              site_properties context/portal_properties/site_properties;
                              use_view_action site_properties/typesUseViewActionInListings|python:();
                              isAnon context/@@plone_portal_state/anonymous;
@@ -37,7 +37,7 @@
                              navigation_root_url context/@@plone_portal_state/navigation_root_url;
                              pas_member context/@@pas_member;">
         <tal:listing condition="batch">
-
+<div id="accordeon">
             <dl metal:define-slot="entries">
                 <tal:entry tal:repeat="item batch" metal:define-macro="entries">
                 <tal:block tal:define="item_url item/getURL;
@@ -55,6 +55,7 @@
                                        item_modified item/ModificationDate;
                                        item_sametime python: item_start == item_end;
                                        item_samedate python: (item_end - item_start &lt; 1) if item_type == 'Event' else False">
+                    
                     <metal:block define-slot="entry">
                     <dt tal:condition="python: item_type == 'abctune'" metal:define-macro="listitem"
                         tal:attributes="class python:item_type == 'Event' and 'vevent' or '' + 'abctune-collection'">
@@ -131,7 +132,7 @@
                 </tal:block>
                 </tal:entry>
             </dl>
-
+</div>
             <div metal:use-macro="context/batch_macros/macros/navigation" />
 
         </tal:listing>
