@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+#
+# No more used !
+#
 from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
 # from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
 from plone.app.dexterity.behaviors.metadata import ICategorization

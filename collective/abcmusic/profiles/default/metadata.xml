@@ -5,8 +5,9 @@
     <!--<dependency>profile-xxx:default</dependency>-->
     <dependency>profile-plone.app.dexterity:default</dependency>
     <dependency>profile-collective.js.jqueryui:default</dependency>
-    <dependency>profile-collective.z3cform.widgets:default</dependency>
     <dependency>profile-collective.js.abcjs:default</dependency>
     <dependency>profile-collective.js.midijs:default</dependency>
+    <!-- <dependency>profile-collective.z3cform.widgets:default</dependency> -->
+    
   </dependencies>
 </metadata>

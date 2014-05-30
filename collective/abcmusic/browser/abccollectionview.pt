@@ -112,6 +112,7 @@
 		            </embed>
 		    </object>
 		    </span>
+		    <span style="margin-left: 25px;"><a href="#" tal:attributes="href python:item_url" target="_blank" i18n:translate="">Edit</a></span>
 		   </div>
 		    <div id="mp3">MP3 :&nbsp;
 		      <span tal:define="sound nocall:item/sound" tal:condition="nocall:sound">

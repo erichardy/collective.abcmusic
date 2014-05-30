@@ -9,8 +9,6 @@
 <head>
 <metal:js fill-slot="javascript_head_slot">
 <!-- --> 
-    
-    
 	<script type="text/javascript" tal:attributes="src string:${portal_url}/++resource++collective.js.abcjs/abcjs_plugin_1.7.user.js"></script>
 	<script tal:omit-tag="" tal:replace="structure view/javascript" ></script>
 	<!-- -->
