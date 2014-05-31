@@ -18,6 +18,9 @@
     <!-- see /plone/app/vocabularies/... -->
     <value key="group" i18n:translate="">Text</value>
   </records>
-  
+  <records interface="collective.js.jqueryui.controlpanel.IJQueryUICSS">
+      <value key="css">False</value>
+      <value key="patch">False</value>
+    </records>
 
 </registry>
