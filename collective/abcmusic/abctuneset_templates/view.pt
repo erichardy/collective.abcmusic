@@ -28,7 +28,10 @@
 	    </tr>
     </tbody>
     </table>
+    
+    <p tal:content="structure string:${here/combinedTitle}">abc</p>
     <p tal:content="structure string:${here/abc}">abc</p>
+    <textarea rows="50" tal:content="string:${here/abc}">abc</textarea>
 	<p />
 <h3>&nbsp;</h3>
 <script type="text/javascript">

@@ -25,13 +25,28 @@ import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
 from os import unlink
+import re
 from collective.abcmusic.abctune import removeNonAscii
 from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
+"""
+Each tune in a set must not have more than one part (P:), so two tags P:
+- the first in the file to indicate how many times to play this tune
+- the second, just before the note which is mandatory when a first P: tells
+how many times to play the tune. 
+If it has no part, it is assumed to be played only one time.
+If those rules are not respected, the result is really uncertain... 
+"""
 
 class IABCTuneSet(form.Schema):
+    
+    form.omitted('combinedTitle')
+    combinedTitle = schema.TextLine(
+                    title=_(u"combined set title"),
+                    description=_(u"this title depends of the tunes titles"),
+                    )
     form.omitted('abc')
     abc = schema.Text(title=_(u"Tune Set abc"),
                       description=_(u'The tunes set in abc format'),)
@@ -81,7 +96,78 @@ class View(grok.View):
         # import pdb;pdb.set_trace()
         return js
 
+def getFirstTitle(abcText):
+    # because T: is mandatory, no more verifications
+    tabc = abcText.split('T:')
+    title = tabc[1].split('\n')[0].strip()
+    return removeNonAscii(title)
 
+# remove undesirable headers D: R: Z: ...
+def cleanupHeaders(abcText):
+    lines = abcText.split('\n')
+    cleanedABC = []
+    headersToRemove = ['D:','R:','S:','T:','X:','Z:']
+    for line in lines:
+        if not line[:2] in headersToRemove:
+            cleanedABC.append(line)
+    return ('\n').join(cleanedABC)
+
+"""
+We re-organize the abc :
+1/ remove undesirable headers
+2/ comments first (they are also MIDI instructions)
+3/ keep useful headers
+4/ memorize only the first P:
+%%QMLKP
+"""
+def reorgenize(abcText, part):
+    abcText = cleanupHeaders(removeNonAscii(abcText))
+    usefulHeaders = ['P:','Q:','M:','L:','K:']
+    comments = []
+    newABCTextLines = []
+    Q = M = L = K = Parts = ''
+    for line in abcText.split('\n'):
+        if line[:1] == '%':
+            comments.append(line.strip('\r'))
+            logger.info(line)
+            # import pdb;pdb.set_trace()
+        if line[:2] == 'Q:':
+            Q = line + '\n'
+        if line[:2] == 'M:':
+            M = line + '\n'
+        if line[:2] == 'L:':
+            L = line + '\n'
+        if line[:2] == 'K:':
+            K = line + '\n'
+        if line[:2] == 'P:':
+            if Parts == '':
+                Parts = line.split(':')[1].strip()
+        if (line[:1] != '%' and line[:2] not in usefulHeaders):
+            newABCTextLines.append(line)
+    headers = '\n'.join(comments)
+    headers += '\n' + Q + M + L + K
+    headers += 'P:' + part + '\n'
+    newABCText = headers
+    newABCText += '\n'.join(newABCTextLines)
+            
+    # if ther is no P: header, we play only one time this tune
+    if Parts == '':
+        Parts = part
+    else:
+        Parts = part * len(Parts)
+    # logger.info(newABCText)
+    # logger.info('---------')
+    # import pdb;pdb.set_trace()
+    return newABCText , Parts
+
+def aff(abc):
+    aabc = cleanupHeaders(removeNonAscii(abc))
+    l = []
+    for line in aabc.split('\n'):
+        logger.info(line)
+        l.append(line)
+    logger.info(l)
+        
 """
 see : http://docs.plone.org/external/plone.app.dexterity/docs/advanced/event-handlers.html
 zope.lifecycleevent.interfaces.IObjectModifiedEvent
@@ -93,26 +179,45 @@ also fired when
 """
 @grok.subscribe(IABCTuneSet, IObjectModifiedEvent)
 def modifAbcTuneSet(context , event):
-    logger.info('IABCTuneSet, IObjectModifiedEvent')
+    # logger.info('IABCTuneSet, IObjectModifiedEvent')
+    partsTags = ['A','B','C','D','E','F','G','H','I','J']
+    num_parts = 0
+    P_header = 'P:'
     abcTunes = [abctune
                 for abctune in event.object.objectValues()
                 if abctune.portal_type == 'abctune']
     abc = ''
+    combinedTitle = ''
     for tune in abcTunes:
-        abc += removeNonAscii(tune.abc)
-        abc += '\n'
-    context.abc = abc
+        combinedTitle += getFirstTitle(tune.abc)
+        nbtunes = len(abcTunes) - 1
+        if abcTunes.index(tune) < nbtunes:
+            combinedTitle += ' , '
+        # aff (tune.abc)
+        # return
+        abcreorgenized , parts = reorgenize(tune.abc, partsTags[num_parts])
+        num_parts += 1
+        P_header += parts
+        abc += abcreorgenized
+        
+    context.combinedTitle = 'T: ' + combinedTitle
+    context.abc = 'X:1\n' + context.combinedTitle + '\n'
+    context.abc += P_header + '\n'
+    context.abc += abc
+    
+    # logger.info(combinedTitle)
     # import pdb;pdb.set_trace()
 
 """
 To create the abc of the set :
 - create the title (T:) from the titles and remove secondary T: fields
 - remove X: except for the first
-- analize the parts P: in order to play each tune as described in the according P:
+- analyze the parts P: in order to play each tune as described in the according P:
 - remove the secondary parts (P:B,...) from tunes
 - set a part to each tune : first == P:A , second == P:B , etc...
 not allowed in tune body : R: Z: 
 - remove unnecessary headers (D: Z:) ???
 - Q: must not be the first header of a secondary just after the previous tune
+
 """
 

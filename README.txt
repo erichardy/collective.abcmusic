@@ -18,6 +18,11 @@ See web sites for more informations :
 * abcMIDI : http://abc.sourceforge.net/abcMIDI/
 * abcjs : http://code.google.com/p/abcjs/
 
+Note about QuickTime : in revent QuickTime versions, Apple removed MIDI support.
+So may be it is possible to recover MIDI support from older versions.
+see : http://support.apple.com/kb/DL923
+
+
 Bug
 ===
 a bug like this sometimes appears (but not always) :
