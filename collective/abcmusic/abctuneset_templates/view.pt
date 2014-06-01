@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.abcmusic">
+
+<head>
+<metal:js fill-slot="javascript_head_slot">
+<!-- --> 
+	<script tal:omit-tag="" tal:replace="structure view/javascript" ></script>
+	<!-- -->
+<!--
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/abcmusic-tuneView.js"></script>
+--> 
+</metal:js>
+</head>
+
+<body>
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+    <table border="0" class="abctune-buttons">
+    <tbody>
+	    <tr>
+		    <td><button id="toggleHeaders" i18n:translate="">hide/show top</button></td>
+		    <td><button id="view-nav" i18n:translate="">View breadcrumbs</button></td>
+	    </tr>
+    </tbody>
+    </table>
+    <p tal:content="structure string:${here/abc}">abc</p>
+	<p />
+<h3>&nbsp;</h3>
+<script type="text/javascript">
+$("#toggleHeaders").click(function(){
+	portalTopHiddenConfig = window.location.href + '-portalTopHidden' ;
+	$("#portal-top").toggle("fast");
+	$("#viewlet-above-content").toggle("fast");
+	$("#edit-bar").toggle("fast" , function() {
+		if ($('#portal-top').is(':hidden')) {
+			localStorage.setItem(portalTopHiddenConfig , true) ;
+			$("#viewlet-above-content").hide();
+			$("#view-nav").show() ;
+		}
+		else {
+			$("#viewlet-above-content").show();
+			$("#view-nav").hide() ;
+			localStorage.setItem(portalTopHiddenConfig , false) ;
+		}
+	});
+});
+$('#view-nav').click(function(){
+	$("#viewlet-above-content").show();
+});
+
+</script>
+
+</tal:main-macro>
+</metal:main>
+</body>
+</html>
