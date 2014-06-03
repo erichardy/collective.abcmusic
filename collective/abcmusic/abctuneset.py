@@ -27,6 +27,10 @@ from StringIO import StringIO
 from os import unlink
 import re
 from collective.abcmusic.abctune import removeNonAscii
+from collective.abcmusic.mp3 import _make_mp3
+from collective.abcmusic.score import _make_score
+from collective.abcmusic.midi import _make_midi 
+
 from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
@@ -106,7 +110,7 @@ def getFirstTitle(abcText):
 def cleanupHeaders(abcText):
     lines = abcText.split('\n')
     cleanedABC = []
-    headersToRemove = ['D:','R:','S:','T:','X:','Z:']
+    headersToRemove = ['D:','R:','S:','X:','Z:']
     for line in lines:
         if not line[:2] in headersToRemove:
             cleanedABC.append(line)
@@ -122,15 +126,17 @@ We re-organize the abc :
 """
 def reorgenize(abcText, part):
     abcText = cleanupHeaders(removeNonAscii(abcText))
-    usefulHeaders = ['P:','Q:','M:','L:','K:']
+    usefulHeaders = ['P:','Q:','M:','L:','K:','C:','T:']
     comments = []
     newABCTextLines = []
-    Q = M = L = K = Parts = ''
+    Q = M = L = K = T = Parts = ''
     for line in abcText.split('\n'):
         if line[:1] == '%':
             comments.append(line.strip('\r'))
-            logger.info(line)
+            # logger.info(line)
             # import pdb;pdb.set_trace()
+        if line[:2] == 'T:':
+            T = line + '\n'
         if line[:2] == 'Q:':
             Q = line + '\n'
         if line[:2] == 'M:':
@@ -145,7 +151,7 @@ def reorgenize(abcText, part):
         if (line[:1] != '%' and line[:2] not in usefulHeaders):
             newABCTextLines.append(line)
     headers = '\n'.join(comments)
-    headers += '\n' + Q + M + L + K
+    headers += '\n' + T + Q + M + L + K
     headers += 'P:' + part + '\n'
     newABCText = headers
     newABCText += '\n'.join(newABCTextLines)
@@ -192,7 +198,7 @@ def modifAbcTuneSet(context , event):
         combinedTitle += getFirstTitle(tune.abc)
         nbtunes = len(abcTunes) - 1
         if abcTunes.index(tune) < nbtunes:
-            combinedTitle += ' , '
+            combinedTitle += ' / '
         # aff (tune.abc)
         # return
         abcreorgenized , parts = reorgenize(tune.abc, partsTags[num_parts])
@@ -204,7 +210,8 @@ def modifAbcTuneSet(context , event):
     context.abc = 'X:1\n' + context.combinedTitle + '\n'
     context.abc += P_header + '\n'
     context.abc += abc
-    
+    _make_midi(context)
+    _make_score(context)
     # logger.info(combinedTitle)
     # import pdb;pdb.set_trace()
 
