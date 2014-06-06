@@ -16,7 +16,7 @@
 <div id="subjects-content" 
      tal:define="subjects python:view.listSubjects();
                  currents python:view.currentSubjects()">
-<form>
+<form id='subjects-form'>
 <span tal:repeat="subject subjects">
   <span tal:condition="python:subject in currents">
     <input class="subject-value" type="checkbox" name="subject" tal:attributes="value string:${subject}" checked><span tal:content="string:  ${subject}">subject</span><p />
@@ -25,21 +25,53 @@
     <input class="subject-value" type="checkbox" name="subject" tal:attributes="value string:${subject}"><span tal:content="string:  ${subject}">subject</span><p />
   </span>
 </span>
+<span id="for-new-value"></span>
+  <input id="subject-new-value" type="text" name="subject">
+  <button id="new-keyword" i18n:translate="">new keyword</button>
+
 </form>
 </div>
 <script type="text/javascript">
 
-$(".subject-value").change(function(){
+function updateKeywords() {
 	var subjects = '';
 	var pathname = $(location).attr('href');
 	$(".subject-value:checked").each(function(){
 		subjects = subjects + '|' + this.value;
 	});
 	// console.log(subjects);
-	method = pathname + "/@@update-subjects"
+	method = pathname + "/@@update-subjects";
 	updateSubjects = $.post(method,{'subjects':subjects},function(data){console.log(data)});
+};
+
+$(".subject-value").change(function(){
+	updateKeywords() ;
 });
 
+$("#new-keyword").click(function(event){
+	event.preventDefault();
+	newvalue = $('#subject-new-value').val().trim();
+	if (newvalue == '') {
+		$('#subject-new-value').val('');
+		return false;
+	}
+	currentValues = new Array();
+	$(".subject-value").each(function(){
+		currentValues.push(this.value);
+	});
+	if ($.inArray(newvalue, currentValues) != -1) {
+		$(".subject-value[value='" + newvalue + "']").attr("checked", "checked");
+		$('#subject-new-value').val('');
+		updateKeywords() ;
+		return false;
+	}
+	toAppend = '<input class="subject-value" type="checkbox" name="subject" checked value="' + newvalue + '"> ' + newvalue + '<p />';
+	$('#for-new-value').before(toAppend);
+	$('#subject-new-value').val('');
+	$("#subjects-content").hide().fadeIn('fast');
+	updateKeywords();
+	return false;
+});
 </script>
 <style type="text/css" media="screen">
 

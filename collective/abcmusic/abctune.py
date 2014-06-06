@@ -19,6 +19,9 @@ from plone.directives import form
 from z3c.form import button, field
 # for events handlers
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent, IObjectModifiedEvent
+from zope.event import notify
+from collective.abcmusic.events import ITuneInTuneSetModified, TuneInTuneSetModified
+from collective.abcmusic.abctuneset import updateTuneSet
 # END for events handlers
 import subprocess as sp
 import tempfile as tf
@@ -27,7 +30,8 @@ from os import unlink
 
 from collective.abcmusic.mp3 import _make_mp3
 from collective.abcmusic.score import _make_score
-from collective.abcmusic.midi import _make_midi 
+from collective.abcmusic.midi import _make_midi
+from collective.abcmusic.utils import removeNonAscii
 from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
@@ -168,7 +172,6 @@ def addOrigins(context):
     else:
         context.tunearea = "unknown"
 
-def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
 def newAbcTune(context , event):
@@ -193,10 +196,22 @@ def updateAbcTune(context , event):
         addOrigins(context)
         _make_midi(context)
         _make_score(context)
+        parent = context.aq_parent
+        
+        if parent.portal_type == 'abctuneset':
+            logger.info ('updateAbcTune '+ parent.portal_type)
+            notify(TuneInTuneSetModified(context))
         # _make_mp3(context)
     except:
-        logger.info("abctune not modified...")
+        logger.info("updateAbcTune : abctune not modified...")
     ## logger.info("abc edited/modified !")
+
+
+@grok.subscribe(IABCTune, ITuneInTuneSetModified)
+def tuneInTuneSetModified(context, event):
+    logger.info('tuneInTuneSetModified Event')
+    updateTuneSet(context.aq_parent, event)
+
 
 # for addForm, see : https://pypi.python.org/pypi/plone.directives.form/1.1
 # class Add(dexterity.AddForm):

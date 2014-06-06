@@ -11,6 +11,7 @@ class updateSubjects(BrowserView):
                       for subject in subjects.strip('|').split('|')
                       if subject]
         self.context.subject = list(l_subjects)
+        self.context.reindexObject(idxs=["subject"])
         return 'ok'
 
 

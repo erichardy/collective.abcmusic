@@ -20,16 +20,20 @@ from plone.directives import form
 from z3c.form import button, field
 # for events handlers
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent, IObjectModifiedEvent
+from zope.component.interfaces import IObjectEvent
+from zope.component.interfaces import ObjectEvent
+from zope.event import notify
 # END for events handlers
 import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
 from os import unlink
 import re
-from collective.abcmusic.abctune import removeNonAscii
+from collective.abcmusic.utils import removeNonAscii
 from collective.abcmusic.mp3 import _make_mp3
 from collective.abcmusic.score import _make_score
-from collective.abcmusic.midi import _make_midi 
+from collective.abcmusic.midi import _make_midi
+from collective.abcmusic.events import ITuneInTuneSetModified
 
 from collective.abcmusic import _
 
@@ -183,9 +187,9 @@ also fired when
 - a new object is created in the container
 - an object is removed
 """
-@grok.subscribe(IABCTuneSet, IObjectModifiedEvent)
-def modifAbcTuneSet(context , event):
-    # logger.info('IABCTuneSet, IObjectModifiedEvent')
+
+def updateTuneSet(context, event):
+    logger.ingo(event.object.portal_type)
     partsTags = ['A','B','C','D','E','F','G','H','I','J']
     num_parts = 0
     P_header = 'P:'
@@ -212,6 +216,11 @@ def modifAbcTuneSet(context , event):
     context.abc += abc
     _make_midi(context)
     _make_score(context)
+
+@grok.subscribe(IABCTuneSet, IObjectModifiedEvent)
+def modifAbcTune(context , event):
+    updateTuneSet(context, event)
+    # logger.info('IABCTuneSet, IObjectModifiedEvent')
     # logger.info(combinedTitle)
     # import pdb;pdb.set_trace()
 
@@ -228,3 +237,7 @@ not allowed in tune body : R: Z:
 
 """
 
+@grok.subscribe(IABCTuneSet, ITuneInTuneSetModified)
+def tuneInTuneSetModified(context, event):
+    logger.info('tuneInTuneSetModified Event')
+    updateTuneSet(context, event)
