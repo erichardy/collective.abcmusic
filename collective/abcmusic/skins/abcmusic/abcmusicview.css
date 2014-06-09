@@ -54,11 +54,12 @@ h3.tuneCollapsedHeading {
     cursor: pointer;
 }
 
-h3.tuneCollapsedHeading.tuneCollapsed:before {
-    content: "▶ ";
-}
 h3.tuneCollapsedHeading:before {
     content: "▼ ";   
+}
+
+h3.tuneCollapsedHeading.tuneCollapsed:before {
+    content: "▶ ";
 }
 
 #abctuneMidi, #abctuneMP3 {

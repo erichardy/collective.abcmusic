@@ -14,6 +14,7 @@ from collective.abcmusic.mp3 import _make_mp3
 
 from collective.abcmusic.abctune import addTuneType
 from collective.abcmusic.abctune import addOrigins
+from collective.abcmusic.abctuneset import updateTuneSet
 
 from collective.abcmusic import _
 
@@ -48,6 +49,10 @@ class updateTune(BrowserView):
         if makeMP3 != '0':
             _make_mp3(abctune)
         # import pdb;pdb.set_trace()
+        parent = abctune.aq_parent
+        if parent.portal_type == 'abctuneset':
+            logger.info('in updateTune.updateTune')
+            updateTuneSet(parent)
         return 1
 
 class currentScore(BrowserView):
@@ -75,6 +80,7 @@ class currentMidi(BrowserView):
     def __call__(self, uuid):
         abctune = uuidToObject(uuid)
         retour = '<embed id="abctuneMidi" height="30" autostart="true" controller="true" autoplay="true"'
+        retour = '<embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="false"'
         retour = retour + ' src="' + abctune.absolute_url() + '/@@download/midi/' + abctune.midi.filename + '"'
         retour = retour + ' type="audio/mid"> </embed>'            
         return retour

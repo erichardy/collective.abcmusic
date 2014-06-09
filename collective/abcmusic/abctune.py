@@ -199,9 +199,10 @@ def updateAbcTune(context , event):
         parent = context.aq_parent
         
         if parent.portal_type == 'abctuneset':
-            logger.info ('updateAbcTune '+ parent.portal_type)
+            logger.info ('(IObjectModifiedEvent)abctune.updateAbcTune '+ parent.portal_type)
             notify(TuneInTuneSetModified(context))
         # _make_mp3(context)
+
     except:
         logger.info("updateAbcTune : abctune not modified...")
     ## logger.info("abc edited/modified !")
@@ -209,8 +210,8 @@ def updateAbcTune(context , event):
 
 @grok.subscribe(IABCTune, ITuneInTuneSetModified)
 def tuneInTuneSetModified(context, event):
-    logger.info('tuneInTuneSetModified Event')
-    updateTuneSet(context.aq_parent, event)
+    logger.info('(ITuneInTuneSetModified)abctune.tuneInTuneSetModified Event')
+    updateTuneSet(context.aq_parent)
 
 
 # for addForm, see : https://pypi.python.org/pypi/plone.directives.form/1.1

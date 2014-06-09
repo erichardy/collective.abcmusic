@@ -20,15 +20,7 @@ from plone.directives import form
 from z3c.form import button, field
 # for events handlers
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent, IObjectModifiedEvent
-from zope.component.interfaces import IObjectEvent
-from zope.component.interfaces import ObjectEvent
-from zope.event import notify
 # END for events handlers
-import subprocess as sp
-import tempfile as tf
-from StringIO import StringIO
-from os import unlink
-import re
 from collective.abcmusic.utils import removeNonAscii
 from collective.abcmusic.mp3 import _make_mp3
 from collective.abcmusic.score import _make_score
@@ -98,7 +90,6 @@ class View(grok.View):
     
     def javascript(self):
         js = u"""<script type="text/javascript">\n"""
-        js += u'tuneModified = ' + _(u"'The tune was modified... continue ?'") + u';\n'
         js += u'var uuid = "' + api.content.get_uuid(self.context) + '";\n'
         js += u'</script>'
         # import pdb;pdb.set_trace()
@@ -155,12 +146,12 @@ def reorgenize(abcText, part):
         if (line[:1] != '%' and line[:2] not in usefulHeaders):
             newABCTextLines.append(line)
     headers = '\n'.join(comments)
-    headers += '\n' + T + Q + M + L + K
-    headers += 'P:' + part + '\n'
+    headers += '\n' + T + M + L + K
+    headers += 'P:' + part + '\n' + Q
     newABCText = headers
     newABCText += '\n'.join(newABCTextLines)
             
-    # if ther is no P: header, we play only one time this tune
+    # if there is no P: header, we play only one time this tune
     if Parts == '':
         Parts = part
     else:
@@ -188,13 +179,13 @@ also fired when
 - an object is removed
 """
 
-def updateTuneSet(context, event):
-    logger.ingo(event.object.portal_type)
+def updateTuneSet(context):
+    logger.info('abctuneset.updateTuneSet : ' + context.portal_type)
     partsTags = ['A','B','C','D','E','F','G','H','I','J']
     num_parts = 0
     P_header = 'P:'
     abcTunes = [abctune
-                for abctune in event.object.objectValues()
+                for abctune in context.objectValues()
                 if abctune.portal_type == 'abctune']
     abc = ''
     combinedTitle = ''
@@ -217,9 +208,11 @@ def updateTuneSet(context, event):
     _make_midi(context)
     _make_score(context)
 
+
 @grok.subscribe(IABCTuneSet, IObjectModifiedEvent)
 def modifAbcTune(context , event):
-    updateTuneSet(context, event)
+    logger.info('(IObjectModifiedEvent)abctuneset.modifAbcTune')
+    updateTuneSet(context)
     # logger.info('IABCTuneSet, IObjectModifiedEvent')
     # logger.info(combinedTitle)
     # import pdb;pdb.set_trace()
@@ -237,7 +230,3 @@ not allowed in tune body : R: Z:
 
 """
 
-@grok.subscribe(IABCTuneSet, ITuneInTuneSetModified)
-def tuneInTuneSetModified(context, event):
-    logger.info('tuneInTuneSetModified Event')
-    updateTuneSet(context, event)

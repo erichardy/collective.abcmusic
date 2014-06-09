@@ -16,10 +16,12 @@ $(document).ready(function() {
 		$(this).nextUntil("h1 , h2 ,h3").slideToggle("fast");
 		$(this).toggleClass("tuneCollapsed");
 	});
+	$("h3.tuneCollapsed").nextUntil("h1 , h2 ,h3").hide();
+	
 	$("#saveModifications").click(function(){
 		// var pathname = window.location.pathname;
 		var pathname = $(location).attr('href');
-		console.log(uuid);
+		// console.log(uuid);
 		abctext = $("#abc-text").val();
 		makeMP3 = 0;
 		if ($("#checkboxMakeMP3").is(':checked')) makeMP3 = 1;
@@ -62,6 +64,7 @@ $(document).ready(function() {
 	});
 	function getSpeed() {
 		abcInput = $("#abc-text").val();
+		if (abcInput == undefined) return ;
 		lines = abcInput.split('\n');
 		i = 0 ;
 		for (i ; i < lines.length ; i++) {

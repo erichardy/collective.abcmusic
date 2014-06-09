@@ -9,7 +9,6 @@ class ITuneInTuneSetModified(IObjectEvent):
     """
 
 
-
 class TuneInTuneSetModified(ObjectEvent):
     grok.implements(ITuneInTuneSetModified)
 

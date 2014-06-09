@@ -38,7 +38,7 @@ setup(name='collective.abcmusic',
           'plone.formwidget.namedfile',
           'collective.autopermission',
           'collective.js.jqueryui',
-          'collective.js.abcjs==1.7.0',
+          'collective.js.abcjs==1.10',
           'collective.js.midijs',
           # -*- Extra requirements: -*-
       ],

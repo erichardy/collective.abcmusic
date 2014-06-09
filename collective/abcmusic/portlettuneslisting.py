@@ -88,7 +88,7 @@ class Renderer(base.Renderer):
         context = aq_inner(self.context)
         # logger.info(context)
         # logger.info(context.aq_parent)
-        if context.portal_type == 'Folder':
+        if context.portal_type in ['Folder', 'abctuneset']:
             folder_path = '/'.join(context.getPhysicalPath())
         else:
             folder_path = '/'.join(context.aq_parent.getPhysicalPath())

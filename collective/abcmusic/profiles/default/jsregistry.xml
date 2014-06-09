@@ -2,7 +2,7 @@
 <object name="portal_javascripts">
 
  <javascript cacheable="False" compression="none" cookable="True"
-    enabled="True" expression="python:context.portal_type=='abctune'"
+    enabled="True" expression=""
     id="abcmusic-tuneView.js" inline="False"/>
 
  <javascript cacheable="False" compression="none" cookable="True"
@@ -16,5 +16,9 @@
   <javascript cacheable="False" compression="none" cookable="True"
     enabled="True" expression="python:context.portal_type=='Collection'"
     id="abcCollectionView.js" inline="False"/>
+
+  <javascript cacheable="True" compression="none" cookable="True"
+    	enabled="True" expression=""
+    	id="++resource++collective.js.abcjs/abcjs_basic_1.10-min.js"/>
  
 </object>

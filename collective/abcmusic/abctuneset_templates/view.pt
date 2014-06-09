@@ -28,6 +28,7 @@
 	    </tr>
     </tbody>
     </table>
+    <div class="tune-view">
     <table>
     <tbody>
      <tr id="audioraw">
@@ -87,8 +88,11 @@
 	  </tr>
 	</tbody>
 	</table>
-
-    <textarea rows="50" tal:content="string:${here/abc}">abc</textarea>
+    </div>
+    <div class="tune-edit">
+      <h3 class="tuneCollapsedHeading tuneCollapsed" i18n:translate="">the set in abc format</h3>
+        <textarea id="abc-text" rows="50" tal:content="string:${here/abc}">abc</textarea>
+    </div>
 	<p />
 <h3>&nbsp;</h3>
 <script type="text/javascript">

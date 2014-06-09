@@ -22,6 +22,10 @@ Note about QuickTime : in revent QuickTime versions, Apple removed MIDI support.
 So may be it is possible to recover MIDI support from older versions.
 see : http://support.apple.com/kb/DL923
 
+NOTE
+====
+If you want to here midi inline, it is necessary to use an old version of Quicktime(R)
+which can be downloaded from : http://support.apple.com/kb/DL923 
 
 Bug
 ===
