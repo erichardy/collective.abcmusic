@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.abcmusic\n"
-"POT-Creation-Date: 2014-05-29 22:09+0000\n"
+"POT-Creation-Date: 2014-06-15 11:27+0000\n"
 "PO-Revision-Date: 2010-11-13 11:07+0100\n"
 "Last-Translator: YOURNAME <name@email.com>\n"
 "Language-Team: French <plone-fr@lists.plone.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Domain: collective.abcmusic\n"
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
-#: ./abctune.py:137
+#: ./abctune.py:145
 msgid "'The tune was modified... continue ?'"
 msgstr "Ce morceau a été modifié... continuer ?"
 
@@ -49,9 +49,22 @@ msgstr "Annuler"
 msgid "Create"
 msgstr "Ajouter"
 
-#: ./abctune_templates/view.pt:72
+#: ./abctune_templates/view.pt:74
+#: ./abctuneset_templates/view.pt:66
 msgid "Create MP3"
 msgstr "Créer le MP3"
+
+#: ./profiles/default/actions.xml
+msgid "Create MP3 for tunes in this folder it is not yet present"
+msgstr "Génère les MP3 pour tous les morceaux de ce dossier s'il ne sont pas déjà faits"
+
+#: ./profiles/default/actions.xml
+msgid "Create all MP3"
+msgstr "Créér tous les MP3 de ce dossier"
+
+#: ./profiles/default/types/abctuneset.xml
+msgid "Description of the Tune Set"
+msgstr "Suite de morceaux de musique"
 
 #: ./portlettuneslisting.py:42
 msgid "Edit Tunes listing Portlet"
@@ -89,23 +102,33 @@ msgstr "Jig"
 msgid "MIDIjs View"
 msgstr ""
 
+#: ./abctune_templates/view.pt:80
+msgid "MP3 not present"
+msgstr "le MP3 n'est pas créé"
+
 #: ./portlettuneslisting.py:18
 msgid "Maximum size of the box."
 msgstr "Taille de la fenêtre des morceaux"
 
-#: ./abctune.py:82
+#: ./abctune.py:86
+#: ./abctuneset.py:69
 msgid "Midi"
 msgstr "Midi"
 
-#: ./abctune.py:83
+#: ./abctune.py:87
 msgid "Midi sound of the tune"
 msgstr "Ecouter le morceau en MIDI"
 
-#: ./abctune.py:56
+#: ./abctuneset.py:70
+msgid "Midi sound of the tunes set"
+msgstr ""
+
+#: ./abctune.py:60
 msgid "More detailed origin of the tune, from O: field"
 msgstr ""
 
-#: ./abctune.py:75
+#: ./abctune.py:79
+#: ./abctuneset.py:62
 msgid "PDF Score"
 msgstr "La partition en PDF"
 
@@ -113,11 +136,12 @@ msgstr "La partition en PDF"
 msgid "Reel"
 msgstr "Reel"
 
-#: ./abctune_templates/view.pt:105
+#: ./abctune_templates/view.pt:115
 msgid "Save"
 msgstr " Enregistrer "
 
-#: ./abctune.py:68
+#: ./abctune.py:72
+#: ./abctuneset.py:55
 msgid "Score"
 msgstr "La Partition"
 
@@ -129,35 +153,47 @@ msgstr ""
 msgid "Thank you for your order. We will contact you shortly"
 msgstr ""
 
-#: ./abctune.py:55
+#: ./abctune.py:59
 msgid "The area from which the tune is from"
 msgstr ""
 
-#: ./abctune.py:63
+#: ./abctune.py:67
 msgid "The country"
 msgstr ""
 
-#: ./abctune.py:89
+#: ./abctune.py:93
 msgid "The mp3 sound of the tune"
 msgstr "Le morceau en MP3"
 
-#: ./abctune.py:62
+#: ./abctuneset.py:77
+msgid "The mp3 sound of the tunes set"
+msgstr ""
+
+#: ./abctune.py:66
 msgid "The origin country of the tune, from first part of O: field"
 msgstr ""
 
-#: ./abctune.py:76
+#: ./abctune.py:80
 msgid "The score of the tune as PDF"
 msgstr "La Partition en PDF"
 
-#: ./abctune.py:70
+#: ./abctune.py:74
 msgid "The score of the tune as png image"
 msgstr "La partition en image PNG"
 
-#: ./abctune.py:40
+#: ./abctuneset.py:63
+msgid "The score of the tunes set as PDF"
+msgstr ""
+
+#: ./abctuneset.py:57
+msgid "The score of the tunes set as png image"
+msgstr ""
+
+#: ./abctune.py:44
 msgid "The tune in abc format"
 msgstr "Le morceau de musique au format ABC"
 
-#: ./abctune_templates/view.pt:104
+#: ./abctune_templates/view.pt:114
 msgid "The tune is modified, you should save it if you want to keep your work :"
 msgstr "Le morceau a été modifié. Il faut l'enregistrer pour conserver votre travail..."
 
@@ -165,7 +201,11 @@ msgstr "Le morceau a été modifié. Il faut l'enregistrer pour conserver votre 
 msgid "The tune type"
 msgstr "Type de morceau"
 
-#: ./abctune.py:45
+#: ./abctuneset.py:52
+msgid "The tunes set in abc format"
+msgstr ""
+
+#: ./abctune.py:49
 msgid "The type of the tune"
 msgstr ""
 
@@ -177,11 +217,19 @@ msgstr "Ce portlet regroupe les morceaux de musique de ce dossier"
 msgid "This will create abctune(s)"
 msgstr "Des morceaux de musique au format ABC vont être créés"
 
+#: ./profiles/default/types/abctuneset.xml
+msgid "Tune Set"
+msgstr "Suite de morceaux"
+
+#: ./abctuneset.py:51
+msgid "Tune Set abc"
+msgstr ""
+
 #: ./addtune.py:14
 msgid "Tune Type"
 msgstr "Type de morceau"
 
-#: ./abctune.py:39
+#: ./abctune.py:43
 msgid "Tune abc"
 msgstr "La partie abc"
 
@@ -197,7 +245,8 @@ msgstr "Les morceaux de musique de ce dossier (abc)"
 msgid "Tunes listing"
 msgstr "Liste des morceaux de musique"
 
-#: ./abctune_templates/view.pt:31
+#: ./abctune_templates/view.pt:32
+#: ./abctuneset_templates/view.pt:27
 msgid "View breadcrumbs"
 msgstr "Voir le chemin dans le site"
 
@@ -217,19 +266,25 @@ msgstr "Les modèles disponibles"
 msgid "abctune"
 msgstr "Un morceau de musique en ABC"
 
-#: ./abctune_templates/view.pt:73
+#: ./abctune_templates/view.pt:75
+#: ./abctuneset_templates/view.pt:67
 msgid "clic here and wait... can be long"
 msgstr "Cliquez ici et patientez ! ça peut être long..."
 
-#: ./abctune.py:46
+#: ./abctuneset.py:47
+msgid "combined set title"
+msgstr ""
+
+#: ./abctune.py:50
 msgid "from the field R:"
 msgstr "à partir du champ R:"
 
-#: ./abctune_templates/view.pt:30
+#: ./abctune_templates/view.pt:31
 msgid "hide/show abcTextarea"
 msgstr "Cacher/Monter le texte ABC"
 
-#: ./abctune_templates/view.pt:29
+#: ./abctune_templates/view.pt:30
+#: ./abctuneset_templates/view.pt:26
 msgid "hide/show top"
 msgstr "Cacher/Monter l'entête du site"
 
@@ -241,24 +296,29 @@ msgstr "Importer un fichier qui contient un ou plusieurs morceaux au format ABC"
 msgid "import abc file"
 msgstr "Importer un fichier ABC"
 
-#: ./abctune_templates/view.pt:100
+#: ./abctune_templates/view.pt:110
 msgid "inline editing"
 msgstr "Edition du morceau en direct"
 
-#: ./abctune_templates/view.pt:102
+#: ./abctune_templates/view.pt:112
 msgid "manage subjects"
 msgstr "Gérer les mots clé"
+
+#: ./browser/managesubjects.pt:30
+msgid "new keyword"
+msgstr "Nouveau mot clé"
 
 #: ./portlettuneslisting.py:17
 msgid "size of the box"
 msgstr "Nombre de morceaux à montrer"
 
-#: ./abctune.py:88
+#: ./abctune.py:92
+#: ./abctuneset.py:76
 msgid "sound"
 msgstr ""
 
 #. Default: "speed :"
-#: ./abctune_templates/view.pt:114
+#: ./abctune_templates/view.pt:124
 msgid "speed : "
 msgstr "Vitesse : "
 
@@ -266,7 +326,15 @@ msgstr "Vitesse : "
 msgid "templates"
 msgstr "Modèles"
 
-#: ./abctune_templates/view.pt:36
+#: ./abctuneset_templates/view.pt:93
+msgid "the set in abc format"
+msgstr "La suite dans son format abc"
+
+#: ./abctune_templates/view.pt:37
 msgid "the tune as it is stored in the database"
 msgstr "Le morceau tel qu'il est enregistré"
+
+#: ./abctuneset.py:48
+msgid "this title depends of the tunes titles"
+msgstr ""
 

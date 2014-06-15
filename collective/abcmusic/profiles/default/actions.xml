@@ -34,6 +34,21 @@
    <property name="visible">True</property>
   </object>
 </object>
+
+ <object name="object_buttons" meta_type="CMF Action Category">
+  <object name="export-To-Abc" meta_type="CMF Action" i18n:domain="collective.abcmusic">
+   <property name="title" i18n:translate="">Create all MP3</property>
+   <property name="description" i18n:translate="">Create MP3 for tunes in this folder it is not yet present</property>
+   <property
+      name="url_expr">string:@@create-all-mp3</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr">python:folder is object</property>
+   <property name="permissions">
+    <element value="Modify portal content"/>
+   </property>
+   <property name="visible">True</property>
+  </object>
+</object>
  
  
 </object> 

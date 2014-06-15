@@ -90,16 +90,23 @@
   />
   
   <browser:page
-    for="*"
+    for="Products.CMFCore.interfaces.IFolderish"
     name="import-abc"
     class=".importAbc.importAbc"
     permission="cmf.ModifyPortalContent"
   />
   <browser:page
-    for="*"
+    for="Products.CMFCore.interfaces.IFolderish"
     name="export-to-abc"
     class=".exporttoabc.exportToAbc"
     permission="zope2.View"
+  />
+
+  <browser:page
+    for="Products.CMFCore.interfaces.IFolderish"
+    name="create-all-mp3"
+    class=".createallmp3.createAllMP3"
+    permission="cmf.ModifyPortalContent"
   />
 
   <browser:page

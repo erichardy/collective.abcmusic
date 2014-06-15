@@ -11,10 +11,12 @@ $(document).ready(function() {
         // part of Plone page going into pop-up dialog content area
         filter: '#content > *'
     });
-
+	if (auth == false) {
+		$("h3").removeClass("tuneCollapsedHeading");
+	}
 	$("h3.tuneCollapsedHeading").click(function() {
-		$(this).nextUntil("h1 , h2 ,h3").slideToggle("fast");
-		$(this).toggleClass("tuneCollapsed");
+		  $(this).nextUntil("h1 , h2 ,h3").slideToggle("fast");
+		  $(this).toggleClass("tuneCollapsed");
 	});
 	$("h3.tuneCollapsed").nextUntil("h1 , h2 ,h3").hide();
 	

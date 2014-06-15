@@ -137,9 +137,14 @@ class View(grok.View):
         return True
     
     def javascript(self):
+        auth = self.abcAutorized()
+        authjs = u'true'
+        if not auth: authjs = u'false'
+        
         js = u"""<script type="text/javascript">\n"""
         js += u'tuneModified = ' + _(u"'The tune was modified... continue ?'") + u';\n'
         js += u'var uuid = "' + api.content.get_uuid(self.context) + '";\n'
+        js += u'var auth = ' + authjs + ';\n'
         js += u'</script>'
         # import pdb;pdb.set_trace()
         return js
