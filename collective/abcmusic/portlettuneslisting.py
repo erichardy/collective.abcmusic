@@ -83,7 +83,7 @@ class Renderer(base.Renderer):
     def tunes_link(self):
         return '%s/tune' % self.portal_url
 
-    @memoize
+    # @memoize
     def _data(self):
         context = aq_inner(self.context)
         # logger.info(context)
@@ -94,5 +94,6 @@ class Renderer(base.Renderer):
             folder_path = '/'.join(context.aq_parent.getPhysicalPath())
         results = self.catalog(
                        Type = "abctune",
-                       path={'query': folder_path, 'depth': 1})
+                       path={'query': folder_path, 'depth': 1},
+                       sort_on='sortable_title')
         return results
