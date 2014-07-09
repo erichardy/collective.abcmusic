@@ -7,7 +7,7 @@
  
  
  <object name="object_buttons" meta_type="CMF Action Category">
-  <object name="import" meta_type="CMF Action" i18n:domain="collective.abcmusic">
+  <object name="import-from-file" meta_type="CMF Action" i18n:domain="collective.abcmusic">
    <property name="title" i18n:translate="">Import ABC File</property>
    <property name="description" i18n:translate="">Import one or many files from a wellformed abc file</property>
    <property name="url_expr">string:@@import-abc</property>
@@ -21,7 +21,7 @@
  </object>
  
  <object name="object_buttons" meta_type="CMF Action Category">
-  <object name="export-To-Abc" meta_type="CMF Action" i18n:domain="collective.abcmusic">
+  <object name="export-to-abc" meta_type="CMF Action" i18n:domain="collective.abcmusic">
    <property name="title" i18n:translate="">Export to abc file</property>
    <property name="description" i18n:translate="">Export all the tunes of this folder to one file</property>
    <property
@@ -36,9 +36,9 @@
 </object>
 
  <object name="object_buttons" meta_type="CMF Action Category">
-  <object name="export-To-Abc" meta_type="CMF Action" i18n:domain="collective.abcmusic">
+  <object name="create-all-mp3" meta_type="CMF Action" i18n:domain="collective.abcmusic">
    <property name="title" i18n:translate="">Create all MP3</property>
-   <property name="description" i18n:translate="">Create MP3 for tunes in this folder it is not yet present</property>
+   <property name="description" i18n:translate="">Create MP3 for tunes in this folder if not yet present</property>
    <property
       name="url_expr">string:@@create-all-mp3</property>
    <property name="icon_expr"></property>

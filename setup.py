@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3b10'
+version = '0.3b11dev'
 
 setup(name='collective.abcmusic',
       version=version,
@@ -42,7 +42,7 @@ setup(name='collective.abcmusic',
           'collective.js.midijs',
           # -*- Extra requirements: -*-
       ],
-      extras_require = dict(
+      extras_require=dict(
           tests=['plone.app.testing'],
       ),
       entry_points="""

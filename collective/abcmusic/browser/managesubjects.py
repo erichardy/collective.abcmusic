@@ -12,6 +12,7 @@ class updateSubjects(BrowserView):
                       if subject]
         self.context.subject = list(l_subjects)
         self.context.reindexObject(idxs=["subject"])
+        logger.info('updateSubjects: Subject List updated')
         return 'ok'
 
 

@@ -4,7 +4,7 @@
     i18n_domain="collective.abcmusic">
 
   <interface
-      interface=".interfaces.IABCMusicLayer"
+      interface="..interfaces.IABCMusicLayer"
       name="collective.abcmusic"
       />
   
@@ -13,7 +13,7 @@
         provides=".interfaces.IABCMusicViewletManager"
         permission="zope2.View"
         class="plone.app.viewletmanager.manager.OrderedViewletManager"
-        layer=".interfaces.IABCMusicLayer"
+        layer="..interfaces.IABCMusicLayer"
         />
 
   <browser:viewlet
@@ -21,7 +21,7 @@
       manager=".interfaces.IABCMusicViewletManager"
       class=".viewlets.MidiViewlet"
       template="midi.pt"
-      layer=".interfaces.IABCMusicLayer"
+      layer="..interfaces.IABCMusicLayer"
       permission="zope2.View"
       />
 
@@ -30,7 +30,7 @@
    	name="midijs-view"
    	template="midijsview.pt"
    	class = ".midijsview.midijsView"
-   	layer = ".interfaces.IABCMusicLayer"
+   	layer = "..interfaces.IABCMusicLayer"
     permission="zope2.View"
   />
   

@@ -29,6 +29,11 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   <include file="upgrades.zcml" />
+  
+  <interface
+      interface=".interfaces.IABCMusicLayer"
+      name="collective.abcmusic"
+  />
 
 <!--
   <browser:resourceDirectory
@@ -62,4 +67,14 @@
 <!--
   <adapter factory=".subjects.SubjectsFieldWidget" />
 -->
+  <!-- add form declaration for tune -->
+  <!-- the name parameter below must match the content type name -->
+  <adapter
+        name="abctune"
+        for="*
+             .interfaces.IABCMusicLayer
+             plone.dexterity.interfaces.IDexterityFTI"
+        provides="zope.publisher.interfaces.browser.IBrowserPage"
+        factory=".addtune.add_form" />
+
 </configure>

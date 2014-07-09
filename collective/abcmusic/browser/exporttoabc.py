@@ -8,6 +8,7 @@ from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
+
 class exportToAbc(BrowserView):
 
     def __call__(self):
@@ -17,14 +18,14 @@ class exportToAbc(BrowserView):
         filename = context.getId() + '.abc'
         catalog = site.portal_catalog
         results = catalog.searchResults(
-                  portal_type = 'abctune',
-                  path = {'query': folder_path, 'depth': 1},
+                  portal_type='abctune',
+                  path={'query': folder_path, 'depth': 1},
                   )
         abcFile = ''
         for tune in results:
             abcFile += tune.abc
             abcFile += '\n\n'
         self.request.response.setHeader('Content-Type', 'text/abc')
-        self.request.response.setHeader('Content-Disposition', 'attachment; filename="%s"' % filename)
+        self.request.response.setHeader('Content-Disposition',
+                                        'attachment; filename="%s"' % filename)
         return abcFile
-

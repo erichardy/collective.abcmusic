@@ -28,7 +28,7 @@ $(document).ready(function() {
 		makeMP3 = 0;
 		if ($("#checkboxMakeMP3").is(':checked')) makeMP3 = 1;
 		var updatedTune  = $.post("@@updateTune" , {'abctext':abctext, 'uuid':uuid, 'makeMP3':makeMP3} , function(data){
-			console.log(makeMP3);
+			// console.log(makeMP3);
 			$.post("@@currentScore", {'uuid':uuid}, function(data){
 				width = $("#scoreView").attr('width');
 				height = $("#scoreView").attr('height');
