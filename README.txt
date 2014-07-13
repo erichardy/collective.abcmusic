@@ -18,9 +18,18 @@ See web sites for more informations :
 * abcMIDI : http://abc.sourceforge.net/abcMIDI/
 * abcjs : http://code.google.com/p/abcjs/
 
-Note about QuickTime : in revent QuickTime versions, Apple removed MIDI support.
+Note about QuickTime : in recent QuickTime versions, Apple removed MIDI support.
 So may be it is possible to recover MIDI support from older versions.
 see : http://support.apple.com/kb/DL923
+
+DEPENDENCIES
+============
+* abcm2ps
+* abc2midi
+* convert (ImageMagick package)
+* ps2pdf (ubuntu : ghostscript package)
+* lame
+
 
 NOTE
 ====
