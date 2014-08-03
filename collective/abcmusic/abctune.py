@@ -36,6 +36,7 @@ from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
+
 class IABCTune(form.Schema):
 
     dexteritytextindexer.searchable('abc')
@@ -45,27 +46,27 @@ class IABCTune(form.Schema):
 
     dexteritytextindexer.searchable('tunetype')
     form.omitted('tunetype')
-    tunetype = schema.TextLine (
-                        title = _(u"The type of the tune"),
-                        description = _(u"from the field R:"),
-                        required = False,
+    tunetype = schema.TextLine(
+                        title=_(u"The type of the tune"),
+                        description=_(u"from the field R:"),
+                        required=False,
                         )
     # NOTE: as specified in the v2.1 standard, A: field is deprecated
     # so, only O: is used to specified country and areas... separated
     # by ';'
     dexteritytextindexer.searchable('tunearea')
     form.omitted('tunearea')
-    tunearea = schema.TextLine (
-                        title = _(u"The area from which the tune is from"),
-                        description = _(u"More detailed origin of the tune, from O: field"),
-                        required = False,
+    tunearea = schema.TextLine(
+                        title=_(u"The area from which the tune is from"),
+                        description=_(u"More detailed origin of the tune, from O: field"),
+                        required=False,
                         )
     dexteritytextindexer.searchable('tunecountry')
     form.omitted('tunecountry')
-    tunecountry = schema.TextLine (
-                        title = _(u"The origin country of the tune, from first part of O: field"),
-                        description = _(u"The country"),
-                        required = False,
+    tunecountry = schema.TextLine(
+                        title=_(u"The origin country of the tune, from first part of O: field"),
+                        description=_(u"The country"),
+                        required=False,
                         )
 
     form.omitted('score')
@@ -75,24 +76,25 @@ class IABCTune(form.Schema):
                            required=False,)
 
     form.omitted('pdfscore')
-    pdfscore = NamedBlobFile (
-            title = _(u"PDF Score"),
+    pdfscore = NamedBlobFile(
+            title=_(u"PDF Score"),
             description = _(u'The score of the tune as PDF'),
             required = False,
         )
 
     form.omitted('midi')
-    midi = NamedBlobFile (
-            title = _(u"Midi"),
-            description = _(u'Midi sound of the tune'),
-            required = False,
+    midi = NamedBlobFile(
+            title=_(u"Midi"),
+            description=_(u'Midi sound of the tune'),
+            required=False,
         )
     form.omitted('sound')
-    sound = NamedBlobFile (
-            title = _(u"sound"),
-            description = _(u'The mp3 sound of the tune'),
-            required = False,
+    sound = NamedBlobFile(
+            title=_(u"sound"),
+            description=_(u'The mp3 sound of the tune'),
+            required=False,
         )
+
 
 @form.default_value(field=IABCTune['abc'])
 def abcDefaultValue(data):
@@ -118,12 +120,13 @@ P:A
 """
     return tune
 
+
 # for hidden fields, see : http://packages.python.org/z3c.form/form.html#hidden-fields
 # to use in the add and edit forms
 class View(grok.View):
     grok.context(IABCTune)
     grok.require('zope2.View')
-    
+
     """
     def __call__(self):
         return
@@ -135,12 +138,13 @@ class View(grok.View):
         if not sm.checkPermission(ModifyPortalContent, context):
             return False
         return True
-    
+
     def javascript(self):
         auth = self.abcAutorized()
         authjs = u'true'
-        if not auth: authjs = u'false'
-        
+        if not auth:
+            authjs = u'false'
+
         js = u"""<script type="text/javascript">\n"""
         js += u'tuneModified = ' + _(u"'The tune was modified... continue ?'") + u';\n'
         js += u'var uuid = "' + api.content.get_uuid(self.context) + '";\n'
@@ -149,13 +153,15 @@ class View(grok.View):
         # import pdb;pdb.set_trace()
         return js
 
+
 def addQ(context):
     abc = context.abc
     if len(abc.split('Q:')) == 1:
         labc = abc.split('\n')
-        labc.insert(1,'Q:100')
+        labc.insert(1, 'Q:100')
         abc = ('\n').join(labc)
         context.abc = abc
+
 
 def addTuneType(context):
     abc = context.abc
@@ -165,6 +171,7 @@ def addTuneType(context):
         context.tunetype = tunetype.strip().lower()
     else:
         context.tunetype = "unknown"
+
 
 def addOrigins(context):
     abc = context.abc
@@ -179,7 +186,7 @@ def addOrigins(context):
 
 
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
-def newAbcTune(context , event):
+def newAbcTune(context, event):
     try:
         context.abc = removeNonAscii(context.abc)
         addQ(context)
@@ -192,8 +199,9 @@ def newAbcTune(context , event):
     except:
         logger.info("abctune not created...")
 
+
 @grok.subscribe(IABCTune, IObjectModifiedEvent)
-def updateAbcTune(context , event):
+def updateAbcTune(context, event):
     try:
         context.abc = removeNonAscii(context.abc)
         addQ(context)
@@ -202,7 +210,7 @@ def updateAbcTune(context , event):
         _make_midi(context)
         _make_score(context)
         parent = context.aq_parent
-        
+
         if parent.portal_type == 'abctuneset':
             logger.info ('(IObjectModifiedEvent)abctune.updateAbcTune '+ parent.portal_type)
             notify(TuneInTuneSetModified(context))
@@ -225,4 +233,3 @@ def tuneInTuneSetModified(context, event):
 #    grok.template('addAbcTune')
 
 
-    

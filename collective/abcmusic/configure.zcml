@@ -64,11 +64,11 @@
     component=".vocabularies.abcTunetypesVocabularyFactory"
     name="collective.abcmusic.vocabularies.abctunetypes"
     />
-<!--
-  <adapter factory=".subjects.SubjectsFieldWidget" />
--->
+
   <!-- add form declaration for tune -->
   <!-- the name parameter below must match the content type name -->
+  <!-- For Future use... -->
+  <!--
   <adapter
         name="abctune"
         for="*
@@ -76,5 +76,5 @@
              plone.dexterity.interfaces.IDexterityFTI"
         provides="zope.publisher.interfaces.browser.IBrowserPage"
         factory=".addtune.add_form" />
-
+  -->
 </configure>

@@ -19,7 +19,7 @@ See web sites for more informations :
 * abcjs : http://code.google.com/p/abcjs/
 
 Note about QuickTime : in recent QuickTime versions, Apple removed MIDI support.
-So may be it is possible to recover MIDI support from older versions.
+So, may be it is possible to recover MIDI support from older versions.
 see : http://support.apple.com/kb/DL923
 
 DEPENDENCIES
@@ -33,7 +33,7 @@ DEPENDENCIES
 
 NOTE
 ====
-If you want to here midi inline, it is necessary to use an old version of Quicktime(R)
+If you want to listen midi inline, it is necessary to use an old version of Quicktime(R)
 which can be downloaded from : http://support.apple.com/kb/DL923 
 
 Bug
@@ -61,7 +61,10 @@ A dexterity content type is defined so it can be added in a folder.
 
 TODO
 ====
-* button to create MP3 if it doesn't exist (started... to be fixed...)
+* when manage keywords, only display keywords of owned items
+* export tune or tunes as zipfile
+* get command lines for abc -> ps, ps -> jpeg, abc->midi, midi->mp3 from controlpanel
+* when export a folder to a file, save also keywords in abc file as tagged comments and manage them in import
 * manage better switching with MidiJS view
 * overlaies for help and explanations
 * keyboard bindings : i.e. to start play with a key pressed
