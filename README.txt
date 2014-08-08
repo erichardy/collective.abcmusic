@@ -61,10 +61,13 @@ A dexterity content type is defined so it can be added in a folder.
 
 TODO
 ====
+* fix modification time when tune is modified by standard view (not by "edit" menu)
 * when manage keywords, only display keywords of owned items
 * export tune or tunes as zipfile
 * get command lines for abc -> ps, ps -> jpeg, abc->midi, midi->mp3 from controlpanel
 * when export a folder to a file, save also keywords in abc file as tagged comments and manage them in import
+* new content type : tune repository with custom views
+* tuneset : add tune by selection from directory browser
 * manage better switching with MidiJS view
 * overlaies for help and explanations
 * keyboard bindings : i.e. to start play with a key pressed
@@ -75,4 +78,3 @@ TODO
 * create a public database of tunes from which a tune can be added to a owned folder
   ...perhaps by a specific add form (?)
 * improve the IHM : which kind of menus?
-* manage sets of tunes (in an other module in the future)

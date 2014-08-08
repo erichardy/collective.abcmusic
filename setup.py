@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3b11dev'
+version = '0.3b11'
 
 setup(name='collective.abcmusic',
       version=version,

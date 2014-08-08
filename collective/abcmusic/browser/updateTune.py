@@ -18,7 +18,7 @@ from collective.abcmusic.abctuneset import updateTuneSet
 
 from collective.abcmusic import _
 
-logger = logging.getLogger('collective.abcmusic')
+logger = logging.getLogger('collective.abcmusic updateTune: ')
 
 def removeViewInURL(url):
     """ OK if the tune name is not 'view' """
@@ -49,9 +49,10 @@ class updateTune(BrowserView):
         if makeMP3 != '0':
             _make_mp3(abctune)
         # import pdb;pdb.set_trace()
+        logger.info('"' + abctune.title + '" updated')
         parent = abctune.aq_parent
         if parent.portal_type == 'abctuneset':
-            logger.info('in updateTune.updateTune')
+            # logger.info('in updateTune.updateTune')
             updateTuneSet(parent)
         return 1
 

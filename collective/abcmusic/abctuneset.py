@@ -29,19 +29,20 @@ from collective.abcmusic.events import ITuneInTuneSetModified
 
 from collective.abcmusic import _
 
-logger = logging.getLogger('collective.abcmusic')
+logger = logging.getLogger('collective.abcmusic TuneSet: ')
 
 """
 Each tune in a set must not have more than one part (P:), so two tags P:
 - the first in the file to indicate how many times to play this tune
 - the second, just before the note which is mandatory when a first P: tells
-how many times to play the tune. 
+how many times to play the tune.
 If it has no part, it is assumed to be played only one time.
-If those rules are not respected, the result is really uncertain... 
+If those rules are not respected, the result is really uncertain...
 """
 
+
 class IABCTuneSet(form.Schema):
-    
+
     form.omitted('combinedTitle')
     combinedTitle = schema.TextLine(
                     title=_(u"combined set title"),
@@ -58,26 +59,25 @@ class IABCTuneSet(form.Schema):
                            required=False,)
 
     form.omitted('pdfscore')
-    pdfscore = NamedBlobFile (
-            title = _(u"PDF Score"),
-            description = _(u'The score of the tunes set as PDF'),
-            required = False,
+    pdfscore = NamedBlobFile(
+            title=_(u"PDF Score"),
+            description=_(u'The score of the tunes set as PDF'),
+            required=False,
         )
 
     form.omitted('midi')
-    midi = NamedBlobFile (
-            title = _(u"Midi"),
-            description = _(u'Midi sound of the tunes set'),
-            required = False,
+    midi = NamedBlobFile(
+            title=_(u"Midi"),
+            description=_(u'Midi sound of the tunes set'),
+            required=False,
         )
 
     form.omitted('sound')
-    sound = NamedBlobFile (
-            title = _(u"sound"),
-            description = _(u'The mp3 sound of the tunes set'),
-            required = False,
+    sound = NamedBlobFile(
+            title=_(u"sound"),
+            description=_(u'The mp3 sound of the tunes set'),
+            required=False,
         )
-
 
 
 class abctuneset(Container):
@@ -87,7 +87,7 @@ class abctuneset(Container):
 class View(grok.View):
     grok.context(IABCTuneSet)
     grok.require('zope2.View')
-    
+
     def javascript(self):
         js = u"""<script type="text/javascript">\n"""
         js += u'var uuid = "' + api.content.get_uuid(self.context) + '";\n'
@@ -95,17 +95,19 @@ class View(grok.View):
         # import pdb;pdb.set_trace()
         return js
 
+
 def getFirstTitle(abcText):
     # because T: is mandatory, no more verifications
     tabc = abcText.split('T:')
     title = tabc[1].split('\n')[0].strip()
     return removeNonAscii(title)
 
-# remove undesirable headers D: R: Z: ...
+
 def cleanupHeaders(abcText):
+    """remove undesirable headers D: R: Z: ..."""
     lines = abcText.split('\n')
     cleanedABC = []
-    headersToRemove = ['D:','R:','S:','X:','Z:']
+    headersToRemove = ['D:', 'R:', 'S:', 'X:', 'Z:']
     for line in lines:
         if not line[:2] in headersToRemove:
             cleanedABC.append(line)
@@ -119,9 +121,11 @@ We re-organize the abc :
 4/ memorize only the first P:
 %%QMLKP
 """
+
+
 def reorgenize(abcText, part):
     abcText = cleanupHeaders(removeNonAscii(abcText))
-    usefulHeaders = ['P:','Q:','M:','L:','K:','C:','T:']
+    usefulHeaders = ['P:', 'Q:', 'M:', 'L:', 'K:', 'C:', 'T:']
     comments = []
     newABCTextLines = []
     Q = M = L = K = T = Parts = ''
@@ -150,7 +154,7 @@ def reorgenize(abcText, part):
     headers += 'P:' + part + '\n' + Q
     newABCText = headers
     newABCText += '\n'.join(newABCTextLines)
-            
+
     # if there is no P: header, we play only one time this tune
     if Parts == '':
         Parts = part
@@ -159,7 +163,8 @@ def reorgenize(abcText, part):
     # logger.info(newABCText)
     # logger.info('---------')
     # import pdb;pdb.set_trace()
-    return newABCText , Parts
+    return newABCText, Parts
+
 
 def aff(abc):
     aabc = cleanupHeaders(removeNonAscii(abc))
@@ -168,7 +173,7 @@ def aff(abc):
         logger.info(line)
         l.append(line)
     logger.info(l)
-        
+
 """
 see : http://docs.plone.org/external/plone.app.dexterity/docs/advanced/event-handlers.html
 zope.lifecycleevent.interfaces.IObjectModifiedEvent
@@ -179,9 +184,10 @@ also fired when
 - an object is removed
 """
 
+
 def updateTuneSet(context):
     logger.info('abctuneset.updateTuneSet : ' + context.portal_type)
-    partsTags = ['A','B','C','D','E','F','G','H','I','J']
+    partsTags = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     num_parts = 0
     P_header = 'P:'
     abcTunes = [abctune
@@ -196,21 +202,22 @@ def updateTuneSet(context):
             combinedTitle += ' / '
         # aff (tune.abc)
         # return
-        abcreorgenized , parts = reorgenize(tune.abc, partsTags[num_parts])
+        abcreorgenized, parts = reorgenize(tune.abc, partsTags[num_parts])
         num_parts += 1
         P_header += parts
         abc += abcreorgenized
-        
+
     context.combinedTitle = 'T: ' + combinedTitle
     context.abc = 'X:1\n' + context.combinedTitle + '\n'
     context.abc += P_header + '\n'
     context.abc += abc
     _make_midi(context)
     _make_score(context)
+    logger.info('"' + context.title + '" updated')
 
 
 @grok.subscribe(IABCTuneSet, IObjectModifiedEvent)
-def modifAbcTune(context , event):
+def modifAbcTune(context, event):
     logger.info('(IObjectModifiedEvent)abctuneset.modifAbcTune')
     updateTuneSet(context)
     # logger.info('IABCTuneSet, IObjectModifiedEvent')
@@ -224,9 +231,8 @@ To create the abc of the set :
 - analyze the parts P: in order to play each tune as described in the according P:
 - remove the secondary parts (P:B,...) from tunes
 - set a part to each tune : first == P:A , second == P:B , etc...
-not allowed in tune body : R: Z: 
+not allowed in tune body : R: Z:
 - remove unnecessary headers (D: Z:) ???
 - Q: must not be the first header of a secondary just after the previous tune
 
 """
-
