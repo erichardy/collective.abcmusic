@@ -8,16 +8,25 @@ logger = logging.getLogger('collective.abcmusic')
 class updateSubjects(BrowserView):
     """ AJAX method/view"""
     def __call__(self, subjects):
+        # logger.info(self.context)
+        context = self.context
+        # because context is may be a view...
+        try:
+            tune = context.portal_type
+        except:
+            tune = context.context.portal_type
+            context = self.context.context
+        # import pdb;pdb.set_trace()
         l_subjects = [subject
                       for subject in subjects.strip('|').split('|')
                       if subject]
-        self.context.subject = list(l_subjects)
-        self.context.reindexObject(idxs=["subject"])
-        logger.info('updateSubjects: Subject List updated ' + str(l_subjects))
-        return self.sujbectsStr()
+        context.subject = list(l_subjects)
+        context.reindexObject(idxs=["subject"])
+        # logger.info('updateSubjects: Subject List updated ' + str(l_subjects))
+        return self.sujbectsStr(context)
 
-    def sujbectsStr(self):
-        subjects = self.context.subject
+    def sujbectsStr(self, context):
+        subjects = context.subject
         subject_str = ''
         for s in subjects:
             subject_str += s + ', '
@@ -38,12 +47,12 @@ class manageSubjects(BrowserView):
         subjects = []
         for abctune in abctunes:
             keywords = list(abctune.getObject().subject)
-            logger.info(keywords)
+            # logger.info(keywords)
             for k in keywords:
                 if not k in subjects:
                     subjects.append(k)
         subjects.sort()
-        logger.info(subjects)
+        # logger.info(subjects)
         return subjects
 
     def currentSubjects(self):
