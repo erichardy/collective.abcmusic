@@ -6,6 +6,7 @@ from zope import schema
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
 from zope.component import getUtility
+from zope.component.hooks import getSite
 from plone.i18n.normalizer.interfaces import INormalizer
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
@@ -178,7 +179,7 @@ def aff(abc):
 see : http://docs.plone.org/external/plone.app.dexterity/docs/advanced/event-handlers.html
 zope.lifecycleevent.interfaces.IObjectModifiedEvent
 fired by the standard edit form when an object has been modified.
-also fired when 
+also fired when
 - an object position in the container is changed
 - a new object is created in the container
 - an object is removed
@@ -213,6 +214,9 @@ def updateTuneSet(context):
     context.abc += abc
     _make_midi(context)
     _make_score(context)
+    site = getSite()
+    catalog = site.portal_catalog
+    catalog.reindexObject(context)
     logger.info('"' + context.title + '" updated')
 
 

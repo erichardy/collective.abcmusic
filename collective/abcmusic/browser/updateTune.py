@@ -6,7 +6,7 @@ from plone.app.uuid.utils import uuidToObject
 # from z3c.blobfile import file, image
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
-
+from DateTime import DateTime
 from collective.abcmusic.midi import _make_midi
 from collective.abcmusic.score import _make_score
 from collective.abcmusic.pdfscore import _make_PDFscore
@@ -20,6 +20,7 @@ from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic updateTune: ')
 
+
 def removeViewInURL(url):
     """ OK if the tune name is not 'view' """
     l_url = url.split('/')
@@ -29,9 +30,10 @@ def removeViewInURL(url):
     logger.info('update : ' + url)
     return url
 
+
 class updateTune(BrowserView):
     """ AJAX method/view"""
-    def __call__(self , abctext , uuid, makeMP3):
+    def __call__(self, abctext, uuid, makeMP3):
         # need to remove 'view' at the end if present
         abctune = uuidToObject(uuid)
         sm = getSecurityManager()
@@ -42,19 +44,23 @@ class updateTune(BrowserView):
         addOrigins(abctune)
         _make_midi(abctune)
         _make_score(abctune)
-        site = getSite()
-        catalog = site.portal_catalog
-        catalog.reindexObject(abctune)
+
         # _make_PDFscore(abctune)
         if makeMP3 != '0':
             _make_mp3(abctune)
         # import pdb;pdb.set_trace()
+        abctune.modification_date = DateTime()
+        logger.info(abctune.modified())
         logger.info('"' + abctune.title + '" updated')
         parent = abctune.aq_parent
         if parent.portal_type == 'abctuneset':
             # logger.info('in updateTune.updateTune')
             updateTuneSet(parent)
+        site = getSite()
+        catalog = site.portal_catalog
+        catalog.reindexObject(abctune)
         return 1
+
 
 class currentScore(BrowserView):
     """ AJAX method/view"""
@@ -63,37 +69,48 @@ class currentScore(BrowserView):
         height = abctune.score._height
         width = abctune.score._width
         retour = '<img src="' + abctune.absolute_url() + '/@@download/score/'
-        retour = retour +  abctune.score.filename
-        retour = retour + '" height="' + str(height) + '" width="' + str(width) + '">'
+        retour += abctune.score.filename
+        retour += '" height="' + str(height) + '" width="' + str(width) + '">'
         return retour
+
 
 class currentPDFScore(BrowserView):
     """ AJAX method/view"""
     def __call__(self, uuid):
         abctune = uuidToObject(uuid)
         retour = '<a id="abctunePDFScore" '
-        retour += 'href="' + abctune.absolute_url() + '/@@download/pdfscore/' + abctune.pdfscore.filename + '"'
-        retour += ' target="_blank" type="application/pdf" ><img src="pdf.png" /></a>'
+        retour += 'href="' + abctune.absolute_url() + '/@@download/pdfscore/'
+        retour += abctune.pdfscore.filename + '"'
+        retour += ' target="_blank" type="application/pdf" >'
+        retour += '<img src="pdf.png" /></a>'
         return retour
-        
+
+
 class currentMidi(BrowserView):
     """ AJAX method/view"""
     def __call__(self, uuid):
         abctune = uuidToObject(uuid)
-        retour = '<embed id="abctuneMidi" height="30" autostart="true" controller="true" autoplay="true"'
-        retour = '<embed id="abctuneMidi" height="30" autostart="false" controller="true" autoplay="false"'
-        retour = retour + ' src="' + abctune.absolute_url() + '/@@download/midi/' + abctune.midi.filename + '"'
-        retour = retour + ' type="audio/mid"> </embed>'            
+        # retour = '<embed id="abctuneMidi" height="30" autostart="true" '
+        # retour += controller="true" autoplay="true"'
+        retour = '<embed id="abctuneMidi" height="30" autostart="false" '
+        retour += 'controller="true" autoplay="false"'
+        retour += ' src="' + abctune.absolute_url() + '/@@download/midi/'
+        retour += abctune.midi.filename + '"'
+        retour += ' type="audio/mid"> </embed>'
         return retour
+
 
 class currentMP3(BrowserView):
     """ AJAX method/view"""
     def __call__(self, uuid):
         abctune = uuidToObject(uuid)
-        retour = '<embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true"'
-        retour = retour + ' src="' + abctune.absolute_url() + '/@@download/sound/' + abctune.sound.filename + '"'
-        retour = retour + ' type="audio/mp3"> </embed>'            
+        retour = '<embed id="abctuneMP3" height="30" autostart="false" '
+        retour += 'controller="true" autoplay="true"'
+        retour += ' src="' + abctune.absolute_url() + '/@@download/sound/'
+        retour += abctune.sound.filename + '"'
+        retour += ' type="audio/mp3"> </embed>'
         return retour
+
 
 class createMP3(BrowserView):
     """ AJAX method/view"""
@@ -104,7 +121,9 @@ class createMP3(BrowserView):
             return
         abctune.abc = abctext
         _make_mp3(abctune)
-        retour = '<embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true"'
-        retour = retour + ' src="' + abctune.absolute_url() + '/@@download/sound/' + abctune.sound.filename + '"'
-        retour = retour + ' type="audio/mp3"> </embed>'            
+        retour = '<embed id="abctuneMP3" height="30" autostart="false" '
+        retour += 'controller="true" autoplay="true"'
+        retour += ' src="' + abctune.absolute_url() + '/@@download/sound/'
+        retour += abctune.sound.filename + '"'
+        retour += ' type="audio/mp3"> </embed>'
         return retour

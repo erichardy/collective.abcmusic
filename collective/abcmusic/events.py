@@ -1,4 +1,3 @@
-import logging
 from five import grok
 from zope.component.interfaces import IObjectEvent
 from zope.component.interfaces import ObjectEvent

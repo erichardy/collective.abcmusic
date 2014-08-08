@@ -14,7 +14,7 @@
 <tal:main-macro metal:define-macro="main">
 
 <div id="subjects-content" 
-     tal:define="subjects python:view.listSubjects();
+     tal:define="subjects python:view.listOwnedSubjects();
                  currents python:view.currentSubjects()">
 <form id='subjects-form'>
 <span tal:repeat="subject subjects">
