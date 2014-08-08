@@ -146,12 +146,20 @@ class View(grok.View):
             authjs = u'false'
 
         js = u"""<script type="text/javascript">\n"""
-        js += u'tuneModified = ' + _(u"'The tune was modified... continue ?'") + u';\n'
+        js += u'tuneModified = ' + _(u"'The tune was modified... continue ?'")
+        js += u';\n'
         js += u'var uuid = "' + api.content.get_uuid(self.context) + '";\n'
         js += u'var auth = ' + authjs + ';\n'
         js += u'</script>'
         # import pdb;pdb.set_trace()
         return js
+
+    def sujbectsStr(self):
+        subjects = self.context.subject
+        subject_str = ''
+        for s in subjects:
+            subject_str += s + ', '
+        return subject_str.strip(', ')
 
 
 def addQ(context):

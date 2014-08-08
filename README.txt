@@ -63,6 +63,7 @@ TODO
 ====
 * fix modification time when tune is modified by standard view (not by "edit" menu)
 * when manage keywords, only display keywords of owned items
+* add bullet of keywords when mouse is over 'manage subjects' in view
 * export tune or tunes as zipfile
 * get command lines for abc -> ps, ps -> jpeg, abc->midi, midi->mp3 from controlpanel
 * when export a folder to a file, save also keywords in abc file as tagged comments and manage them in import

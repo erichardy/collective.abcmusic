@@ -14,8 +14,14 @@ class updateSubjects(BrowserView):
         self.context.subject = list(l_subjects)
         self.context.reindexObject(idxs=["subject"])
         logger.info('updateSubjects: Subject List updated ' + str(l_subjects))
-        return 'ok'
+        return self.sujbectsStr()
 
+    def sujbectsStr(self):
+        subjects = self.context.subject
+        subject_str = ''
+        for s in subjects:
+            subject_str += s + ', '
+        return subject_str.strip(', ')
 
 class manageSubjects(BrowserView):
 

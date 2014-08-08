@@ -72,3 +72,7 @@ td#pdfScore {
 td#pdfScore a:link {
 	text-decoration: none;
 }
+
+span#tuneSubject {
+	font-style: italic;
+}

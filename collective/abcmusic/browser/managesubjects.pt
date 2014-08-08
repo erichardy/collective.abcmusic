@@ -41,7 +41,8 @@ function updateKeywords() {
 	});
 	// console.log(subjects);
 	method = pathname + "/@@update-subjects";
-	updateSubjects = $.post(method,{'subjects':subjects},function(data){console.log(data)});
+	updateSubjects = $.post(method,{'subjects':subjects},function(data){console.log(data)})
+	                  .done(function(data){$("#tuneSubject").html('(' + data + ')')});
 };
 
 $(".subject-value").change(function(){

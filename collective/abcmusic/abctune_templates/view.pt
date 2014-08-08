@@ -102,6 +102,7 @@
 	<h3 i18n:translate="">inline editing</h3>
 	<span tal:condition="python:view.abcAutorized()">
 	<a class="a-overlay" href="" tal:attributes="href string:${context/absolute_url}/@@manage-subjects" i18n:translate="">manage subjects</a>
+	   <span class="tune_subject" id="tuneSubject" tal:content="string: (${view/sujbectsStr})">keywords</span>
        <div id="tuneModified">
          <span i18n:translate="">The tune is modified, you should save it if you want to keep your work : </span>
          <button id="saveModifications" i18n:translate="">Save</button>
