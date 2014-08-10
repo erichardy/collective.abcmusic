@@ -137,6 +137,13 @@
     permission="cmf.ManagePortal"
   />
 
+  <browser:page
+    for="*"
+    name="recurse"
+    class=".utils.recurse"
+    permission="cmf.ManagePortal"
+  />
+
   <!-- EXAMPLE:
       
   <include package="plone.app.contentmenu" />

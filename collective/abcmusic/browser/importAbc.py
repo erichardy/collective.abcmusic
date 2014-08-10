@@ -61,15 +61,32 @@ class importAbc(form.SchemaForm):
                 return title
         return 'collective.abcmusic.NoTitle'
 
-    def createTune(self, newtune=None, tuneId=None, tuneTitle=None):
+    def getSubject(self, tune):
+        subjects = []
+        for line in tune:
+            if line[:12] == '%ABCKeyWord:':
+                subject = line.split(':')[1]
+                subjects.append(subject)
+        return subjects
+
+    def cleanup(self, tune):
+        returned = []
+        for line in tune:
+            if line[:12] != '%ABCKeyWord:':
+                returned.append(line)
+        return returned
+
+    def createTune(self,
+                   newtune=None,
+                   tuneId=None,
+                   tuneTitle=None,
+                   tuneSubject=None):
         self.context.invokeFactory(type_name='abctune',
                                    id=tuneId,
                                    abc=newtune,
-                                   title=tuneTitle)
-        ## logger.info('createTune:' + tuneId)
-        # tune = self.context[tuneId]
-        # tune.abc = newtune
-        # return tune
+                                   title=tuneTitle,
+                                   subject=tuneSubject)
+        return
 
     def processABC(self, data):
         # tunes = data.split('\n')
@@ -78,14 +95,15 @@ class importAbc(form.SchemaForm):
         for rawtune in rawtunes:
             tune = rawtune.split('\n')[1:]
             tune.insert(0, 'X:1')
-            newtune = ('\n').join(tune)
+            newtune = ('\n').join(self.cleanup(tune))
             tuneId = self.getTuneId(tune)
             tuneTitle = self.getTuneTitle(tune)
+            tuneSubject = self.getSubject(tune)
             if tuneId != 'collective.abcmusic.NoId':
                 self.createTune(newtune=newtune,
                                 tuneId=tuneId,
-                                tuneTitle=tuneTitle)
-        # import pdb;pdb.set_trace()
+                                tuneTitle=tuneTitle,
+                                tuneSubject=tuneSubject)
 
     @button.buttonAndHandler(u'Ok')
     def handleApply(self, action):
@@ -94,9 +112,10 @@ class importAbc(form.SchemaForm):
             self.status = self.formErrorsMessage
             return
 
-        tune = data["abc_file"].data
-        self.processABC(tune)
+        tunes = data["abc_file"].data
+        self.processABC(tunes)
         self.status = "Thank you very much!"
+        self.request.response.redirect(self.context.absolute_url())
 
     @button.buttonAndHandler(u"Cancel")
     def handleCancel(self, action):

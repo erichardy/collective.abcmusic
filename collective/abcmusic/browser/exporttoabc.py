@@ -22,8 +22,18 @@ class exportToAbc(BrowserView):
                   path={'query': folder_path, 'depth': 1},
                   )
         abcFile = ''
-        for tune in results:
-            abcFile += tune.abc
+
+        for tunes in results:
+            tune = tunes.getObject()
+            abc = tune.abc
+            for line in abc.split('\n'):
+                abcFile += line + '\n'
+                if line[:2] == 'X:':
+                    subjects = tune.subject
+                    if len(subjects) > 0:
+                        for subject in subjects:
+                            abcFile += '%ABCKeyWord:' + subject + '\n'
+                            logger.info(subject)
             abcFile += '\n\n'
         self.request.response.setHeader('Content-Type', 'text/abc')
         self.request.response.setHeader('Content-Disposition',
