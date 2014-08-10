@@ -14,6 +14,7 @@ from collective.abcmusic.mp3 import _make_mp3
 
 from collective.abcmusic.abctune import addTuneType
 from collective.abcmusic.abctune import addOrigins
+from collective.abcmusic.abctune import addKeys
 from collective.abcmusic.abctuneset import updateTuneSet
 
 from collective.abcmusic import _
@@ -42,6 +43,7 @@ class updateTune(BrowserView):
         abctune.abc = abctext
         addTuneType(abctune)
         addOrigins(abctune)
+        addKeys(abctune)
         _make_midi(abctune)
         _make_score(abctune)
 

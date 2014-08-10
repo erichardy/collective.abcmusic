@@ -5,10 +5,27 @@
     <upgradeStep
         source="*"
         destination="1001"
-        title="Upgrade"
+        title="Upgrade: do nothing special"
         description=""
         profile="collective.abcmusic:default"
         handler=".upgrades.common"
+        />
+
+	<upgradeStep
+        source="*"
+        destination="1002"
+        title="set Keys because new field (keys) is added"
+        description=""
+        profile="collective.abcmusic:default"
+        handler=".upgrades.setNewKeys"
+        />
+	<upgradeStep
+        source="1002"
+        destination="1003"
+        title="key field changed from 'keys' to 'tunekeys'"
+        description=""
+        profile="collective.abcmusic:default"
+        handler=".upgrades.setTuneKeys"
         />
 
 </configure>

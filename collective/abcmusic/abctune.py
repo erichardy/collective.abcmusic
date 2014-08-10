@@ -44,6 +44,15 @@ class IABCTune(form.Schema):
     abc = schema.Text(title=_(u"Tune abc"),
                       description=_(u'The tune in abc format'),)
 
+    dexteritytextindexer.searchable('tunekeys')
+    form.omitted('tunekeys')
+    tunekeys = schema.List(
+                       title=u'keys',
+                       description=u'set by abc content',
+                       required=False,
+                       value_type=schema.TextLine(required=False),
+                       )
+
     dexteritytextindexer.searchable('tunetype')
     form.omitted('tunetype')
     tunetype = schema.TextLine(
@@ -193,6 +202,17 @@ def addOrigins(context):
         context.tunearea = "unknown"
 
 
+def addKeys(context):
+    abc = context.abc
+    keys = []
+    for line in abc.split('\n'):
+        if line[:2] == 'K:':
+            key = line.split(':')[1].strip()
+            if not key in keys:
+                keys.append(key)
+    context.tunekeys = keys
+
+
 @grok.subscribe(IABCTune, IObjectCreatedEvent)
 def newAbcTune(context, event):
     try:
@@ -200,6 +220,7 @@ def newAbcTune(context, event):
         addQ(context)
         addTuneType(context)
         addOrigins(context)
+        addKeys(context)
         _make_midi(context)
         _make_score(context)
         # _make_mp3(context)
@@ -215,6 +236,7 @@ def updateAbcTune(context, event):
         addQ(context)
         addTuneType(context)
         addOrigins(context)
+        addKeys(context)
         _make_midi(context)
         _make_score(context)
         parent = context.aq_parent

@@ -78,3 +78,8 @@ TODO
 * create a public database of tunes from which a tune can be added to a owned folder
   ...perhaps by a specific add form (?)
 * improve the IHM : which kind of menus?
+
+NOTE about MIDI
+===============
+* another way to convert midi to MP3 : http://ubuntuforums.org/showthread.php?t=1790563
+and : http://www.remlab.net/op/vlc-midi.shtml
