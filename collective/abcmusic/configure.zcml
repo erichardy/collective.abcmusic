@@ -64,6 +64,10 @@
     component=".vocabularies.abcTunetypesVocabularyFactory"
     name="collective.abcmusic.vocabularies.abctunetypes"
     />
+  <utility
+    component=".vocabularies.abcTuneKeysVocabularyFactory"
+    name="collective.abcmusic.vocabularies.abctunekeys"
+    />
 
   <!-- add form declaration for tune -->
   <!-- the name parameter below must match the content type name -->

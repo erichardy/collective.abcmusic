@@ -18,6 +18,23 @@
     <!-- see /plone/app/vocabularies/... -->
     <value key="group" i18n:translate="">Text</value>
   </records>
+
+  <records interface="collective.abcmusic.controlpanel.IABCMusicSettingsForm" />
+  
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.abcTuneKeys">
+    <value key="title" i18n:translate="">Tune keys</value>
+    <value key="description" i18n:translate="">The tune keys</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+        <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">collective.abcmusic.vocabularies.abctunekeys</value>
+    <!-- see /plone/app/vocabularies/... -->
+    <value key="group" i18n:translate="">Text</value>
+  </records>
+
   <records interface="collective.js.jqueryui.controlpanel.IJQueryUICSS">
       <value key="css">False</value>
       <value key="patch">False</value>

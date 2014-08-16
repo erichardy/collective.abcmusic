@@ -6,11 +6,6 @@ $(document).ready(function() {
 jQuery(document).ready(function($) {
 
 $(document).ready(function() {
-	$("a.a-overlay").prepOverlay({
-        subtype: 'ajax',
-        // part of Plone page going into pop-up dialog content area
-        filter: '#content > *'
-    });
 	if (auth == false) {
 		$("h3").removeClass("tuneCollapsedHeading");
 	}

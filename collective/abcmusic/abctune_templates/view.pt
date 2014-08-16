@@ -98,6 +98,9 @@
 		</div>
 	</div>
 	<p />
+	<div tal:condition="python:not auth">
+	  <span style="margin-left: 25px;"><a class="a-overlay" href="#" tal:attributes="href string:${here/absolute_url}/@@only-abc" i18n:translate="">get-abc</a></span>
+	</div>
 	<div tal:condition="auth" class="tune-edit">
 	<h3 i18n:translate="">inline editing</h3>
 	<span tal:condition="python:view.abcAutorized()">

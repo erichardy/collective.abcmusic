@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="collective.abcmusic">
 
 <body>
 
@@ -12,7 +12,8 @@
     <metal:block define-macro="content-core"
                  tal:define="kssClassesView context/@@kss_field_decorator_view;
                              getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
-                             templateId template/getId">
+                             templateId template/getId;
+                             ">
 
         <div metal:define-macro="text-field-view"
              id="parent-fieldname-text" class="stx"
@@ -54,7 +55,8 @@
                                        item_end python:(item.end or item.EndDate) if item_type == 'Event' else None;
                                        item_modified item/ModificationDate;
                                        item_sametime python: item_start == item_end;
-                                       item_samedate python: (item_end - item_start &lt; 1) if item_type == 'Event' else False">
+                                       item_samedate python: (item_end - item_start &lt; 1) if item_type == 'Event' else False;
+                                       item_editable python:view.itemEditable(item)">
                     
                     <metal:block define-slot="entry">
                     <dt tal:condition="python: item_type == 'abctune'" metal:define-macro="listitem"
@@ -108,7 +110,10 @@
 		            </embed>
 		    </object>
 		    </span>
-		    <span style="margin-left: 25px;"><a href="#" tal:attributes="href python:item_url" target="_blank" i18n:translate="">Edit</a></span>
+		      <span tal:condition="item_editable" style="margin-left: 25px;">
+		       <a href="#" tal:attributes="href python:item_url" target="_blank" i18n:translate="">Edit</a>
+		      </span>
+            <span style="margin-left: 25px;"><a class="a-overlay" href="#" tal:attributes="href string:${item_url}/@@only-abc" target="_blank" i18n:translate="">get-abc</a></span>
 		   </div>
 		    <div id="mp3">MP3 :&nbsp;
 		      <span tal:define="sound nocall:item/sound" tal:condition="nocall:sound">
@@ -118,7 +123,7 @@
 		                   type="audio/mp3">
 		            </embed>
 		        </object>
-              </span>
+		      </span>
             </div>
 		         <img id="abctuneScore"
 		              tal:attributes="src string:${item_url}/@@download/score/${score/filename};

@@ -99,7 +99,7 @@
     for="Products.CMFCore.interfaces.IFolderish"
     name="export-to-abc"
     class=".exporttoabc.exportToAbc"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
   />
 
   <browser:page
@@ -124,10 +124,18 @@
   />
   <browser:page
     for="*"
+    name="only-abc"
+    class=".abc.onlyABC"
+    template="abc.pt"
+    permission="zope2.View"
+  />
+
+  <browser:page
+    for="*"
     name="abc_collection_view"
     class=".abccollectionview.abcCollectionView"
     template="abccollectionview.pt"
-    permission="cmf.ManagePortal"
+    permission="zope2.View"
   />
 
   <browser:page

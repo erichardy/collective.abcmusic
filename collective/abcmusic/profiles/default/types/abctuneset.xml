@@ -37,7 +37,7 @@
    <element value="folder_summary_view"/>
   </property>
   <property name="default_view_fallback">False</property>
-  <property name="add_permission">zope2.View</property>
+  <property name="add_permission">cmf.AddPortalContent</property>
 
 
   <!-- Method aliases -->
