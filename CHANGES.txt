@@ -1,8 +1,18 @@
 Changelog
 =========
 
-0.1-dev (unreleased)
+0.3b13dev (unreleased)
 --------------------
 
-- Package created using templer
-  []
+- add tune types for collections
+- add tune keys for collections
+- add view of abc for tunes in collection
+- add view of abc if not permission to modify portal content
+- manage permissions in views (tune & collections)
+- fix add permission for tuneset
+
+0.3b13 (unreleased)
+--------------------
+
+- no changes
+
