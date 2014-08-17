@@ -8,9 +8,11 @@ logger = logging.getLogger('collective.abcmusic')
 class updateSubjects(BrowserView):
     """ AJAX method/view"""
     def __call__(self, subjects):
+        # NB: javascript allways returns str strings (not utf8)
+        # keywords must be converted to utf8 before to be set to the object !!
         # logger.info(self.context)
         context = self.context
-        # because context is may be a view...
+        # because context may be a view...
         try:
             tune = context.portal_type
         except:
@@ -20,6 +22,7 @@ class updateSubjects(BrowserView):
         l_subjects = [subject
                       for subject in subjects.strip('|').split('|')
                       if subject]
+        # import pdb;pdb.set_trace()
         context.subject = list(l_subjects)
         context.reindexObject(idxs=["subject"])
         # logger.info('updateSubjects: Subject List updated ' + str(l_subjects))
@@ -51,7 +54,8 @@ class manageSubjects(BrowserView):
             for k in keywords:
                 if not k in subjects:
                     subjects.append(k)
-        subjects.sort()
+        # sorting will be possible when all keywords in same encoding : utf8 !
+        # subjects.sort()
         # logger.info(subjects)
         return subjects
 

@@ -1,6 +1,15 @@
+# -*- coding: utf8 -*-
 import logging
 from Products.CMFCore.utils import getToolByName
 PROFILE = 'profile-collective.abcmusic:default'
+
+# TODO : new upgrade
+# convert all keywords which are not unicode to unicode
+# change the coding of the keywords management : only manipulate unicode
+# http://sametmax.com/lencoding-en-python-une-bonne-fois-pour-toute/
+# http://www.joelonsoftware.com/articles/Unicode.html
+# ch = 'chaîne' # type str
+# uch = ch.decode('utf8') # type unicode
 
 
 def common(context):
