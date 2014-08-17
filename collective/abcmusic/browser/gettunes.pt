@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.abcmusic">
+
+<head>
+</head>
+
+<body>
+<metal:main fill-slot="main">
+<tal:main-macro metal:define-macro="main">
+
+<div id="get-tunes" tal:define="tunes view/getLocalTunes;
+                                folders view/getLocalFolders;
+                                get_parent view/getParent;">
+
+<span tal:condition="get_parent">
+  <a href="" tal:attributes="href python:get_parent.absolute_url() + '/@@get-tunes'">parent</a>
+  <br />
+</span>
+<span tal:repeat="folder folders">
+  <a href="" tal:attributes="href python:folder.getObject().absolute_url() + '/@@get-tunes'"
+             tal:content="python:folder.getObject().title">folder title</a>
+  <br />
+</span>
+
+<form id='gettunes-form'>
+<span tal:repeat="tune tunes">
+    <p tal:content="python:tune.getObject().title">tune title</p>
+</span>
+
+</form>
+</div>
+<script type="text/javascript">
+
+</script>
+<style type="text/css" media="screen">
+
+</style>
+</tal:main-macro>
+</metal:main>
+
+</body>
+</html>

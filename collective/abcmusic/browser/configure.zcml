@@ -140,6 +140,14 @@
 
   <browser:page
     for="*"
+    name="get-tunes"
+    class=".gettunes.getTunes"
+    template="gettunes.pt"
+    permission="cmf.ManagePortal"
+  />
+
+  <browser:page
+    for="*"
     name="abcDebug"
     class=".abcDebug.abcDebug"
     permission="cmf.ManagePortal"
