@@ -27,5 +27,13 @@
         profile="collective.abcmusic:default"
         handler=".upgrades.setTuneKeys"
         />
+    <upgradeStep
+        source="*"
+        destination="1004"
+        title="convert to unicode keywords which are not unicode"
+        description=""
+        profile="collective.abcmusic:default"
+        handler=".upgrades.subject_to_unicode"
+        />
 
 </configure>

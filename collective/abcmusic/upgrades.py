@@ -99,3 +99,31 @@ def setNewKeys(context, logger=None):
     """
     setup.runImportStepFromProfile(PROFILE, 'catalog')
     logger.info("%s tunes, %s keys added." % (nbtunes, nbkeys))
+
+
+def subject_to_unicode(context, logger=None):
+    if logger is None:
+        logger = logging.getLogger('collective.abcmusic')
+    setup = getToolByName(context, 'portal_setup')
+    setup.runImportStepFromProfile(PROFILE, 'catalog')
+    catalog = getToolByName(context, 'portal_catalog')
+    # thanks to http://maurits.vanrees.org/weblog/archive/2009/12/catalog
+    # first add index to catalog
+    brains = catalog(portal_type='abctune')
+    nbtunes = 0
+    nbsubjects = 0
+    for brain in brains:
+        tune = brain.getObject()
+        subjects = tune.subject
+        usubjects = []
+        for subject in subjects:
+            if isinstance(subject, unicode):
+                usubjects.append(subject)
+            else:
+                usubjects.append(subject.decode('utf8'))
+                nbsubjects += 1
+        tune.subject = usubjects
+        tune.reindexObject()
+        nbtunes += 1
+    setup.runImportStepFromProfile(PROFILE, 'catalog')
+    logger.info("%s tunes, %s subjects converted." % (nbtunes, nbsubjects))

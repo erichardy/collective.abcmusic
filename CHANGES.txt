@@ -11,8 +11,10 @@ Changelog
 - manage permissions in views (tune & collections)
 - fix add permission for tuneset
 
-0.3b13 (unreleased)
+0.3b14 (unreleased)
 --------------------
 
-- no changes
+- upgrade (* -> 1004) : convert subjects to unicode if necessary
+- when update subjects, convert them to unicode
+
 

@@ -19,22 +19,24 @@ class updateSubjects(BrowserView):
             tune = context.context.portal_type
             context = self.context.context
         # import pdb;pdb.set_trace()
-        l_subjects = [subject
+        l_subjects = [self.to_unicode(subject)
                       for subject in subjects.strip('|').split('|')
                       if subject]
         # import pdb;pdb.set_trace()
         context.subject = list(l_subjects)
         context.reindexObject(idxs=["subject"])
         # logger.info('updateSubjects: Subject List updated ' + str(l_subjects))
-        return self.sujbectsStr(context)
+        return self.sujbectsString(context)
 
-    def sujbectsStr(self, context):
+    def sujbectsString(self, context):
         subjects = context.subject
         subject_str = ''
         for s in subjects:
             subject_str += s + ', '
         return subject_str.strip(', ')
 
+    def to_unicode(self, s):
+        return s.decode('utf-8') if isinstance(s, str) else s
 
 class manageSubjects(BrowserView):
 
@@ -55,7 +57,7 @@ class manageSubjects(BrowserView):
                 if not k in subjects:
                     subjects.append(k)
         # sorting will be possible when all keywords in same encoding : utf8 !
-        # subjects.sort()
+        subjects.sort()
         # logger.info(subjects)
         return subjects
 
