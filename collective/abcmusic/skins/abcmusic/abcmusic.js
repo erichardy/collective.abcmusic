@@ -27,4 +27,8 @@ $(document).ready(function() {
 	$("a").hover(function(event){
 		console.log('div.pb-ajax a');
 	});
+	
+	$(".overlaycontent td.contenttype-folder").prev().hide();
+	$(".overlaycontent td.contenttype-folder").css("background-color","Red");
+	
 });

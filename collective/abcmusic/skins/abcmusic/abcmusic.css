@@ -8,3 +8,16 @@ button {
 pre.abcText {
 	font-size: 120%;
 }
+/*
+.overlaycontent td.contenttype-folder + td {
+   display: none;
+}
+
+.overlaycontent td.contenttype-folder {
+	background-color: Red;
+}
+
+.overlaycontent td.contenttype-folder + td {
+	display: none;
+}
+*/

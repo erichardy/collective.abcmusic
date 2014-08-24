@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+xmlns:tal="http://xml.zope.org/namespaces/tal"
+metal:use-macro="context/main_template/macros/master">
+
+<head>
+<metal:head fill-slot="javascript_head_slot">
+<script type="text/javascript" src=""
+   tal:attributes="src string:${portal_url}/referencebrowser.js"></script>
+</metal:head>
+</head>
+
+<body>
+<!-- Many thanks to http://blog.redturtle.it/2013/12/19/usare-widget-plone-in-semplici-template-html -->
+<metal:content-core fill-slot="content-core">
+<metal:content-core define-macro="content-core">
+
+<form action="@@gestisciform" method="post">
+
+<div id="atrb_referenze" class="overlay-ajax overlay">
+<div class="close"><span>Chiudi</span></div>
+<div class="pb-ajax">
+<div class="overlaycontent" style="font-size: 125%"></div>
+</div>
+</div>
+
+<input type="hidden" name="referenze:default:list" value="" />
+<input type="hidden" value="1" name="referenze-sortable" />
+
+<div style="float: left"> <!-- don't remove this. it is needed for DOM traversal -->
+</div>
+<ul class="visualNoMarker" id="ref_browser_items_referenze" >
+</ul>
+
+<input type="button" rel="#atrb_referenze" src=""
+	class="addreference searchButton" value="Ajouter..."
+	tal:define="startup_directory context/absolute_url;
+                helper python:context.restrictedTraverse('refbrowserhelper', nothing);
+                at_url helper/getAtURL|nothing;"
+    tal:attributes="src string:${startup_directory}/refbrowser_popup?fieldName=referenze&amp;fieldRealName=relatedItems&amp;at_url=${at_url}&amp;" />
+
+<input type="submit" name="send" value="Valider" />
+</form>
+<style type="text/css" media="screen">
+/*
+.overlaycontent td.contenttype-folder {
+	background-color: Red;
+}
+*/
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+/* .... */
+});
+</script>
+</metal:content-core>
+</metal:content-core>
+
+</body>
+</html>

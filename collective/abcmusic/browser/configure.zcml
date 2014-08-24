@@ -141,17 +141,32 @@
   <browser:page
     for="*"
     name="get-tunes"
+    template="gettunes.pt"
     class=".gettunes.getTunes"
-    permission="cmf.ManagePortal"
+    permission="cmf.ModifyPortalContent"
   />
-<!-- template="gettunes.pt" -->
+
   <browser:page
     for="*"
     name="navi"
     template="navigate.pt"
     permission="cmf.ManagePortal"
   />
-
+<!--
+  <browser:page
+    for="*"
+    name="refbrowser_popup_gettunes"
+    template="gettunes_popup.pt"
+    class=".gettunespopup.ReferenceBrowserPopup"
+    permission="cmf.ManagePortal"
+  />
+  <adapter
+      for="Products.Five.BrowserView"
+      factory=".gettunespopup.default_popup_template"
+      name="gettunes-popup"
+      provides="zope.formlib.namedtemplate.INamedTemplate"
+      />
+-->
   <browser:page
     for="*"
     name="abcDebug"
@@ -165,6 +180,8 @@
     class=".utils.recurse"
     permission="cmf.ManagePortal"
   />
+  
+  
 
   <!-- EXAMPLE:
       
