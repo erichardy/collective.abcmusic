@@ -142,7 +142,13 @@
     for="*"
     name="get-tunes"
     class=".gettunes.getTunes"
-    template="gettunes.pt"
+    permission="cmf.ManagePortal"
+  />
+<!-- template="gettunes.pt" -->
+  <browser:page
+    for="*"
+    name="navi"
+    template="navigate.pt"
     permission="cmf.ManagePortal"
   />
 

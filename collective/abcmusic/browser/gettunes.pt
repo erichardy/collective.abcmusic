@@ -16,27 +16,15 @@
 <div id="get-tunes" tal:define="tunes view/getLocalTunes;
                                 folders view/getLocalFolders;
                                 get_parent view/getParent;">
-<script type="text/javascript">
-$(document).ready(function() {
-	$("div#get-tunes a.get-tunes-overlay").click(function(event){
-		event.preventDefault();
-		$.post(this.href, function(data){
-			var content = $(data); // .find("#get-tunes" );
-			// $("div#get-tunes").html(content) ;
-			$("#get-tunes").empty().append(content);
-			// $("#get-tunes").not(this).hide();
-			console.log('get-tunes');
-		});
-	});
-	
-});
-</script>
+
+
+
 <span tal:condition="get_parent">
-  <a href="" class="get-tunes-overlay" tal:attributes="href python:get_parent.absolute_url() + '/@@get-tunes'; target string:_self">parent</a>
+  <a href="" class="get-tunes-overlay" tal:attributes="href python:get_parent.absolute_url() + '/@@get-tunes';">parent</a>
   <br />
 </span>
 <span tal:repeat="folder folders">
-  <a href="" class="get-tunes-overlay" tal:attributes="href python:folder.getObject().absolute_url() + '/@@get-tunes'; target string:_parent"
+  <a href="" class="get-tunes-overlay" tal:attributes="href python:folder.getObject().absolute_url() + '/@@get-tunes'"
              tal:content="python:folder.getObject().title">folder title</a>
   <br />
 </span>
@@ -50,8 +38,14 @@ $(document).ready(function() {
 </div>
 
 <style type="text/css" media="screen">
-
+/* ... */
 </style>
+<script type="text/javascript">
+
+/* ... */
+
+</script>
+<span tal:replace="structure python:view.js()">js</span>
 </tal:main-macro>
 </metal:main>
 
