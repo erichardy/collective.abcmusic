@@ -26,7 +26,9 @@
     </tbody>
     </table>
 	<div class="tune-view">
-		<h3 class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
+		<h3 tal:condition="auth" class="tuneCollapsedHeading" i18n:translate="">the tune as it is stored in the database</h3>
+		<h3 tal:condition="not: auth" tal:content="string:${here/title}">Tune Title</h3>
+
 		<div>
 		<table border="0">
 		<tbody>

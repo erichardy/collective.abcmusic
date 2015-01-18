@@ -7,6 +7,7 @@ from plone.app.uuid.utils import uuidToObject
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
 from DateTime import DateTime
+from datetime import datetime
 from collective.abcmusic.midi import _make_midi
 from collective.abcmusic.score import _make_score
 from collective.abcmusic.pdfscore import _make_PDFscore
@@ -67,11 +68,14 @@ class updateTune(BrowserView):
 class currentScore(BrowserView):
     """ AJAX method/view"""
     def __call__(self, uuid):
+        today = datetime.today()
+        microsecond = today.microsecond
         abctune = uuidToObject(uuid)
         height = abctune.score._height
         width = abctune.score._width
         retour = '<img src="' + abctune.absolute_url() + '/@@download/score/'
         retour += abctune.score.filename
+        retour += '/?' + str(microsecond)
         retour += '" height="' + str(height) + '" width="' + str(width) + '">'
         return retour
 

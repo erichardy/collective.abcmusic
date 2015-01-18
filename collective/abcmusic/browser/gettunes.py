@@ -17,6 +17,7 @@ from z3c.form import field, button
 from Products.CMFCore.interfaces import ISiteRoot
 from five import grok
 
+from z3c.form.browser.checkbox import CheckBoxFieldWidget
 from archetypes.referencebrowserwidget.widget import ReferenceBrowserWidget
 from plone.formwidget.contenttree import PathSourceBinder
 from plone.formwidget.contenttree import path_src_binder
@@ -30,9 +31,12 @@ logger = logging.getLogger('collective.abcmusic')
 
 
 class IGetTunes(form.Schema):
-    my_tunes = schema.Choice(title=u"Choice tunes",
+    form.widget(my_tunes='z3c.form.browser.checkbox.CheckBoxFieldWidget')
+    my_tunes = schema.Set(title=u"Choice tunes",
                              description=u"Select one, please",
-                             source="collective.abcmusic.getLocalTunes"
+                             value_type=schema.Choice(
+                                vocabulary=u"collective.abcmusic.getLocalTunes"
+                                ),
                            )
     """
     my_tunes = schema.List(title=u"Choice tunes",
