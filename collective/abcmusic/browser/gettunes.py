@@ -1,66 +1,62 @@
 # -*- coding: UTF-8 -*-
 import logging
-from zope.publisher.browser import BrowserView
-from zope.component.hooks import getSite
-from zope.interface import Interface, implements
-from zope.component import getUtility
-from zope.schema.vocabulary import SimpleVocabulary
-from zope.schema.interfaces import IVocabularyFactory
-from plone.z3cform.layout import wrap_form
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from zope import schema
-
 from plone.directives import form
 from plone.supermodel import model
+from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
+from zope import schema
+# from plone.directives import form
+# from plone.supermodel import model
 from z3c.form import field, button
 from Products.CMFCore.interfaces import ISiteRoot
 from five import grok
 
-from z3c.form.browser.checkbox import CheckBoxFieldWidget
-from archetypes.referencebrowserwidget.widget import ReferenceBrowserWidget
-from plone.formwidget.contenttree import PathSourceBinder
-from plone.formwidget.contenttree import path_src_binder
-from plone.formwidget.contenttree import ContentTreeFieldWidget
-from plone.formwidget.contenttree import MultiContentTreeFieldWidget
-
+from collective.plonefinder.widgets.referencewidget import FinderSelectWidget
 from collective.plonefinder.widgets.referencewidget import FinderSelectFileWidget
 from plone import api
+
+from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
 
+class FinderSelectTuneWidget(FinderSelectWidget):
+    finderlabel = _(u'Browse for files')
+    types = ['abctune']
+    allowupload = 0
+    allowaddfolder = 0
+
+
 class IGetTunes(form.Schema):
-    form.widget(my_tunes='z3c.form.browser.checkbox.CheckBoxFieldWidget')
-    my_tunes = schema.Set(title=u"Choice tunes",
+
+    # form.widget(my_tunes='collective.abcmusic.browser.gettunes.FinderSelectTuneWidget')
+    # form.widget(my_tunes=FinderSelectFileWidget)
+    my_tunes = schema.Tuple(title=u"Choice tunes",
                              description=u"Select one, please",
-                             value_type=schema.Choice(
-                                vocabulary=u"collective.abcmusic.getLocalTunes"
-                                ),
+                             default=()
                            )
-    """
-    my_tunes = schema.List(title=u"Choice tunes",
-                             description=u"Select one, please",
-                             value_type=schema.Choice(
-                               title=u"Selection",
-                               vocabulary=u"collective.abcmusic.getLocalTunes"
-                               )
-                           )
-    """
+
 
 class getTunes(form.SchemaForm):
     grok.context(ISiteRoot)
     schema = IGetTunes
+    # fields = field.Fields(IGetTunes)
+    # fields['my_tunes'].widgetFactory = FinderSelectTuneWidget
     ignoreContext = True
+    # fields = field.Fields(IGetTunes)
+    # fields["my_tunes"].widgetFactory = FinderSelectTuneWidget
+    label = u"Choose a tune..."
+    description = u"Form to choose a tune"
 
     def updateWidgets(self):
         super(getTunes, self).updateWidgets()
-        self.fields['my_tunes'].widgetFactory = ReferenceBrowserWidget
+        fields = field.Fields(IGetTunes)
+        fields['my_tunes'].widgetFactory = FinderSelectFileWidget
+        # self.fields['my_tunes'].widgetFactory = FinderSelectTuneWidget
         # self.fields['my_tunes'].widgetFactory = MultiContentTreeFieldWidget
         # self.widgets['my_tunes'].size = 20
         # import pdb;pdb.set_trace()
-"""
 
+"""
 
 class getTunes(BrowserView):
 
