@@ -29,7 +29,7 @@ class FinderSelectTuneWidget(FinderSelectWidget):
 class IGetTunes(form.Schema):
 
     # form.widget(my_tunes='collective.abcmusic.browser.gettunes.FinderSelectTuneWidget')
-    # form.widget(my_tunes=FinderSelectFileWidget)
+    form.widget(my_tunes=FinderSelectFileWidget)
     my_tunes = schema.Tuple(title=u"Choice tunes",
                              description=u"Select one, please",
                              default=()
