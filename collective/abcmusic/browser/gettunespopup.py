@@ -38,7 +38,7 @@ from Products.CMFPlone.PloneBatch import Batch
 from archetypes.referencebrowserwidget import utils
 from archetypes.referencebrowserwidget.interfaces import IFieldRelation
 from archetypes.referencebrowserwidget.interfaces import \
-        IReferenceBrowserHelperView
+                                                    IReferenceBrowserHelperView
 
 default_popup_template = named_template_adapter(
     ViewPageTemplateFile('gettunes_popup.pt'))
@@ -201,8 +201,9 @@ class ReferenceBrowserPopup(BrowserView):
         base_props = getToolByName(aq_inner(context), 'base_properties', None)
         if base_props is not None:
 
-            self.discreetColor = getattr(base_props, 'discreetColor',
-                    DISCREETCOLOR)
+            self.discreetColor = getattr(base_props,
+                                         'discreetColor',
+                                         DISCREETCOLOR)
         else:
             # XXX This concept has changed in Plone 4.0
             self.discreetColor = DISCREETCOLOR
@@ -223,8 +224,9 @@ class ReferenceBrowserPopup(BrowserView):
             self.has_brain = True
             self.brainuid = at_brain.UID
         else:
-            self.at_obj = context.restrictedTraverse(
-                    urllib.unquote(self.at_url))
+            self.at_obj = context.restrictedTraverse(urllib.unquote(self.at_url
+                                                                    )
+                                                     )
         self.field = self.at_obj.Schema()[self.fieldRealName]
         self.widget = self.field.widget
         self.multiValued = int(self.field.multiValued)
@@ -269,9 +271,11 @@ class ReferenceBrowserPopup(BrowserView):
         qc = getMultiAdapter((self.context, self.request),
                              name='refbrowser_querycatalog')
         if self.widget.show_results_without_query or self.search_text:
-            result = (self.widget.show_results_without_query or
-                self.search_text) and \
-                qc(search_catalog=self.widget.search_catalog)
+            result = (self.widget.show_results_without_query
+                      or
+                      self.search_text) \
+                      and \
+                      qc(search_catalog=self.widget.search_catalog)
 
             self.has_queryresults = bool(result)
 
@@ -325,8 +329,12 @@ class ReferenceBrowserPopup(BrowserView):
 
     def genRefBrowserUrl(self, urlbase):
         assert self._updated
-        return "%s/%s?fieldName=%s&fieldRealName=%s&at_url=%s" % (
-            urlbase, self.__name__, self.fieldName, self.fieldRealName, self.at_url)
+        return "%s/%s?fieldName=%s&fieldRealName=%s&at_url=%s" % \
+            (urlbase,
+             self.__name__,
+             self.fieldName,
+             self.fieldRealName,
+             self.at_url)
 
     def getUid(self, item):
         assert self._updated

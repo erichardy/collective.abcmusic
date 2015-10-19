@@ -29,7 +29,7 @@ def setTuneKeys(context, logger=None):
     indexables = []
     if 'keys' in indexes:
         catalog.delIndex('keys')
-    if not 'tunekeys' in indexes:
+    if 'tunekeys' not in indexes:
         catalog.addIndex('tunekeys', 'KeywordIndex')
         indexables.append('tunekeys')
         logger.info("Added %s for field %s.", 'KeywordIndex', 'keys')
@@ -69,7 +69,7 @@ def setNewKeys(context, logger=None):
     # first add index to catalog
     indexes = catalog.indexes()
     indexables = []
-    if not 'keys' in indexes:
+    if 'keys' not in indexes:
         catalog.addIndex('keys', 'KeywordIndex')
         indexables.append('keys')
         logger.info("Added %s for field %s.", 'KeywordIndex', 'keys')
@@ -78,7 +78,7 @@ def setNewKeys(context, logger=None):
         catalog.manage_reindexIndex(ids=indexables)
     #
 
-    brains = catalog(portal_type='abctune')
+    # brains = catalog(portal_type='abctune')
     nbtunes = 0
     nbkeys = 0
     """

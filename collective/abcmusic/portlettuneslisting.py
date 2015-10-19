@@ -4,7 +4,7 @@ from zope import schema
 from zope.interface import implements
 from zope.formlib import form
 
-from plone.memoize.instance import memoize
+# from plone.memoize.instance import memoize
 from zope.component import getMultiAdapter
 from Acquisition import aq_inner
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -13,11 +13,13 @@ from plone.portlets.interfaces import IPortletDataProvider
 from collective.abcmusic import _
 logger = logging.getLogger('collective.abcmusic')
 
+
 class ITunesListingPortlet(IPortletDataProvider):
     count = schema.Int(title=_(u'size of the box'),
                        description=_(u'Maximum size of the box.'),
                        required=True,
                        default=20)
+
 
 class Assignment(base.Assignment):
     implements(ITunesListingPortlet)
@@ -29,6 +31,7 @@ class Assignment(base.Assignment):
     def title(self):
         return _(u"Tunes listing")
 
+
 class AddForm(base.AddForm):
     form_fields = form.Fields(ITunesListingPortlet)
     label = _(u"Add Tunes listing Portlet")
@@ -37,10 +40,12 @@ class AddForm(base.AddForm):
     def create(self, data):
         return Assignment(count=data.get('count', 20))
 
+
 class EditForm(base.EditForm):
     form_fields = form.Fields(ITunesListingPortlet)
     label = _(u"Edit Tunes listing Portlet")
     description = _(u"This portlet gather the tunes in the current folder.")
+
 
 class Renderer(base.Renderer):
     _template = ViewPageTemplateFile('tuneslisting.pt')
@@ -49,14 +54,21 @@ class Renderer(base.Renderer):
         base.Renderer.__init__(self, *args)
 
         context = aq_inner(self.context)
-        portal_state = getMultiAdapter((context, self.request), name=u'plone_portal_state')
-        self.anonymous = portal_state.anonymous()  # whether or not the current user is Anonymous
-        self.portal_url = portal_state.portal_url()  # the URL of the portal object
+        portal_state = getMultiAdapter((context, self.request),
+                                       name=u'plone_portal_state'
+                                       )
+        # whether or not the current user is Anonymous
+        self.anonymous = portal_state.anonymous()
+        # the URL of the portal object
+        self.portal_url = portal_state.portal_url()
 
         # a list of portal types considered "end user" types
         self.typesToShow = portal_state.friendly_types()
-
-        plone_tools = getMultiAdapter((context, self.request), name=u'plone_tools')
+        """
+        plone_tools = getMultiAdapter((context, self.request),
+                                      name=u'plone_tools'
+                                      )
+        """
         self.catalog = context.portal_catalog
 
     def render(self):
@@ -75,8 +87,7 @@ class Renderer(base.Renderer):
             return nb_results
         else:
             return count
-                          
-        
+
     def tunes_items(self):
         return self._data()
 
@@ -92,8 +103,9 @@ class Renderer(base.Renderer):
             folder_path = '/'.join(context.getPhysicalPath())
         else:
             folder_path = '/'.join(context.aq_parent.getPhysicalPath())
-        results = self.catalog(
-                       Type = "abctune",
-                       path={'query': folder_path, 'depth': 1},
-                       sort_on='sortable_title')
+        results = self.catalog(Type="abctune",
+                               path={'query': folder_path,
+                                     'depth': 1},
+                               sort_on='sortable_title'
+                               )
         return results

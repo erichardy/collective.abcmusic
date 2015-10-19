@@ -1,13 +1,16 @@
+"""
 import transaction
 import unittest2 as unittest
 from zope import interface
 from plone.app import testing
 from collective.abcmusic import testing
 
+
 class UnitTestCase(unittest.TestCase):
 
     def setUp(self):
         pass
+
 
 class IntegrationTestCase(unittest.TestCase):
 
@@ -27,5 +30,6 @@ class FunctionalTestCase(IntegrationTestCase):
     layer = layer.FUNCTIONAL
 
     def setUp(self):
-        #we must commit the transaction
+        # we must commit the transaction
         transaction.commit()
+"""

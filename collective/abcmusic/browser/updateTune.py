@@ -1,6 +1,6 @@
 from zope.publisher.browser import BrowserView
 import logging
-from plone import api
+# from plone import api
 from zope.component.hooks import getSite
 from plone.app.uuid.utils import uuidToObject
 # from z3c.blobfile import file, image
@@ -10,7 +10,7 @@ from DateTime import DateTime
 from datetime import datetime
 from collective.abcmusic.midi import _make_midi
 from collective.abcmusic.score import _make_score
-from collective.abcmusic.pdfscore import _make_PDFscore
+# from collective.abcmusic.pdfscore import _make_PDFscore
 from collective.abcmusic.mp3 import _make_mp3
 
 from collective.abcmusic.abctune import addTuneType
@@ -18,7 +18,7 @@ from collective.abcmusic.abctune import addOrigins
 from collective.abcmusic.abctune import addKeys
 from collective.abcmusic.abctuneset import updateTuneSet
 
-from collective.abcmusic import _
+# from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic updateTune: ')
 

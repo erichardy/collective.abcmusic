@@ -1,32 +1,32 @@
 import logging
 from five import grok
 from plone import api
-from plone.namedfile.interfaces import HAVE_BLOBS
+# from plone.namedfile.interfaces import HAVE_BLOBS
 from zope import schema
-from AccessControl import getSecurityManager
-from Products.CMFCore.permissions import ModifyPortalContent
-from zope.component import getUtility
+# from AccessControl import getSecurityManager
+# from Products.CMFCore.permissions import ModifyPortalContent
+# from zope.component import getUtility
 from zope.component.hooks import getSite
-from plone.i18n.normalizer.interfaces import INormalizer
+# from plone.i18n.normalizer.interfaces import INormalizer
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
 
-from plone.namedfile.file import NamedBlobImage as nbi
-from plone.namedfile.file import NamedBlobFile as nbf
+# from plone.namedfile.file import NamedBlobImage as nbi
+# from plone.namedfile.file import NamedBlobFile as nbf
 
-from collective import dexteritytextindexer
-from plone.directives import dexterity
+# from collective import dexteritytextindexer
+# from plone.directives import dexterity
 from plone.dexterity.content import Container
 from plone.directives import form
-from z3c.form import button, field
+# from z3c.form import button, field
 # for events handlers
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent, IObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 # END for events handlers
 from collective.abcmusic.utils import removeNonAscii
-from collective.abcmusic.mp3 import _make_mp3
+# from collective.abcmusic.mp3 import _make_mp3
 from collective.abcmusic.score import _make_score
 from collective.abcmusic.midi import _make_midi
-from collective.abcmusic.events import ITuneInTuneSetModified
+# from collective.abcmusic.events import ITuneInTuneSetModified
 
 from collective.abcmusic import _
 
@@ -45,8 +45,7 @@ If those rules are not respected, the result is really uncertain...
 class IABCTuneSet(form.Schema):
 
     form.omitted('combinedTitle')
-    combinedTitle = schema.TextLine(
-                    title=_(u"combined set title"),
+    combinedTitle = schema.TextLine(title=_(u"combined set title"),
                     description=_(u"this title depends of the tunes titles"),
                     )
     form.omitted('abc')
@@ -60,22 +59,19 @@ class IABCTuneSet(form.Schema):
                            required=False,)
 
     form.omitted('pdfscore')
-    pdfscore = NamedBlobFile(
-            title=_(u"PDF Score"),
+    pdfscore = NamedBlobFile(title=_(u"PDF Score"),
             description=_(u'The score of the tunes set as PDF'),
             required=False,
         )
 
     form.omitted('midi')
-    midi = NamedBlobFile(
-            title=_(u"Midi"),
+    midi = NamedBlobFile(title=_(u"Midi"),
             description=_(u'Midi sound of the tunes set'),
             required=False,
         )
 
     form.omitted('sound')
-    sound = NamedBlobFile(
-            title=_(u"sound"),
+    sound = NamedBlobFile(title=_(u"sound"),
             description=_(u'The mp3 sound of the tunes set'),
             required=False,
         )
@@ -176,7 +172,8 @@ def aff(abc):
     logger.info(l)
 
 """
-see : http://docs.plone.org/external/plone.app.dexterity/docs/advanced/event-handlers.html
+see : http://docs.plone.org/external/plone.app.dexterity/docs/advanced/\
+        event-handlers.html
 zope.lifecycleevent.interfaces.IObjectModifiedEvent
 fired by the standard edit form when an object has been modified.
 also fired when
@@ -232,7 +229,8 @@ def modifAbcTune(context, event):
 To create the abc of the set :
 - create the title (T:) from the titles and remove secondary T: fields
 - remove X: except for the first
-- analyze the parts P: in order to play each tune as described in the according P:
+- analyze the parts P: in order to play each tune as described in the
+  according P:
 - remove the secondary parts (P:B,...) from tunes
 - set a part to each tune : first == P:A , second == P:B , etc...
 not allowed in tune body : R: Z:

@@ -1,5 +1,5 @@
-import logging
 from zope.publisher.browser import BrowserView
+
 
 class onlyABC(BrowserView):
     def getABC(self):

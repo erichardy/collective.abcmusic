@@ -9,7 +9,7 @@ import tempfile as tf
 from StringIO import StringIO
 from os import unlink
 
-from collective.abcmusic import _
+# from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
@@ -63,7 +63,11 @@ def _make_score(context):
 
     pstemp = tf.NamedTemporaryFile(mode='w+b',
                                    suffix='.ps', delete=False).name
-    p = sp.Popen(["abcm2ps", abctemp, '-O', pstemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p = sp.Popen(["abcm2ps", abctemp,
+                  '-O', pstemp],
+                 stdout=sp.PIPE,
+                 stderr=sp.PIPE
+                 )
     p.wait()
     pdftemp = tf.NamedTemporaryFile(mode='w+b',
                                     suffix='.pdf', delete=False).name

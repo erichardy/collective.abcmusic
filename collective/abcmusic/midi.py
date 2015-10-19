@@ -8,15 +8,17 @@ import tempfile as tf
 from StringIO import StringIO
 from os import unlink
 
-from collective.abcmusic import _
+# from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
 
 def _make_midi(context):
     """
-    peut etre utile : http://stackoverflow.com/questions/12298136/dynamic-source-for-plone-dexterity-relationlist
-    pour les donnees binaires : http://plone.org/products/dexterity/documentation/manual/developer-manual/advanced/files-and-images
+    peut etre utile : http://stackoverflow.com/questions/12298136/\
+    dynamic-source-for-plone-dexterity-relationlist
+    pour les donnees binaires : http://plone.org/products/dexterity/\
+    documentation/manual/developer-manual/advanced/files-and-images
     """
     abc = context.abc
     abctemp = tf.NamedTemporaryFile(mode='w+b',
@@ -30,7 +32,10 @@ def _make_midi(context):
     miditemp = tf.NamedTemporaryFile(mode='w+b',
                                      suffix='.mid',
                                      delete=False).name
-    p = sp.Popen(["abc2midi", abctemp,'-o', miditemp], stdout=sp.PIPE, stderr=sp.PIPE)
+    p = sp.Popen(["abc2midi", abctemp, '-o', miditemp],
+                 stdout=sp.PIPE,
+                 stderr=sp.PIPE
+                 )
     p.wait()
     iomidi = StringIO()
     fmiditemp = open(miditemp, 'r')
@@ -43,7 +48,10 @@ def _make_midi(context):
     midiFilename = unicode(normalizedTitle + '.mid')
     midiData = iomidi.getvalue()
     midiContentType = u'audio/mid'
-    blobMidi = nbf(midiData, contentType=midiContentType, filename=midiFilename)
+    blobMidi = nbf(midiData,
+                   contentType=midiContentType,
+                   filename=midiFilename
+                   )
     context.midi = blobMidi
 
     output, errors = p.communicate()

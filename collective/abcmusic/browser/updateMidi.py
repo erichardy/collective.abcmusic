@@ -3,13 +3,14 @@ import logging
 from plone import api
 
 from collective.abcmusic.abctune import _make_midi
-from collective.abcmusic import _
+# from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
+
 class updateMidi(BrowserView):
-    def __call__(self , abctext , abctuneURL):
-        ## logger.info("dans __call_ de updateMidi:")
+    def __call__(self, abctext, abctuneURL):
+        # logger.info("dans __call_ de updateMidi:")
         abctune = api.content.get(path=abctuneURL)
         abctune.abc = abctext
         _make_midi(abctune)

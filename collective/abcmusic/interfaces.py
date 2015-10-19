@@ -1,5 +1,5 @@
 from zope import interface
-from zope.viewlet.interfaces import IViewletManager
+# from zope.viewlet.interfaces import IViewletManager
 
 
 class IABCMusicLayer(interface.Interface):

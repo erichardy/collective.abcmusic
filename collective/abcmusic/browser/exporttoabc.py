@@ -4,7 +4,7 @@
 import logging
 from zope.publisher.browser import BrowserView
 from zope.component.hooks import getSite
-from collective.abcmusic import _
+# from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
@@ -17,10 +17,10 @@ class exportToAbc(BrowserView):
         site = getSite()
         filename = context.getId() + '.abc'
         catalog = site.portal_catalog
-        results = catalog.searchResults(
-                  portal_type='abctune',
-                  path={'query': folder_path, 'depth': 1},
-                  )
+        results = catalog.searchResults(portal_type='abctune',
+                                        path={'query': folder_path,
+                                              'depth': 1},
+                                        )
         abcFile = ''
 
         for tunes in results:

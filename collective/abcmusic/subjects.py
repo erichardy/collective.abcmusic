@@ -5,7 +5,8 @@
 
 """
 from collective.z3cform.widgets.token_input_widget import TokenInputFieldWidget
-# from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
+from collective.z3cform.widgets.enhancedtextlines import\
+        EnhancedTextLinesFieldWidget
 from plone.app.dexterity.behaviors.metadata import ICategorization
 from plone.app.z3cform.interfaces import IPloneFormLayer
 from z3c.form.interfaces import IFieldWidget

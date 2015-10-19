@@ -25,7 +25,8 @@ class updateSubjects(BrowserView):
         # import pdb;pdb.set_trace()
         context.subject = list(l_subjects)
         context.reindexObject(idxs=["subject"])
-        # logger.info('updateSubjects: Subject List updated ' + str(l_subjects))
+        # logger.info('updateSubjects: Subject List updated '
+        # + str(l_subjects))
         return self.sujbectsString(context)
 
     def sujbectsString(self, context):
@@ -37,6 +38,7 @@ class updateSubjects(BrowserView):
 
     def to_unicode(self, s):
         return s.decode('utf-8') if isinstance(s, str) else s
+
 
 class manageSubjects(BrowserView):
 
@@ -54,7 +56,7 @@ class manageSubjects(BrowserView):
             keywords = list(abctune.getObject().subject)
             # logger.info(keywords)
             for k in keywords:
-                if not k in subjects:
+                if k not in subjects:
                     subjects.append(k)
         # sorting will be possible when all keywords in same encoding : utf8 !
         subjects.sort()

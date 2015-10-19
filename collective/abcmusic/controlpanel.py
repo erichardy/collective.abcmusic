@@ -6,18 +6,15 @@ from collective.abcmusic import _
 
 
 class IABCMusicSettingsForm(form.Schema):
-    templates = schema.Text(
-                            title=_(u"templates"),
+    templates = schema.Text(title=_(u"templates"),
                             description=_(u"abcmusic templates description"),
                             required=False,
                             )
-    public_tunes = schema.TextLine(
-                            title=_(u"Path to the public tune base"),
+    public_tunes = schema.TextLine(title=_(u"Path to the public tune base"),
                             description=_(u"relative to the root plone site"),
                             required=False,
                             )
-    group_quotas = schema.Text(
-                            title=_(u"quota for group members (max items)"),
+    group_quotas = schema.Text(title=_(u"quota for group members (max items)"),
                             description=_(u"one line per group, in the format\
                             : groupName:maxItems"),
                             required=False,

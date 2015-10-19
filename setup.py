@@ -10,12 +10,11 @@ setup(name='collective.abcmusic',
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
-      classifiers=[
-        "Programming Language :: Python",
-        "Framework :: Plone",
-        "Framework :: Plone :: 4.2",
-        "Framework :: Plone :: 4.3",
-        ],
+      classifiers=["Programming Language :: Python",
+                   "Framework :: Plone",
+                   "Framework :: Plone :: 4.2",
+                   "Framework :: Plone :: 4.3",
+                   ],
       keywords='',
       author='',
       author_email='',

@@ -20,9 +20,8 @@ logger = logging.getLogger('collective.abcmusic')
 
 
 class IImportABC(form.Schema):
-    abc_file = NamedFile(
-            title=_(u"import a file containing one or more abc tunes"),
-        )
+    msg = _(u"import a file containing one or more abc tunes")
+    abc_file = NamedFile(title=msg)
 
 
 class importAbc(form.SchemaForm):
@@ -44,7 +43,7 @@ class importAbc(form.SchemaForm):
             if tuneLine[:2] == 'T:':
                 title = tuneLine.split(':')[1]
                 tuneId = normalizer.normalize(title, locale='fr')
-                ## logger.info("getTuneId:" + tuneLine + ':' + tuneId)
+                # logger.info("getTuneId:" + tuneLine + ':' + tuneId)
                 idOrigine = tuneId
                 i = 1
                 while tuneId in context.keys():

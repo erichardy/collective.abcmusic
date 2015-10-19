@@ -1,3 +1,4 @@
+"""
 from plone.testing import z2
 
 from plone.app.testing import *
@@ -14,4 +15,4 @@ INTEGRATION = IntegrationTesting(bases=(FIXTURE,),
 
 FUNCTIONAL = FunctionalTesting(bases=(FIXTURE,),
                         name="collective.abcmusic:Functional")
-
+"""

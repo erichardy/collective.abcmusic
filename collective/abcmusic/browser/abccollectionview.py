@@ -11,7 +11,8 @@ title = _(u'abc_collection_view')
 
 class abcCollectionView(BrowserView):
     def itemEditable(self, item):
-        editable = getSecurityManager().checkPermission(
-                                    permissions.ModifyPortalContent,
-                                    item.getObject())
+        perms = permissions.ModifyPortalContent
+        editable = getSecurityManager().checkPermission(perms,
+                                                        item.getObject()
+                                                        )
         return editable

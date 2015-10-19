@@ -7,7 +7,7 @@ import tempfile as tf
 from StringIO import StringIO
 from os import unlink
 
-from collective.abcmusic import _
+# from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 

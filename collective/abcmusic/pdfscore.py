@@ -1,15 +1,15 @@
 import logging
 from zope.component import getUtility
 from plone.i18n.normalizer.interfaces import INormalizer
-from plone.namedfile.file import NamedBlobImage as nbi
-from plone.namedfile.file import NamedBlobFile as nbf
+# from plone.namedfile.file import NamedBlobImage as nbi
+# from plone.namedfile.file import NamedBlobFile as nbf
 
 import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
 from os import unlink
 
-from collective.abcmusic import _
+# from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
@@ -53,7 +53,7 @@ def _make_PDFscore(context):
     output, errors = p.communicate()
     # logger.info(errors)
     # logger.info(output)
-    ## logger.info('PDF: ' + abctemp)
+    # logger.info('PDF: ' + abctemp)
     unlink(abctemp)
     unlink(pstemp)
     unlink(pdftemp)

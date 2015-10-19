@@ -1,34 +1,36 @@
 import logging
 from five import grok
 from plone import api
-from plone.namedfile.interfaces import HAVE_BLOBS
+# from plone.namedfile.interfaces import HAVE_BLOBS
 from zope import schema
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ModifyPortalContent
-from zope.component import getUtility
-from plone.i18n.normalizer.interfaces import INormalizer
+# from zope.component import getUtility
+# from plone.i18n.normalizer.interfaces import INormalizer
 from plone.namedfile.field import NamedBlobImage
 from plone.namedfile.field import NamedBlobFile
 
-from plone.namedfile.file import NamedBlobImage as nbi
-from plone.namedfile.file import NamedBlobFile as nbf
+# from plone.namedfile.file import NamedBlobImage as nbi
+# from plone.namedfile.file import NamedBlobFile as nbf
 
 from collective import dexteritytextindexer
-from plone.directives import dexterity
+# from plone.directives import dexterity
 from plone.directives import form
-from z3c.form import button, field
+# from z3c.form import button, field
 # for events handlers
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent, IObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.event import notify
-from collective.abcmusic.events import ITuneInTuneSetModified, TuneInTuneSetModified
+from collective.abcmusic.events import ITuneInTuneSetModified
+from collective.abcmusic.events import TuneInTuneSetModified
 from collective.abcmusic.abctuneset import updateTuneSet
 # END for events handlers
-import subprocess as sp
-import tempfile as tf
-from StringIO import StringIO
-from os import unlink
+# import subprocess as sp
+# import tempfile as tf
+# from StringIO import StringIO
+# from os import unlink
 
-from collective.abcmusic.mp3 import _make_mp3
+# from collective.abcmusic.mp3 import _make_mp3
 from collective.abcmusic.score import _make_score
 from collective.abcmusic.midi import _make_midi
 from collective.abcmusic.utils import removeNonAscii
@@ -46,63 +48,55 @@ class IABCTune(form.Schema):
 
     dexteritytextindexer.searchable('tunekeys')
     form.omitted('tunekeys')
-    tunekeys = schema.List(
-                       title=u'keys',
-                       description=u'set by abc content',
-                       required=False,
-                       value_type=schema.TextLine(required=False),
-                       )
+    tunekeys = schema.List(title=u'keys',
+                           description=u'set by abc content',
+                           required=False,
+                           value_type=schema.TextLine(required=False),
+                           )
 
     dexteritytextindexer.searchable('tunetype')
     form.omitted('tunetype')
-    tunetype = schema.TextLine(
-                        title=_(u"The type of the tune"),
-                        description=_(u"from the field R:"),
-                        required=False,
-                        )
+    tunetype = schema.TextLine(title=_(u"The type of the tune"),
+                               description=_(u"from the field R:"),
+                               required=False,
+                               )
     # NOTE: as specified in the v2.1 standard, A: field is deprecated
     # so, only O: is used to specified country and areas... separated
     # by ';'
     dexteritytextindexer.searchable('tunearea')
     form.omitted('tunearea')
-    tunearea = schema.TextLine(
-                        title=_(u"The area from which the tune is from"),
-                        description=_(u"More detailed origin of the tune, from O: field"),
-                        required=False,
-                        )
+    tunearea = schema.TextLine(title=_(u"The area from which the tune is from"),
+                               description=_(u"More detailed origin of the tune, from O: field"),
+                               required=False,
+                               )
     dexteritytextindexer.searchable('tunecountry')
     form.omitted('tunecountry')
-    tunecountry = schema.TextLine(
-                        title=_(u"The origin country of the tune, from first part of O: field"),
-                        description=_(u"The country"),
-                        required=False,
-                        )
+    tunecountry = schema.TextLine(title=_(u"The origin country of the tune, from first part of O: field"),
+                                  description=_(u"The country"),
+                                  required=False,
+                                  )
 
     form.omitted('score')
     score = NamedBlobImage(title=_(u"Score"),
-                           description=
-                                _(u'The score of the tune as png image'),
+                           description=_(u'The score of the tune as png image'),
                            required=False,)
 
     form.omitted('pdfscore')
-    pdfscore = NamedBlobFile(
-            title=_(u"PDF Score"),
-            description = _(u'The score of the tune as PDF'),
-            required = False,
-        )
+    pdfscore = NamedBlobFile(title=_(u"PDF Score"),
+                             description=_(u'The score of the tune as PDF'),
+                             required=False,
+                             )
 
     form.omitted('midi')
-    midi = NamedBlobFile(
-            title=_(u"Midi"),
-            description=_(u'Midi sound of the tune'),
-            required=False,
-        )
+    midi = NamedBlobFile(title=_(u"Midi"),
+                         description=_(u'Midi sound of the tune'),
+                         required=False,
+                         )
     form.omitted('sound')
-    sound = NamedBlobFile(
-            title=_(u"sound"),
-            description=_(u'The mp3 sound of the tune'),
-            required=False,
-        )
+    sound = NamedBlobFile(title=_(u"sound"),
+                          description=_(u'The mp3 sound of the tune'),
+                          required=False,
+                          )
 
 
 @form.default_value(field=IABCTune['abc'])
@@ -130,7 +124,8 @@ P:A
     return tune
 
 
-# for hidden fields, see : http://packages.python.org/z3c.form/form.html#hidden-fields
+# for hidden fields, see : http://packages.python.org/z3c.form/\
+# form.html#hidden-fields
 # to use in the add and edit forms
 class View(grok.View):
     grok.context(IABCTune)
@@ -208,7 +203,7 @@ def addKeys(context):
     for line in abc.split('\n'):
         if line[:2] == 'K:':
             key = line.split(':')[1].strip()
-            if not key in keys:
+            if key not in keys:
                 keys.append(key)
     context.tunekeys = keys
 
@@ -242,13 +237,15 @@ def updateAbcTune(context, event):
         parent = context.aq_parent
 
         if parent.portal_type == 'abctuneset':
-            logger.info ('(IObjectModifiedEvent)abctune.updateAbcTune '+ parent.portal_type)
+            log = '(IObjectModifiedEvent)abctune.updateAbcTune '
+            log += parent.portal_type
+            logger.info(log)
             notify(TuneInTuneSetModified(context))
         # _make_mp3(context)
 
     except:
         logger.info("updateAbcTune : abctune not modified...")
-    ## logger.info("abc edited/modified !")
+    # logger.info("abc edited/modified !")
 
 
 @grok.subscribe(IABCTune, ITuneInTuneSetModified)
@@ -261,5 +258,3 @@ def tuneInTuneSetModified(context, event):
 # class Add(dexterity.AddForm):
 #    grok.name('abctune')
 #    grok.template('addAbcTune')
-
-

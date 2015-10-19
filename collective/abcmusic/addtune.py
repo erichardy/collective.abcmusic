@@ -12,15 +12,13 @@ from collective.abcmusic import _
 
 
 class IAddTune(form.Schema):
-    tuneType = schema.Set(
-        title=_(u"Tune Type"),
-        value_type=schema.Choice(
-                        values=[_(u'Reel'), _(u'Jig'), _(u'Hornpipe')]
-                        ),
-        )
-    name = schema.TextLine(
-            title=_(u"Your full name"),
-        )
+    tuneType = schema.Set(title=_(u"Tune Type"),
+                          value_type=schema.Choice(values=[_(u'Reel'),
+                                                           _(u'Jig'),
+                                                           _(u'Hornpipe')]
+                                                   ),
+                          )
+    name = schema.TextLine(title=_(u"Your full name"))
 
 
 class AddTune(add.DefaultAddForm):
@@ -51,10 +49,9 @@ class AddTune(add.DefaultAddForm):
 
         # Redirect back to the front page with a status message
 
-        IStatusMessage(self.request).addStatusMessage(
-                _(u"Thank you for your order. We will contact you shortly"),
-                "info"
-            )
+        IStatusMessage(self.request).addStatusMessage(_(u"Thank you"),
+                                                      "info"
+                                                      )
 
         contextURL = self.context.absolute_url()
         self.request.response.redirect(contextURL)
