@@ -38,6 +38,13 @@ from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
 
+tunearea_title = _(u"The area from which the tune is from")
+tunearea_desc = _(u"More detailed origin of the tune, from O: field")
+tunecountry_title = u"The origin country of the tune, "
+tunecountry_title += u"from first part of O: field"
+tunecountry_title = _(tunecountry_title)
+score_desc = _(u'The score of the tune as png image')
+
 
 class IABCTune(form.Schema):
 
@@ -65,20 +72,20 @@ class IABCTune(form.Schema):
     # by ';'
     dexteritytextindexer.searchable('tunearea')
     form.omitted('tunearea')
-    tunearea = schema.TextLine(title=_(u"The area from which the tune is from"),
-                               description=_(u"More detailed origin of the tune, from O: field"),
+    tunearea = schema.TextLine(title=tunearea_title,
+                               description=tunearea_desc,
                                required=False,
                                )
     dexteritytextindexer.searchable('tunecountry')
     form.omitted('tunecountry')
-    tunecountry = schema.TextLine(title=_(u"The origin country of the tune, from first part of O: field"),
+    tunecountry = schema.TextLine(title=tunecountry_title,
                                   description=_(u"The country"),
                                   required=False,
                                   )
 
     form.omitted('score')
     score = NamedBlobImage(title=_(u"Score"),
-                           description=_(u'The score of the tune as png image'),
+                           description=score_desc,
                            required=False,)
 
     form.omitted('pdfscore')

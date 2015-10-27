@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-08-16 22:05+0000\n"
+"POT-Creation-Date: 2015-10-27 14:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-#: ./abctune.py:158
+#: ./abctune.py:160
 msgid "'The tune was modified... continue ?'"
 msgstr ""
 
@@ -25,23 +25,27 @@ msgstr ""
 msgid "A portlet which render a listing of tunes in current folder."
 msgstr ""
 
-#: ./controlpanel.py:29
+#: ./controlpanel.py:26
 msgid "ABC Music Settings"
 msgstr ""
 
-#: ./controlpanel.py:30
+#: ./controlpanel.py:27
 msgid "ABCMusicSettingsDescription"
 msgstr ""
 
-#: ./portlettuneslisting.py:34
+#: ./portlettuneslisting.py:37
 msgid "Add Tunes listing Portlet"
 msgstr ""
 
-#: ./addtune.py:35
+#: ./addtune.py:33
 msgid "Add a new tune"
 msgstr ""
 
-#: ./addtune.py:62
+#: ./browser/gettunes.py:23
+msgid "Browse for files"
+msgstr ""
+
+#: ./addtune.py:59
 msgid "Cancel the tune"
 msgstr ""
 
@@ -53,15 +57,15 @@ msgstr ""
 msgid "Collection of searchable information"
 msgstr ""
 
-#: ./addtune.py:45
+#: ./addtune.py:43
 msgid "Create the tune"
 msgstr ""
 
-#: ./portlettuneslisting.py:42
+#: ./portlettuneslisting.py:46
 msgid "Edit Tunes listing Portlet"
 msgstr ""
 
-#: ./addtune.py:36
+#: ./addtune.py:34
 msgid "Form used to add a new tune"
 msgstr ""
 
@@ -69,127 +73,127 @@ msgstr ""
 msgid "Hornpipe"
 msgstr ""
 
-#: ./addtune.py:18
+#: ./addtune.py:17
 msgid "Jig"
 msgstr ""
 
-#: ./portlettuneslisting.py:18
+#: ./portlettuneslisting.py:19
 msgid "Maximum size of the box."
 msgstr ""
 
-#: ./abctune.py:96
-#: ./abctuneset.py:71
+#: ./abctune.py:98
+#: ./abctuneset.py:68
 msgid "Midi"
 msgstr ""
 
-#: ./abctune.py:97
+#: ./abctune.py:99
 msgid "Midi sound of the tune"
 msgstr ""
 
-#: ./abctuneset.py:72
+#: ./abctuneset.py:69
 msgid "Midi sound of the tunes set"
 msgstr ""
 
-#: ./abctune.py:70
+#: ./abctune.py:42
 msgid "More detailed origin of the tune, from O: field"
 msgstr ""
 
-#: ./abctune.py:89
-#: ./abctuneset.py:64
+#: ./abctune.py:92
+#: ./abctuneset.py:62
 msgid "PDF Score"
 msgstr ""
 
-#: ./controlpanel.py:15
+#: ./controlpanel.py:13
 msgid "Path to the public tune base"
 msgstr ""
 
-#: ./addtune.py:18
+#: ./addtune.py:16
 msgid "Reel"
 msgstr ""
 
-#: ./abctune.py:82
-#: ./abctuneset.py:57
+#: ./abctune.py:87
+#: ./abctuneset.py:56
 msgid "Score"
 msgstr ""
 
-#: ./addtune.py:55
-msgid "Thank you for your order. We will contact you shortly"
+#: ./addtune.py:52
+msgid "Thank you"
 msgstr ""
 
-#: ./abctune.py:69
+#: ./abctune.py:41
 msgid "The area from which the tune is from"
 msgstr ""
 
-#: ./abctune.py:77
+#: ./abctune.py:82
 msgid "The country"
 msgstr ""
 
-#: ./abctune.py:103
+#: ./abctune.py:104
 msgid "The mp3 sound of the tune"
 msgstr ""
 
-#: ./abctuneset.py:79
+#: ./abctuneset.py:75
 msgid "The mp3 sound of the tunes set"
 msgstr ""
 
-#: ./abctune.py:76
-msgid "The origin country of the tune, from first part of O: field"
-msgstr ""
-
-#: ./abctune.py:90
+#: ./abctune.py:93
 msgid "The score of the tune as PDF"
 msgstr ""
 
-#: ./abctune.py:84
+#: ./abctune.py:46
 msgid "The score of the tune as png image"
 msgstr ""
 
-#: ./abctuneset.py:65
+#: ./abctuneset.py:63
 msgid "The score of the tunes set as PDF"
 msgstr ""
 
-#: ./abctuneset.py:59
+#: ./abctuneset.py:58
 msgid "The score of the tunes set as png image"
 msgstr ""
 
-#: ./abctune.py:45
+#: ./abctune.py:54
 msgid "The tune in abc format"
 msgstr ""
 
-#: ./abctuneset.py:54
+#: ./abctuneset.py:53
 msgid "The tunes set in abc format"
 msgstr ""
 
-#: ./abctune.py:59
+#: ./abctune.py:66
 msgid "The type of the tune"
 msgstr ""
 
-#: ./portlettuneslisting.py:35
+#: ./portlettuneslisting.py:38
 msgid "This portlet gather the tunes in the current folder."
 msgstr ""
 
-#: ./browser/importAbc.py:37
+#: ./browser/importAbc.py:36
 msgid "This will create abctune(s)"
 msgstr ""
 
-#: ./abctuneset.py:53
+#: ./abctuneset.py:52
 msgid "Tune Set abc"
 msgstr ""
 
-#: ./addtune.py:16
+#: ./addtune.py:15
 msgid "Tune Type"
 msgstr ""
 
-#: ./abctune.py:44
+#: ./abctune.py:53
 msgid "Tune abc"
 msgstr ""
 
-#: ./portlettuneslisting.py:30
+#: ./portlettuneslisting.py:32
 #: ./profiles/default/portlets.xml
 msgid "Tunes listing"
 msgstr ""
 
-#: ./addtune.py:22
+#: ./browser/gettunes_popup.pt:225
+msgid "View"
+msgstr ""
+
+#: ./addtune.py:21
 msgid "Your full name"
 msgstr ""
 
@@ -197,52 +201,62 @@ msgstr ""
 msgid "abc_collection_view"
 msgstr ""
 
-#: ./controlpanel.py:11
+#: ./controlpanel.py:10
 msgid "abcmusic templates description"
 msgstr ""
 
-#: ./abctuneset.py:49
+#: ./abctuneset.py:48
 msgid "combined set title"
 msgstr ""
 
-#: ./abctune.py:60
+#: ./abctune.py:67
 msgid "from the field R:"
 msgstr ""
 
-#: ./browser/importAbc.py:24
+#: ./browser/importAbc.py:20
 msgid "import a file containing one or more abc tunes"
 msgstr ""
 
-#: ./browser/importAbc.py:36
+#: ./browser/importAbc.py:35
 msgid "import abc file"
 msgstr ""
 
-#: ./controlpanel.py:21
+#. Default: "Search"
+#: ./browser/gettunes_popup.pt:93
+msgid "label_search"
+msgstr ""
+
+#: ./controlpanel.py:18
 msgid "one line per group, in the format                            : groupName:maxItems"
 msgstr ""
 
-#: ./controlpanel.py:20
+#: ./controlpanel.py:17
 msgid "quota for group members (max items)"
 msgstr ""
 
-#: ./controlpanel.py:16
+#: ./controlpanel.py:14
 msgid "relative to the root plone site"
 msgstr ""
 
-#: ./portlettuneslisting.py:17
+#: ./portlettuneslisting.py:18
 msgid "size of the box"
 msgstr ""
 
-#: ./abctune.py:102
-#: ./abctuneset.py:78
+#: ./abctune.py:103
+#: ./abctuneset.py:74
 msgid "sound"
 msgstr ""
 
-#: ./controlpanel.py:10
+#: ./controlpanel.py:9
 msgid "templates"
 msgstr ""
 
-#: ./abctuneset.py:50
+#: ./abctuneset.py:49
 msgid "this title depends of the tunes titles"
+msgstr ""
+
+#. Default: "You are here:"
+#: ./browser/gettunes_popup.pt:138
+msgid "you_are_here"
 msgstr ""
 

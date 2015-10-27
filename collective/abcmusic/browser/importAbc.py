@@ -17,10 +17,10 @@ from collective.abcmusic.utils import removeNonAscii
 from collective.abcmusic import _
 
 logger = logging.getLogger('collective.abcmusic')
+msg = _(u"import a file containing one or more abc tunes")
 
 
 class IImportABC(form.Schema):
-    msg = _(u"import a file containing one or more abc tunes")
     abc_file = NamedFile(title=msg)
 
 
