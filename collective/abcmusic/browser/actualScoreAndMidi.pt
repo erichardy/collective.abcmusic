@@ -55,7 +55,12 @@ button {
 </head>
 
 <body>
-<metal:main fill-slot="main">
+<metal:main fill-slot="main"
+  tal:define="notes context/midi/data"
+  >
+  <span id="MidiTune"
+         tal:content="string:${notes}">notes</span>
+  
  <object id="Jazz1" classid="CLSID:1ACE1618-1C7D-4561-AEE1-34842AA85E90" class="hidden">
   <object id="Jazz2" type="audio/x-jazz" class="hidden">
 <p style="visibility:visible;">This page requires <a href=http://jazz-soft.net>Jazz-Plugin</a> ...</p>
@@ -66,7 +71,7 @@ button {
 	tal:attributes="value string:${context/absolute_url}/@@download/midi/${midi/filename}" />
 
 
-<button onclick='fromUrl();' id="play">play...</button>
+<button onclick='playTune(); return false;' id="play">play...</button>
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
 
 <span tal:replace="nothing">
@@ -94,143 +99,83 @@ AUDIO MP3
 <div id=fname>&nbsp;</div>
 
 <div id="midi"></div>
+<h1>Play MIDI File</h1>
+
+<object id="Jazz1" classid="CLSID:1ACE1618-1C7D-4561-AEE1-34842AA85E90" class="hidden">
+  <object id="Jazz2" type="audio/x-jazz" class="hidden">
+<p style="visibility:visible;">This page requires <a href=http://jazz-soft.net>Jazz-Plugin</a> ...</p>
+  </object>
+</object>
+<p>MIDI Out: <select id=selectmidi onchange='changemidi();'></select></p>
+<p>
+<button id=play onmousedown='play();' disabled>Play</button>
+<button id=pause onmousedown='pause();' disabled>Pause</button>
+<button id=stop onmousedown='stop();' disabled>Stop</button>
+<input type=checkbox id=loop onclick='onloop();'><label for=loop>Loop</label>
+</p>
+
 <script type="text/javascript">
 var Jazz = document.getElementById("Jazz1"); if(!Jazz || !Jazz.isJazz) Jazz = document.getElementById("Jazz2");
-var pl;
-var btn;
-function fromUrl(){
-	 // var url = document.getElementById('url').value;
-	 var url = $("#url").attr('value');
-	 // alert(url);
-	 plzWait(); fName(url);
-	 try{
-	  var req=new XMLHttpRequest();
-	  // req.open("GET",'proxy.php?url='+url,true);
-	  req.open("GET", url, true);
-	  alert(req.responseText) ;
-	  console.log(url);
-	  if(req.overrideMimeType){
-	   req.overrideMimeType("text/plain; charset=x-user-defined");
-	  }
-	  // alert(req.status);
-	  req.onreadystatechange = function(ev){
-	   if(req.readyState === 4){
-	    if(req.status === 200){
-	     var s='';
-	     if(typeof req.responseBody=='unknown'){ // MSIE
-	      var a=new VBArray(req.responseBody).toArray();
-	      for(var i=0;i<a.length;i++) s+=String.fromCharCode(a[i]);
-	     }
-	     else {
-	      var r=req.responseText;
-	      for(var i=0;i<r.length;i++) s+=String.fromCharCode(r.charCodeAt(i)&0xff);
-	     }
-	     readMidiFile(s);
-	    }
-	    else err(req.status+": "+req.statusText);
-	   }
-	  };
-	  req.send(null);
-	 }
-	 catch(e){ err(e);}
-	}
-
-function readMidiFile(s){
-	 try{
-	  var mf=new JZZ.MidiFile(s);
-	  // displayMidiFile(mf);
-	  if(btn){
-	   pl=mf.player();
-	   pl.onEvent=onPlayer;
-	   btn.disabled=false;
-	  }
-	 }
-	 catch(e){ err(e);}
-	}
-	function displayMidiFile(mf){
-	 document.getElementById('midi').innerHTML='';
-	 var chunk;
-	 var div;
-	 chunk=document.createElement('div');
-	 chunk.innerHTML='<div class=hdr>MThd</div>';
-	 div=document.createElement('div');
-	 div.innerHTML='type: '+mf.type+(mf.ppqn?(', ppqn: '+mf.ppqn):(' smpte: '+mf.fps+'x'+mf.ppf));
-	 chunk.appendChild(div);
-	 document.getElementById('midi').appendChild(chunk);
-	 for(var i=0;i<mf.length;i++){
-	  chunk=document.createElement('div');
-	  chunk.innerHTML='<div class=hdr>'+mf[i].type+'</div>';
-	  if(mf[i].data){
-	   div=document.createElement('div');
-	   arr=[]; s=mf[i].data;
-	   for(var j=0;j<s.length;j++){
-	    var c=s.charCodeAt(j)<32?'-':s.charAt(j);
-	    if(c=='&') c='&amp;'; if(c=='<') c='&lt;'; if(c=='>') c='&gt;';
-	    var n=(s.charCodeAt(j)<16?'0':'')+s.charCodeAt(j).toString(16);
-	    if(j && !(j%32)) arr.push('<br>'); else if(j && !(j%8)) arr.push('&nbsp;');
-	    arr.push('<span title="'+c+'">'+n+'</span>');
-	   }
-	   div.innerHTML=arr.join(' ');
-	   chunk.appendChild(div);
-	  }
-	  if(mf[i] instanceof JZZ.MidiFile.MTrk){
-	   for(var j=0;j<mf[i].length;j++){
-	    var evt=mf[i][j];
-	    var s=evt.toString().replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;');
-	    div=document.createElement('div');
-	    div.innerHTML="<span class=clk>"+evt.time+"</span> <span>"+s+"</span>";
-	    chunk.appendChild(div);
-	   }
-	  }
-	  document.getElementById('midi').appendChild(chunk);
-	 }
-	}
-	function err(e){ document.getElementById('midi').innerHTML='<span class=err>'+e+'</span>';}
-	function plzWait(){
-	 document.getElementById('midi').innerHTML='<span class=wait>One moment please...</span>';
-	 if(pl) pl.stop();
-	 if(btn){ btn.disabled=true; btn.innerHTML='play';}
-	}
-	function fName(s){ document.getElementById('fname').innerHTML='<tt>'+s+'</tt>';}
-
-	var b64='\
-	TVRoZAAAAAYAAQADAGRNVHJrAAAAGgD/AwtMaXR0bGUgTGFtYgD/UQMKLCsA/y8ATVRyawAAAPEA/wMF\
-	V29yZHMA/wEYQFRNYXJ5IEhhZCBBIExpdHRsZSBMYW1iZP8BA1xNYTL/AQNyeSAy/wEEaGFkIDL/AQJh\
-	IDL/AQNsaXQy/wEEdGxlIDL/AQVsYW1iLGT/AQQvTGl0Mv8BBHRsZSAy/wEFbGFtYixk/wEEL0xpdDL/\
-	AQR0bGUgMv8BBWxhbWIsZP8BAy9NYTL/AQNyeSAy/wEEaGFkIDL/AQJhIDL/AQNsaXQy/wEEdGxlIDL/\
-	AQVsYW1iLGT/AQYvQmxhaC0y/wEFYmxhaC0y/wEFYmxhaC0y/wEFYmxhaC0y/wEFYmxhaCEA/y8ATVRy\
-	awAAALkA/wMFTXVzaWMAwAtkkEB/MkAAAD5/Mj4AADx/MjwAAD5/Mj4AAEB/MkAAAEB/MkAAAEB/WkAA\
-	Cj5/Mj4AAD5/Mj4AAD5/Wj4ACkB/MkAAAEN/MkMAAEN/WkMACkB/MkAAAD5/Mj4AADx/MjwAAD5/Mj4A\
-	AEB/MkAAAEB/MkAAAEB/WkAACj5/Mj4AAD5/Mj4AAEB/MkAAAD5/Mj4AADx/ZEBkAENkAEh/WjwAAEAA\
-	AEMAAEgACv8vAA==';
-
-function onPlayer(e){
-	 if(e.midi instanceof JZZ.Midi){
-	  Jazz.MidiOutRaw(e.midi.array());
-	 }
-	 if(e.control=='play'){
-	  btn.innerHTML='stop';
-	 }
-	 else if(e.control=='stop'){
-	  for(var i=0;i<16;i++) Jazz.MidiOut(0xb0+i,123,0);
-	  btn.innerHTML='play';
-	 }
-	}
-function onButton(){
-	 if(!pl) return;
-	 if(pl.playing) pl.stop();
-	 else pl.play();
-	}
-	try{
-	 Jazz.MidiOutOpen(0);
-	 var ver=Jazz.version.split('.');
-	 if((ver[0]>1 || (ver[0]==1 && ver[1]>=2)) && Jazz.Support('MidiOutRaw')){
-	  document.getElementById('play').innerHTML='<button id=playbtn onclick="onButton();" disabled>play</button>';
-	  btn=document.getElementById('playbtn');
-	 }
-	}
-	catch(e){alert(e+":)))");}
-
+var player;
+var notes = document.getElementById("MidiTune") ;
+notes64 = JZZ.MidiFile.toBase64(notes) ;
+mozart = notes64 ;
+function onPlayerEvent(e){
+ if(e.midi instanceof JZZ.Midi){
+  Jazz.MidiOutRaw(e.midi.array());
+ }
+ if(e.control=='play'){
+  document.getElementById('play').disabled=true;
+  document.getElementById('pause').disabled=false;
+  document.getElementById('pause').innerHTML='Pause';
+  document.getElementById('stop').disabled=false;
+  document.getElementById('selectmidi').disabled=true;
+ }
+ else if(e.control=='stop'){
+  for(var i=0;i<16;i++) Jazz.MidiOut(0xb0+i,123,0);
+  document.getElementById('play').disabled=false;
+  document.getElementById('pause').disabled=true;
+  document.getElementById('pause').innerHTML='Pause';
+  document.getElementById('stop').disabled=true;
+  document.getElementById('selectmidi').disabled=false;
+ }
+ else if(e.control=='pause'){
+  for(var i=0;i<16;i++) Jazz.MidiOut(0xb0+i,123,0);
+  document.getElementById('pause').innerHTML='Resume';
+ }
+ else if(e.control=='resume'){
+  document.getElementById('pause').innerHTML='Pause';
+ }
+}
+function play(){ player.play();}
+function stop(){ player.stop();}
+function pause(){
+ if(player.playing) player.pause();
+ else player.resume();
+}
+function onloop(){
+ player.loop(document.getElementById('loop').checked);
+}
+function changemidi(){
+ // Jazz.MidiOutOpen(select.options[select.selectedIndex].value);
+ Jazz.MidiOutOpen("Apple DLS Synth");
+}
+var select=document.getElementById('selectmidi');
+try{
+ var list=Jazz.MidiOutList();
+ for(var i in list){
+  select[i]=new Option(list[i],list[i],i==0,i==0);
+ }
+ Jazz.MidiOutOpen(0);
+ var midifile=new JZZ.MidiFile(JZZ.MidiFile.fromBase64(mozart));
+ player=midifile.player();
+ player.onEvent=onPlayerEvent;
+ document.getElementById('play').disabled=false;
+ document.getElementById('pause').disabled=true;
+ document.getElementById('stop').disabled=true;
+ document.getElementById('selectmidi').disabled=false;
+}
+catch(err){}
 
 </script>
 </metal:main>
