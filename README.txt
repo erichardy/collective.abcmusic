@@ -54,6 +54,11 @@ Currently dev for Plone 4.3.x
 
 For quicktime(R) versions, see : http://support.apple.com/downloads/#quicktime
 
+Hack to play midi sound on recent safari (not tested !):
+http://www.macissues.com/2014/04/27/enable-midi-playback-in-web-browsers-for-mavericks-and-mountain-lion/
+https://discussions.apple.com/message/23948316#23948316
+ 
+
 Features
 ========
 

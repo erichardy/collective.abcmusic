@@ -3,25 +3,86 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.abcmusic">
 
 <head>
-
+<metal:js fill-slot="javascript_head_slot">
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/JZZ.Midi.js"></script>
+	<script type="text/javascript" tal:attributes="src string:${portal_url}/JZZ.MidiFile.js"></script>
+</metal:js>
+<style type="text/css">
+button {
+ width:6em;
+}
+#midi {
+ font-family:Courier New, monospace;
+ background-color:#eef;
+ border:none;
+ padding:0.2em;
+}
+#midi div {
+ border:double;
+ margin:0.2em;
+}
+#midi div div {
+ border:none;
+}
+#midi div div.hdr {
+ font-weight:bold;
+ border:none;
+}
+#midi span.clk {
+ width:6em;
+ padding:0 0.5em;
+ text-align:right;
+ display:inline-block;
+ background-color:#ddd;
+}
+#midi .wait {
+ padding:.2em;
+ font-size:1.5em;
+ font-weight:bold;
+ color:#888;
+}
+#midi .err {
+ padding:.5em;
+ font-size:1.2em;
+ font-weight:bold;
+ color:#d00;
+}
+</style>
 </head>
 
 <body>
+<metal:main fill-slot="main">
+ <object id="Jazz1" classid="CLSID:1ACE1618-1C7D-4561-AEE1-34842AA85E90" class="hidden">
+  <object id="Jazz2" type="audio/x-jazz" class="hidden">
+<p style="visibility:visible;">This page requires <a href=http://jazz-soft.net>Jazz-Plugin</a> ...</p>
+  </object>
+</object>
+<p />
+<input type="hidden" id="url" tal:define="midi nocall:context/midi"
+	tal:attributes="value string:${context/absolute_url}/@@download/midi/${midi/filename}" />
+
+
+<button onclick='fromUrl();' id="play">play...</button>
     <!-- cf : http://webdesign.about.com/od/sound/ht/htsound.htm  -->
-    <object tal:define="midi nocall:context/midi"
-            tal:condition="nocall:midi">
-            <param name="autostart" value="false">
-            <param name="src" tal:attributes="value string:${context/absolute_url}/@@download/midi/${midi/filename}">
-            <param name="autoplay" value="true">
-            <param name="controller" value="true">
-            <embed height="30" autostart=false src=""
-                   tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}"
-                   type="audio/mid">
-            </embed>
-    </object>
+
+<span tal:replace="nothing">
+    <audio controls tal:define="midi nocall:context/midi">
+    	<source tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}" type="audio/mid" />
+    </audio>
+    audio/x-jazz
+    <audio controls tal:define="midi nocall:context/midi">
+    	<source tal:attributes="src string:${context/absolute_url}/@@download/midi/${midi/filename}" type="audio/x-jazz" />
+    </audio>
+AUDIO MP3
+    <audio controls tal:define="sound nocall:context/sound">
+    	<source tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}" type="audio/mpeg" />
+    </audio>
+
+</span>
     <div tal:define="score nocall:context/score"
              tal:condition="nocall:score">
             <img tal:attributes="src string:${context/absolute_url}/@@download/score/${score/filename};
@@ -30,7 +91,149 @@
                 />
         </div>
     <span tal:content="string:${context/score/filename}">score filename</span>
+<div id=fname>&nbsp;</div>
 
+<div id="midi"></div>
+<script type="text/javascript">
+var Jazz = document.getElementById("Jazz1"); if(!Jazz || !Jazz.isJazz) Jazz = document.getElementById("Jazz2");
+var pl;
+var btn;
+function fromUrl(){
+	 // var url = document.getElementById('url').value;
+	 var url = $("#url").attr('value');
+	 // alert(url);
+	 plzWait(); fName(url);
+	 try{
+	  var req=new XMLHttpRequest();
+	  // req.open("GET",'proxy.php?url='+url,true);
+	  req.open("GET", url, true);
+	  alert(req.responseText) ;
+	  console.log(url);
+	  if(req.overrideMimeType){
+	   req.overrideMimeType("text/plain; charset=x-user-defined");
+	  }
+	  // alert(req.status);
+	  req.onreadystatechange = function(ev){
+	   if(req.readyState === 4){
+	    if(req.status === 200){
+	     var s='';
+	     if(typeof req.responseBody=='unknown'){ // MSIE
+	      var a=new VBArray(req.responseBody).toArray();
+	      for(var i=0;i<a.length;i++) s+=String.fromCharCode(a[i]);
+	     }
+	     else {
+	      var r=req.responseText;
+	      for(var i=0;i<r.length;i++) s+=String.fromCharCode(r.charCodeAt(i)&0xff);
+	     }
+	     readMidiFile(s);
+	    }
+	    else err(req.status+": "+req.statusText);
+	   }
+	  };
+	  req.send(null);
+	 }
+	 catch(e){ err(e);}
+	}
+
+function readMidiFile(s){
+	 try{
+	  var mf=new JZZ.MidiFile(s);
+	  // displayMidiFile(mf);
+	  if(btn){
+	   pl=mf.player();
+	   pl.onEvent=onPlayer;
+	   btn.disabled=false;
+	  }
+	 }
+	 catch(e){ err(e);}
+	}
+	function displayMidiFile(mf){
+	 document.getElementById('midi').innerHTML='';
+	 var chunk;
+	 var div;
+	 chunk=document.createElement('div');
+	 chunk.innerHTML='<div class=hdr>MThd</div>';
+	 div=document.createElement('div');
+	 div.innerHTML='type: '+mf.type+(mf.ppqn?(', ppqn: '+mf.ppqn):(' smpte: '+mf.fps+'x'+mf.ppf));
+	 chunk.appendChild(div);
+	 document.getElementById('midi').appendChild(chunk);
+	 for(var i=0;i<mf.length;i++){
+	  chunk=document.createElement('div');
+	  chunk.innerHTML='<div class=hdr>'+mf[i].type+'</div>';
+	  if(mf[i].data){
+	   div=document.createElement('div');
+	   arr=[]; s=mf[i].data;
+	   for(var j=0;j<s.length;j++){
+	    var c=s.charCodeAt(j)<32?'-':s.charAt(j);
+	    if(c=='&') c='&amp;'; if(c=='<') c='&lt;'; if(c=='>') c='&gt;';
+	    var n=(s.charCodeAt(j)<16?'0':'')+s.charCodeAt(j).toString(16);
+	    if(j && !(j%32)) arr.push('<br>'); else if(j && !(j%8)) arr.push('&nbsp;');
+	    arr.push('<span title="'+c+'">'+n+'</span>');
+	   }
+	   div.innerHTML=arr.join(' ');
+	   chunk.appendChild(div);
+	  }
+	  if(mf[i] instanceof JZZ.MidiFile.MTrk){
+	   for(var j=0;j<mf[i].length;j++){
+	    var evt=mf[i][j];
+	    var s=evt.toString().replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;');
+	    div=document.createElement('div');
+	    div.innerHTML="<span class=clk>"+evt.time+"</span> <span>"+s+"</span>";
+	    chunk.appendChild(div);
+	   }
+	  }
+	  document.getElementById('midi').appendChild(chunk);
+	 }
+	}
+	function err(e){ document.getElementById('midi').innerHTML='<span class=err>'+e+'</span>';}
+	function plzWait(){
+	 document.getElementById('midi').innerHTML='<span class=wait>One moment please...</span>';
+	 if(pl) pl.stop();
+	 if(btn){ btn.disabled=true; btn.innerHTML='play';}
+	}
+	function fName(s){ document.getElementById('fname').innerHTML='<tt>'+s+'</tt>';}
+
+	var b64='\
+	TVRoZAAAAAYAAQADAGRNVHJrAAAAGgD/AwtMaXR0bGUgTGFtYgD/UQMKLCsA/y8ATVRyawAAAPEA/wMF\
+	V29yZHMA/wEYQFRNYXJ5IEhhZCBBIExpdHRsZSBMYW1iZP8BA1xNYTL/AQNyeSAy/wEEaGFkIDL/AQJh\
+	IDL/AQNsaXQy/wEEdGxlIDL/AQVsYW1iLGT/AQQvTGl0Mv8BBHRsZSAy/wEFbGFtYixk/wEEL0xpdDL/\
+	AQR0bGUgMv8BBWxhbWIsZP8BAy9NYTL/AQNyeSAy/wEEaGFkIDL/AQJhIDL/AQNsaXQy/wEEdGxlIDL/\
+	AQVsYW1iLGT/AQYvQmxhaC0y/wEFYmxhaC0y/wEFYmxhaC0y/wEFYmxhaC0y/wEFYmxhaCEA/y8ATVRy\
+	awAAALkA/wMFTXVzaWMAwAtkkEB/MkAAAD5/Mj4AADx/MjwAAD5/Mj4AAEB/MkAAAEB/MkAAAEB/WkAA\
+	Cj5/Mj4AAD5/Mj4AAD5/Wj4ACkB/MkAAAEN/MkMAAEN/WkMACkB/MkAAAD5/Mj4AADx/MjwAAD5/Mj4A\
+	AEB/MkAAAEB/MkAAAEB/WkAACj5/Mj4AAD5/Mj4AAEB/MkAAAD5/Mj4AADx/ZEBkAENkAEh/WjwAAEAA\
+	AEMAAEgACv8vAA==';
+
+function onPlayer(e){
+	 if(e.midi instanceof JZZ.Midi){
+	  Jazz.MidiOutRaw(e.midi.array());
+	 }
+	 if(e.control=='play'){
+	  btn.innerHTML='stop';
+	 }
+	 else if(e.control=='stop'){
+	  for(var i=0;i<16;i++) Jazz.MidiOut(0xb0+i,123,0);
+	  btn.innerHTML='play';
+	 }
+	}
+function onButton(){
+	 if(!pl) return;
+	 if(pl.playing) pl.stop();
+	 else pl.play();
+	}
+	try{
+	 Jazz.MidiOutOpen(0);
+	 var ver=Jazz.version.split('.');
+	 if((ver[0]>1 || (ver[0]==1 && ver[1]>=2)) && Jazz.Support('MidiOutRaw')){
+	  document.getElementById('play').innerHTML='<button id=playbtn onclick="onButton();" disabled>play</button>';
+	  btn=document.getElementById('playbtn');
+	 }
+	}
+	catch(e){alert(e+":)))");}
+
+
+</script>
+</metal:main>
 </body>
 </html>
     
