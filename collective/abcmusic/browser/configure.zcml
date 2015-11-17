@@ -24,6 +24,13 @@
       layer="..interfaces.IABCMusicLayer"
       permission="zope2.View"
       />
+  <browser:page
+  	for="*"
+   	name="geo"
+   	class=".geo.Geo"
+   	template="geo.pt"
+    permission="zope2.View"
+  />
 
   <browser:page
   	for="collective.abcmusic.abctune.IABCTune"
