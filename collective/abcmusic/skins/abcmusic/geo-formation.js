@@ -5,11 +5,21 @@ $(document).ready(function() {
 	    center: coords ,
 	    zoom: 13
 	});
+	var currentMapName = 'Stamen';
 	
+	map.on('moveend', function(e){
+		// console.log(e.name);
+		// console.log("Center : " + map.getCenter());
+		console.log('zoom : ' + map.getZoom());
+	});
+	map.on('baselayerchange', function(e){
+		currentMapName = e.name ;
+		console.log(currentMapName);
+	})
 	var osmTiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	    attribution: 'OpenStreetMap'
 	});
-	osmTiles.addTo(map);
+	// osmTiles.addTo(map);
 	stamenTiles = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
 	    attribution: 'Stamen'
 	});
@@ -24,12 +34,51 @@ $(document).ready(function() {
 	});
 
 	var baseLayers = {
-			"Stamen": stamenTiles,
+			currentMapName: stamenTiles,
 			"OpenStreetMap": osmTiles,
-			"MapQuestOpen_Aerial": MapQuestOpen_Aerial
+			"MapQuestOpen Aerial": MapQuestOpen_Aerial
 	}
-	
-	terrasses = L.geoJson(null);
+	// console.log(map.getPanes());
+	var geojsonMarkerOptions = {
+		    radius: 8,
+		    fillColor: "#ff7800",
+		    color: "#000",
+		    weight: 1,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+	terrasses = L.geoJson(null, {
+	    onEachFeature: function (feature, layer) {
+	        layer.bindPopup(feature.properties.etablisseme + '<br />' + feature.properties.nature_acti);
+	    },
+        pointToLayer: function (feature, latlng) {
+        	nature = feature.properties.nature_acti;
+        	// console.log(nature);
+        	switch(nature){
+	        	case "Terrasse ouverte-Extension terrasse":
+	        		geojsonMarkerOptions.fillColor = "Red";
+	        		break;
+	        	case "Terrasse sur stationnement":
+	        		geojsonMarkerOptions.fillColor = "Green";
+	        		break;
+	        	case "Terrasse ouverte":
+	        		geojsonMarkerOptions.fillColor = "Grey";
+	        		break;
+	        	case "Terrasse ferm√©e":
+	        		geojsonMarkerOptions.fillColor = "Yellow";
+	        		break;
+	        	case "Terrasse marquise":
+	        		geojsonMarkerOptions.fillColor = "Blue";
+	        		break;
+	        	case "Extension terrasse":
+	        		geojsonMarkerOptions.fillColor = "Black";
+	        		break;
+	        	default:
+	        		geojsonMarkerOptions.fillColor = "White";	        	
+        	}
+        	return L.circleMarker(latlng, geojsonMarkerOptions);
+        }
+        });
 	terrasses.addData(terrassesGEOJSON) ;
 	var overlays = {
 			"Terrasses": terrasses
@@ -38,12 +87,12 @@ $(document).ready(function() {
 
 	terrasses.addTo(map);
 	// on prend la BoundingBox de l'objet terrasses
-	terrassesBounds = terrasses.getBounds()
+	terrassesBounds = terrasses.getBounds();
 	// et on cale la map sur cette bounding box
-	map.fitBounds(terrassesBounds)
+	map.fitBounds(terrassesBounds);
 	
-	// Popup avec texte "fixe", le même pour tous les points
-	terrasses.bindPopup("une terrasse...")
+	// Popup avec texte "fixe", le meme pour tous les points
+	// terrasses.bindPopup("une terrasse...");
 
 	$("#plus").click(function(){
 		opacity = opacity + 0.1
