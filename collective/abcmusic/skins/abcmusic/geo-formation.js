@@ -3,29 +3,30 @@ $(document).ready(function() {
 	var coords = [3.601092044498785, 1.4432430267333984]
 	var map = L.map('myMap', {
 	    center: coords ,
-	    zoom: 13
+	    zoom: 13,
+	    maxZoom: 18
 	});
 	var currentMapName = 'Stamen';
-	
+
+	// EVENTS
 	map.on('moveend', function(e){
 		// console.log(e.name);
 		// console.log("Center : " + map.getCenter());
-		console.log('zoom : ' + map.getZoom());
+		// console.log('zoom : ' + map.getZoom());
 	});
 	map.on('baselayerchange', function(e){
 		currentMapName = e.name ;
-		console.log(currentMapName);
+		// console.log(currentMapName);
 	})
+	// END EVENTS
+	
+	// Déclaration des tuiles de fond de plan
 	var osmTiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	    attribution: 'OpenStreetMap'
 	});
-	// osmTiles.addTo(map);
 	stamenTiles = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
 	    attribution: 'Stamen'
 	});
-	stamenTiles.addTo(map);
-	opacity = 0.5
-	stamenTiles.setOpacity(opacity);
 	var MapQuestOpen_Aerial = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.{ext}', {
 		type: 'sat',
 		ext: 'jpg',
@@ -33,12 +34,20 @@ $(document).ready(function() {
 		subdomains: '1234'
 	});
 
+	var localTiles = L.tileLayer("tiles/{z}/{x}/{y}.png")
+	
 	var baseLayers = {
-			currentMapName: stamenTiles,
+//			currentMapName: stamenTiles,
 			"OpenStreetMap": osmTiles,
-			"MapQuestOpen Aerial": MapQuestOpen_Aerial
+			"MapQuestOpen Aerial": MapQuestOpen_Aerial,
+			"localTiles": localTiles
 	}
-	// console.log(map.getPanes());
+	baseLayers[currentMapName] = stamenTiles;
+	baseLayers[currentMapName].addTo(map);
+	opacity = 0.5
+	baseLayers[currentMapName].setOpacity(opacity);
+	// Fin Déclaration des tuiles de fond de plan
+
 	var geojsonMarkerOptions = {
 		    radius: 8,
 		    fillColor: "#ff7800",
@@ -47,45 +56,65 @@ $(document).ready(function() {
 		    opacity: 1,
 		    fillOpacity: 0.8
 		};
+	var cluster = L.markerClusterGroup();
+	
 	terrasses = L.geoJson(null, {
 	    onEachFeature: function (feature, layer) {
 	        layer.bindPopup(feature.properties.etablisseme + '<br />' + feature.properties.nature_acti);
 	    },
         pointToLayer: function (feature, latlng) {
         	nature = feature.properties.nature_acti;
+        	iconOptions = {size: 'm'};
         	// console.log(nature);
         	switch(nature){
 	        	case "Terrasse ouverte-Extension terrasse":
-	        		geojsonMarkerOptions.fillColor = "Red";
+	        		// geojsonMarkerOptions.fillColor = "Red";
+	        		iconOptions.icon = "school" ;
+	        		iconOptions.color = "#b00" ;
 	        		break;
 	        	case "Terrasse sur stationnement":
-	        		geojsonMarkerOptions.fillColor = "Green";
+	        		// geojsonMarkerOptions.fillColor = "Green";
+	        		iconOptions.icon = "park2" ;
+	        		iconOptions.color = "#0b0" ;
 	        		break;
 	        	case "Terrasse ouverte":
-	        		geojsonMarkerOptions.fillColor = "Grey";
+	        		// geojsonMarkerOptions.fillColor = "Grey";
+	        		iconOptions.icon = "cafe" ;
+	        		iconOptions.color = "#b0b" ;
 	        		break;
 	        	case "Terrasse fermée":
-	        		geojsonMarkerOptions.fillColor = "Yellow";
+	        		iconOptions.icon = "warehouse" ;
+	        		iconOptions.color = '#bbb' ;
+	        		// geojsonMarkerOptions.fillColor = "Yellow";
 	        		break;
 	        	case "Terrasse marquise":
-	        		geojsonMarkerOptions.fillColor = "Blue";
+	        		// geojsonMarkerOptions.fillColor = "Blue";
+	        		iconOptions.icon = "school" ;
+	        		iconOptions.color = "#aaa" ;
 	        		break;
 	        	case "Extension terrasse":
-	        		geojsonMarkerOptions.fillColor = "Black";
+	        		// geojsonMarkerOptions.fillColor = "Black";
+	        		iconOptions.icon = "school" ;
+	        		iconOptions.color = "#444" ;
 	        		break;
 	        	default:
-	        		geojsonMarkerOptions.fillColor = "White";	        	
+	        		iconOptions.icon = "cafe" ;
+        			iconOptions.color = "#fff" ;	        	
         	}
-        	return L.circleMarker(latlng, geojsonMarkerOptions);
+        	// return L.circleMarker(latlng, geojsonMarkerOptions);
+        	var terrasseIcon = L.MakiMarkers.icon(iconOptions) ;
+        	return L.marker(latlng, {icon: terrasseIcon});
         }
         });
 	terrasses.addData(terrassesGEOJSON) ;
 	var overlays = {
-			"Terrasses": terrasses
+			"Terrasses": cluster,
 	}
 	L.control.layers(baseLayers, overlays).addTo(map);
 
-	terrasses.addTo(map);
+	cluster.addLayer(terrasses) ;
+	cluster.addTo(map) ;
+	// terrasses.addTo(map);
 	// on prend la BoundingBox de l'objet terrasses
 	terrassesBounds = terrasses.getBounds();
 	// et on cale la map sur cette bounding box
