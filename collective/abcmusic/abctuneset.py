@@ -45,36 +45,45 @@ If those rules are not respected, the result is really uncertain...
 class IABCTuneSet(form.Schema):
 
     form.omitted('combinedTitle')
+    """this combinedTitle depends of the tunes titles
+    """
     combinedTitle = schema.TextLine(title=_(u"combined set title"),
-                    description=_(u"this title depends of the tunes titles"),
-                    )
+                                    description=_(u"."),
+                                    )
     form.omitted('abc')
     abc = schema.Text(title=_(u"Tune Set abc"),
                       description=_(u'The tunes set in abc format'),)
 
     form.omitted('score')
+    """The score of the tunes set as png image
+    """
     score = NamedBlobImage(title=_(u"Score"),
-                           description=
-                                _(u'The score of the tunes set as png image'),
+                           description=_(u'.'),
                            required=False,)
 
     form.omitted('pdfscore')
+    """The score of the tunes set as PDF
+    """
     pdfscore = NamedBlobFile(title=_(u"PDF Score"),
-            description=_(u'The score of the tunes set as PDF'),
-            required=False,
-        )
+                             description=_(u'.'),
+                             required=False,
+                             )
 
     form.omitted('midi')
+    """Midi sound of the tunes set
+    """
     midi = NamedBlobFile(title=_(u"Midi"),
-            description=_(u'Midi sound of the tunes set'),
-            required=False,
-        )
+                         description=_(u'.'),
+                         required=False,
+                         )
 
     form.omitted('sound')
+    """The mp3 sound of the tunes set
+    """
     sound = NamedBlobFile(title=_(u"sound"),
-            description=_(u'The mp3 sound of the tunes set'),
-            required=False,
-        )
+                          description=_(u'.'),
+                          required=False,
+                          )
 
 
 class abctuneset(Container):

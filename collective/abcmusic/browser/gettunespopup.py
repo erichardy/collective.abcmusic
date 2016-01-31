@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from types import ListType, TupleType
 import urllib
 import re
@@ -38,7 +39,7 @@ from Products.CMFPlone.PloneBatch import Batch
 from archetypes.referencebrowserwidget import utils
 from archetypes.referencebrowserwidget.interfaces import IFieldRelation
 from archetypes.referencebrowserwidget.interfaces import \
-                                                    IReferenceBrowserHelperView
+    IReferenceBrowserHelperView
 
 default_popup_template = named_template_adapter(
     ViewPageTemplateFile('gettunes_popup.pt'))
@@ -271,12 +272,11 @@ class ReferenceBrowserPopup(BrowserView):
         qc = getMultiAdapter((self.context, self.request),
                              name='refbrowser_querycatalog')
         if self.widget.show_results_without_query or self.search_text:
-            result = (self.widget.show_results_without_query
+            result = ((self.widget.show_results_without_query
                       or
-                      self.search_text) \
-                      and \
-                      qc(search_catalog=self.widget.search_catalog)
-
+                      self.search_text)
+                      and qc(search_catalog=self.widget.search_catalog)
+                      )
             self.has_queryresults = bool(result)
 
         elif self.widget.allow_browse:
@@ -288,9 +288,10 @@ class ReferenceBrowserPopup(BrowserView):
                 'depth': 1}
             self.request.form['portal_type'] = []
             if 'sort_on' in self.widget.base_query:
-                self.request.form['sort_on'] = self.widget.base_query['sort_on']
+                so = 'sort_on'
+                self.request.form[so] = self.widget.base_query[so]
             else:
-                self.request.form['sort_on'] = 'getObjPositionInParent'
+                self.request.form[so] = 'getObjPositionInParent'
 
             result = qc(search_catalog=self.widget.search_catalog)
         else:
@@ -314,9 +315,11 @@ class ReferenceBrowserPopup(BrowserView):
                               portal_state.navigation_root_url())}]
         else:
             # display only crumbs into startup directory
-            startup_dir_url = startup_directory or \
-                utils.getStartupDirectory(context,
-                        self.widget.getStartupDirectory(context, self.field))
+            sDirectory = self.widget.getStartupDirectory(context, self.field)
+            startup_dir_url = (startup_directory or
+                               utils.getStartupDirectory(context,
+                                                         sDirectory)
+                               )
             newcrumbs = []
             crumbs = [c for c in crumbs
                       if c['absolute_url'].startswith(startup_dir_url)]

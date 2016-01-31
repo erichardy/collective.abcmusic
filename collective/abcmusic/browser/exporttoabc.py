@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # usefull documentations :
 # http://kevinharvey.net/2011/02/28/create-and-download-a-csv-or-any-other-file-type-with-a-plone-view/
 

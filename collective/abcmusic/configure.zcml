@@ -47,7 +47,7 @@
   <browser:page
      name="abcmusic-settings"
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-     class=".controlpanel.ABCMusicSettingsFormSettingsControlPanel"
+     class=".controlpanel.ABCMusicSettingsFormControlPanel"
      permission="cmf.ManagePortal"
   />
   <!-- Portlet -->

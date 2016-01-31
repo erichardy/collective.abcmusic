@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 from zope.publisher.browser import BrowserView
 # from plone.namedfile.interfaces import HAVE_BLOBS

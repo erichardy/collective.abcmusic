@@ -7,7 +7,7 @@ from plone.namedfile.file import NamedBlobFile as nbf
 import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
-from os import unlink
+# from os import unlink
 
 # from collective.abcmusic import _
 

@@ -11,8 +11,9 @@ from Products.CMFCore.interfaces import ISiteRoot
 from five import grok
 
 from collective.plonefinder.widgets.referencewidget import FinderSelectWidget
-from collective.plonefinder.widgets.referencewidget import FinderSelectFileWidget
-from plone import api
+from collective.plonefinder.widgets.referencewidget import \
+    FinderSelectFileWidget
+# from plone import api
 
 from collective.abcmusic import _
 

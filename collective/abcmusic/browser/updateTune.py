@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope.publisher.browser import BrowserView
 import logging
 # from plone import api

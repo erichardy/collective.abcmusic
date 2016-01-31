@@ -2,12 +2,14 @@ from setuptools import setup, find_packages
 import os
 
 version = '0.3b15dev'
+long_description = open("README.txt").read()
+long_description += "\n" + open(os.path.join("docs",
+                                             "HISTORY.txt")).read(),
 
 setup(name='collective.abcmusic',
       version=version,
       description="Addon for Plone",
-      long_description=open("README.txt").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+      long_description=long_description,
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=["Programming Language :: Python",

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # usefull documentations :
 # http://developer.plone.org/forms/z3c.form.html
 # http://developer.plone.org/forms/files.html

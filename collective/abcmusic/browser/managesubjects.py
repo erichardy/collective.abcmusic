@@ -12,12 +12,14 @@ class updateSubjects(BrowserView):
         # keywords must be converted to utf8 before to be set to the object !!
         # logger.info(self.context)
         context = self.context
+        # XXX a revoir....
         # because context may be a view...
         try:
             tune = context.portal_type
         except:
             tune = context.context.portal_type
             context = self.context.context
+        logger.info(tune)
         # import pdb;pdb.set_trace()
         l_subjects = [self.to_unicode(subject)
                       for subject in subjects.strip('|').split('|')
