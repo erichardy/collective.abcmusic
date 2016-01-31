@@ -120,7 +120,8 @@ class currentMP3(BrowserView):
         retour += ' type="audio/mp3"> </embed>'
         """
         retour = '<audio title="tag audio"  controls="controls">'
-        retour += '<source src="' + abctune.absolute_url() + '/@@download/sound/'
+        retour += '<source src="' + abctune.absolute_url()
+        retour += '/@@download/sound/'
         retour += abctune.sound.filename + '" '
         retour += ' type="audio/mp3"> </audio>'
         logger.info('dans currentMP3')

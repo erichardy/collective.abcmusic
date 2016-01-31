@@ -5,5 +5,4 @@ logger = logging.getLogger('collective.abcmusic')
 
 
 class Geo(BrowserView):
-
     pass
