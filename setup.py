@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3b15dev'
+version = '0.4'
 long_description = open("README.txt").read()
 long_description += "\n" + open(os.path.join("docs",
-                                             "HISTORY.txt")).read(),
+                                             "HISTORY.txt")).read()
 
 setup(name='collective.abcmusic',
       version=version,

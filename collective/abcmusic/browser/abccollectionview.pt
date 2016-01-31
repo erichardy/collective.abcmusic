@@ -117,12 +117,16 @@
 		   </div>
 		    <div id="mp3">MP3 :&nbsp;
 		      <span tal:define="sound nocall:item/sound" tal:condition="nocall:sound">
-		        <object id="mp3View" >
+		        <object id="mp3View" tal:replace="nothing">
 		            <embed id="abctuneMP3" height="30" autostart="false" controller="true" autoplay="true" src=""
 		                   tal:attributes="src string:${item_url}/@@download/sound/${sound/filename}"
 		                   type="audio/mp3">
 		            </embed>
 		        </object>
+		        <audio id="mp3View" title='tag audio' controls="controls"'>
+                  <source tal:attributes="src string:${item_url}/@@download/sound/${sound/filename}" type='audio/mpeg' />
+                Notre navigateur ne supporte pas le tag audio !
+                </audio>
 		      </span>
             </div>
 		         <img id="abctuneScore"

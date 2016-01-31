@@ -56,11 +56,11 @@
 		                   type="audio/mp3">
 		            </embed>
 		        </object>
-		    MP33
-		      <span>
-		        <audio title='tag audio' tal:define="sound nocall:context/sound" controls>
+		    
+		      <span id="mp3View" tal:define="sound nocall:context/sound">
+		        <audio title='tag audio'  controls="controls">
 		          <source tal:attributes="src string:${context/absolute_url}/@@download/sound/${sound/filename}" type='audio/mpeg' />
-		        Le navig. ne supporte pas le tag audio
+		        Notre navigateur ne supporte pas le tag audio !
 		        </audio>
 		      </span>
 			</span>

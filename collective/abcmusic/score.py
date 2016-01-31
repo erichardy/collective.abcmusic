@@ -7,7 +7,7 @@ from plone.namedfile.file import NamedBlobFile as nbf
 import subprocess as sp
 import tempfile as tf
 from StringIO import StringIO
-# from os import unlink
+from os import unlink
 
 # from collective.abcmusic import _
 
@@ -98,13 +98,11 @@ def _make_score(context):
 
     output, errors = pdf_create.communicate()
     # logger.info(errors)
-    # logger.info(output)
-
-    """
+    logger.info(epstemp)
     unlink(abctemp)
     unlink(pstemp)
+    unlink(epstemp.split('.eps')[0] + '001.eps')
     unlink(epstemp)
     unlink(pngtemp)
     unlink(pdftemp)
-    """
     return output

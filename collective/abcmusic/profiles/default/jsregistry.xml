@@ -2,11 +2,11 @@
 <object name="portal_javascripts">
 
  <javascript cacheable="True" compression="none" cookable="True"
-    enabled="True" expression=""
+    enabled="False" expression=""
     id="terrasses-geojson.js" inline="False"/>
 
  <javascript cacheable="True" compression="none" cookable="True"
-    enabled="True" expression=""
+    enabled="False" expression=""
     id="Leaflet.MakiMarkers.js" inline="False"/>
 
  <javascript cacheable="True" compression="none" cookable="True"
@@ -36,7 +36,7 @@
     enabled="False" expression=""
     id="JZZ.MidiFile.js" inline="False"/>
   <javascript cacheable="True" compression="none" cookable="True"
-    enabled="True" expression=""
+    enabled="False" expression=""
     id="geo-formation.js" inline="False"/>
  
  

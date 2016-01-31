@@ -52,6 +52,7 @@ class updateTune(BrowserView):
         # _make_PDFscore(abctune)
         if makeMP3 != '0':
             _make_mp3(abctune)
+            logger.info('lance _make_mp3')
         # import pdb;pdb.set_trace()
         abctune.modification_date = DateTime()
         logger.info(abctune.modified())
@@ -111,11 +112,18 @@ class currentMP3(BrowserView):
     """ AJAX method/view"""
     def __call__(self, uuid):
         abctune = uuidToObject(uuid)
+        """
         retour = '<embed id="abctuneMP3" height="30" autostart="false" '
         retour += 'controller="true" autoplay="true"'
         retour += ' src="' + abctune.absolute_url() + '/@@download/sound/'
         retour += abctune.sound.filename + '"'
         retour += ' type="audio/mp3"> </embed>'
+        """
+        retour = '<audio title="tag audio"  controls="controls">'
+        retour += '<source src="' + abctune.absolute_url() + '/@@download/sound/'
+        retour += abctune.sound.filename + '" '
+        retour += ' type="audio/mp3"> </audio>'
+        logger.info('dans currentMP3')
         return retour
 
 
